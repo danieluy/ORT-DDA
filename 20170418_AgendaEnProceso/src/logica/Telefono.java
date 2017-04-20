@@ -4,10 +4,12 @@ public class Telefono {
 
     private String numero;
     private Tipo tipo;
+    private Contacto contacto;
 
-    public Telefono(String numero, Tipo tipo) {
+    public Telefono(String numero, Tipo tipo, Contacto contacto) {
         this.numero = numero;
         this.tipo = tipo;
+        this.contacto = contacto;
     }
 
     public void validar() throws AgendaException {
@@ -28,6 +30,10 @@ public class Telefono {
     public boolean equals(Object o) {
         Telefono t = (Telefono) o;
         return t.numero.equals(numero);
+    }
+
+    public Contacto getContacto() {
+        return contacto;
     }
 
 }

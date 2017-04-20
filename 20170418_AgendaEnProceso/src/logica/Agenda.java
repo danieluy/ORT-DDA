@@ -26,7 +26,16 @@ public class Agenda {
     public ArrayList<Contacto> getContactos() {
         return contactos;
     }
-    
-    
+
+    public ArrayList<Telefono> getTelefonos() {
+        ArrayList<Telefono> telefonos = new ArrayList();
+        for (Contacto c : contactos) {
+            ArrayList<Telefono> contacto_telefonos = c.getTelefonos();
+            for (Telefono t : contacto_telefonos) {
+                telefonos.add(t);
+            }
+        }
+        return telefonos;
+    }
 
 }

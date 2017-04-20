@@ -12,7 +12,7 @@ public class Contacto {
     private String nombre;
 
     public void agregar(String nro, Tipo t) throws AgendaException {
-        Telefono tel = new Telefono(nro, t);
+        Telefono tel = new Telefono(nro, t, this);
         tel.validar(); //throws AgendaException
         if (telefonos.contains(tel)) {
             throw new AgendaException("Ya existe");
