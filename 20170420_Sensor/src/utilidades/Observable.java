@@ -1,7 +1,6 @@
 package utilidades;
 
 import java.util.ArrayList;
-import sensorObservador.EscuchadorSensor;
 
 public abstract class Observable {
 

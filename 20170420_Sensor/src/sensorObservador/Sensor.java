@@ -1,53 +1,48 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package sensorObservador;
 
+public class Sensor extends utilidades.Observable {
 
-
-/**
- *
- * @author docenteFI
- */
-public class Sensor extends utilidades.Observable{
     private boolean actividad;
 
-   
-    public enum Eventos{ actividad,reposo,mantenimiento};
-    
-    public void on(){
+    public enum Eventos {
+        actividad, reposo, mantenimiento
+    };
+
+    public void on() {
         System.out.println("ON");
         try {
             Thread.currentThread().sleep(2000);
-        } catch (InterruptedException ex) {}
+        } catch (InterruptedException ex) {
+        }
         actividad();
-         try {
+        try {
             Thread.currentThread().sleep(2000);
-        } catch (InterruptedException ex) {}
+        } catch (InterruptedException ex) {
+        }
         reposo();
         try {
             Thread.currentThread().sleep(2000);
-        } catch (InterruptedException ex) {}
+        } catch (InterruptedException ex) {
+        }
         mantenimiento();
         System.out.println("FIN");
     }
+
     private void mantenimiento() {
         System.out.println("MANTENIMIETNO");
         avisar(Eventos.mantenimiento);
     }
-    
+
     private void actividad() {
         System.out.println("ACTIVIDAD!!!");
-        actividad=true;
+        actividad = true;
         avisar(Eventos.actividad);
     }
 
     private void reposo() {
         System.out.println("...REPOSO...");
-        actividad=false;
+        actividad = false;
         avisar(Eventos.reposo);
     }
-    
+
 }

@@ -1,4 +1,4 @@
-package oblligatorio;
+package obligatorio;
 
 public class Main {
 
