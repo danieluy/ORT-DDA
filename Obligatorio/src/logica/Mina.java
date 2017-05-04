@@ -1,0 +1,5 @@
+package logica;
+
+class Mina {
+    
+}

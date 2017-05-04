@@ -1,4 +1,4 @@
-package obligatorio;
+package iu;
 
 public class Main {
 
