@@ -5,6 +5,7 @@ import modelo.Fachada;
 import vistas.InicioFrame;
 import modelo.Jugador;
 import modelo.Administrador;
+import modelo.UsuarioException;
 
 public class LoginControlador {
 
@@ -20,7 +21,7 @@ public class LoginControlador {
             try {
                 Jugador jugador = modelo.loginJugador(usuario, password);
                 vista.loginJugadorOk(jugador);
-            } catch (Exception e) {
+            } catch (UsuarioException e) {
                 vista.loginError(e.getMessage());
             }
         }
@@ -28,7 +29,7 @@ public class LoginControlador {
             try {
                 Administrador administrador = modelo.loginAdministrador(usuario, password);
                 vista.loginAdministradorOk(administrador);
-            } catch (Exception e) {
+            } catch (UsuarioException e) {
                 vista.loginError(e.getMessage());
             }
         }

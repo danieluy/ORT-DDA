@@ -1,7 +1,6 @@
 package vistas.partida;
 
 import controladores.PartidaControlador;
-import javax.swing.JOptionPane;
 import modelo.Jugador;
 
 public class PartidaFrame extends javax.swing.JFrame implements PartidaVista {
