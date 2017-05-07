@@ -17,19 +17,19 @@ public class LoginControlador {
 
     public void login(String usuario, String password, InicioFrame.tipoUsuario tipoUsuario) {
         if (tipoUsuario == InicioFrame.tipoUsuario.jugador) {
-            Jugador jugador = modelo.loginJugador(usuario, password);
-            if (jugador == null) {
-                vista.loginError("Usuario o contraseña incorrectos");
-            } else {
-                vista.iniciarPartida(jugador);
+            try {
+                Jugador jugador = modelo.loginJugador(usuario, password);
+                vista.loginJugadorOk(jugador);
+            } catch (Exception e) {
+                vista.loginError(e.getMessage());
             }
         }
         if (tipoUsuario == InicioFrame.tipoUsuario.administrador) {
-            Administrador administrador = modelo.loginAdministrador(usuario, password);
-            if (administrador == null) {
-                vista.loginError("Usuario o contraseña incorrectos");
-            } else {
+            try {
+                Administrador administrador = modelo.loginAdministrador(usuario, password);
                 vista.loginAdministradorOk(administrador);
+            } catch (Exception e) {
+                vista.loginError(e.getMessage());
             }
         }
     }

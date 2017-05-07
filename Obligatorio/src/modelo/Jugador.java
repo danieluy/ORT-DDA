@@ -13,10 +13,12 @@ public class Jugador extends Usuario {
         super(nombre, nombreCompleto, password);
     }
 
+    Jugador(String usuario) {
+        super(usuario);
+    }
+
     void setPartida(Partida partida) {
         this.partida = partida;
     }
-
-
 
 }

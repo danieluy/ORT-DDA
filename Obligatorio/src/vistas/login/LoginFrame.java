@@ -97,7 +97,8 @@ public class LoginFrame extends java.awt.Frame implements LoginVista {
     }//GEN-LAST:event_btn_loginActionPerformed
 
     @Override
-    public void iniciarPartida(Jugador jugador) {
+    public void loginJugadorOk(Jugador jugador) {
+        // inicio partida
         new PartidaFrame(jugador).setVisible(true);
         dispose();
     }
@@ -108,8 +109,8 @@ public class LoginFrame extends java.awt.Frame implements LoginVista {
     }
 
     @Override
-    public void loginError(String mensage) {
-        JOptionPane.showMessageDialog(this, mensage);
+    public void loginError(String mensaje) {
+        JOptionPane.showMessageDialog(this, mensaje);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

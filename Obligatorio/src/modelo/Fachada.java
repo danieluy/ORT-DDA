@@ -15,11 +15,11 @@ public class Fachada {
         return instancia;
     }
 
-    public Jugador loginJugador(String usuario, String password) {
+    public Jugador loginJugador(String usuario, String password) throws UsuarioException {
         return sistemaUsuarios.loginJugador(usuario, password);
     }
 
-    public Administrador loginAdministrador(String password, String pass) {
+    public Administrador loginAdministrador(String password, String pass) throws UsuarioException {
         return sistemaUsuarios.loginAdministrador(password, pass);
     }
 
@@ -37,6 +37,10 @@ public class Fachada {
 
     public void addAdministrador(Administrador administrador) {
         sistemaUsuarios.addAdministrador(administrador);
+    }
+
+    public Partida iniciarPartida(Jugador jugador) {
+        return sistemaPartidas.iniciarPartida(jugador);
     }
     
     

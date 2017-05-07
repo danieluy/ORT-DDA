@@ -12,6 +12,10 @@ public class Usuario {
         this.password = password;
     }
 
+    public Usuario(String nombre) {
+        this.nombre = nombre;
+    }
+
     public String getNombre() {
         return nombre;
     }
@@ -36,6 +40,11 @@ public class Usuario {
         if (nombre.isEmpty() || password.isEmpty() || nombreCompleto.isEmpty()) {
             throw new UsuarioException("Error creando un usuario");
         }
+    }
+    
+    @Override
+    public boolean equals(Object o){
+        return ((Usuario) o).getNombre().equalsIgnoreCase(nombre);
     }
 
 }

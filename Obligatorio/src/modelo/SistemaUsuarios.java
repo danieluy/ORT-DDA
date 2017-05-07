@@ -6,29 +6,37 @@ import java.util.logging.Logger;
 
 class SistemaUsuarios {
 
-    ArrayList<Jugador> jugadores = new ArrayList();
-    ArrayList<Jugador> jugadoresLogueados = new ArrayList();
-    ArrayList<Administrador> administradores = new ArrayList();
-    ArrayList<Administrador> administradoresLogueados = new ArrayList();
+    private ArrayList<Jugador> jugadores = new ArrayList();
+    private ArrayList<Jugador> jugadoresLogueados = new ArrayList();
+    private ArrayList<Administrador> administradores = new ArrayList();
+    private ArrayList<Administrador> administradoresLogueados = new ArrayList();
 
-    public Jugador loginJugador(String usuario, String password) {
+    public Jugador loginJugador(String usuario, String password) throws UsuarioException {
+        jugadorEstaLogueado(usuario);
         for (Jugador jugador : jugadores) {
             if (jugador.getNombre().equalsIgnoreCase(usuario) && jugador.getPassword().equals(password)) {
                 jugadoresLogueados.add(jugador);
                 return jugador;
             }
         }
-        return null;
+        throw new UsuarioException("Usuario y/o contraseña incorrectos");
     }
 
-    public Administrador loginAdministrador(String usuario, String password) {
+    public Administrador loginAdministrador(String usuario, String password) throws UsuarioException {
         for (Administrador administrador : administradores) {
             if (administrador.getNombre().equalsIgnoreCase(usuario) && administrador.getPassword().equals(password)) {
                 administradoresLogueados.add(administrador);
                 return administrador;
             }
         }
-        return null;
+        throw new UsuarioException("Usuario y/o contraseña incorrectos");
+    }
+    
+    private void jugadorEstaLogueado(String nombreUsuario) throws UsuarioException{
+        Jugador jugador = new Jugador(nombreUsuario);
+        if(jugadoresLogueados.contains(jugador)){
+            throw new UsuarioException("El jugador " + nombreUsuario + " ya se encuantra en el sistema");
+        }
     }
 
     public void logoutJugador(Jugador jugador) {
