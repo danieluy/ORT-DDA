@@ -24,7 +24,6 @@ public class PartidaControlador implements Observer {
     }
 
     private void setTituloFrame() {
-//        System.out.println(partida.isIniciada() ? "Partida iniciada" : "Partida en espera");
         if (partida.isIniciada()) {
             vista.setTitulo(partida.getJugador1().getNombreCompleto() + " vs. " + partida.getJugador2().getNombreCompleto());
         } else {

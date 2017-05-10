@@ -5,15 +5,12 @@ import java.util.ArrayList;
 class SistemaUsuarios {
 
     private ArrayList<Jugador> jugadores = new ArrayList();
-    private ArrayList<Jugador> jugadoresLogueados = new ArrayList();
     private ArrayList<Administrador> administradores = new ArrayList();
-    private ArrayList<Administrador> administradoresLogueados = new ArrayList();
 
     public Jugador loginJugador(String usuario, String password) throws UsuarioException {
-        jugadorEstaLogueado(usuario);
         for (Jugador jugador : jugadores) {
             if (jugador.getNombre().equalsIgnoreCase(usuario) && jugador.getPassword().equals(password)) {
-                jugadoresLogueados.add(jugador);
+                jugadorEstaLogueado(jugador);
                 return jugador;
             }
         }
@@ -23,26 +20,24 @@ class SistemaUsuarios {
     public Administrador loginAdministrador(String usuario, String password) throws UsuarioException {
         for (Administrador administrador : administradores) {
             if (administrador.getNombre().equalsIgnoreCase(usuario) && administrador.getPassword().equals(password)) {
-                administradoresLogueados.add(administrador);
                 return administrador;
             }
         }
         throw new UsuarioException("Usuario y/o contraseña incorrectos");
     }
-    
-    private void jugadorEstaLogueado(String nombreUsuario) throws UsuarioException{
-        Jugador jugador = new Jugador(nombreUsuario);
-        if(jugadoresLogueados.contains(jugador)){
-            throw new UsuarioException("El jugador " + nombreUsuario + " ya se encuantra en el sistema");
+
+    private void jugadorEstaLogueado(Jugador jugador) throws UsuarioException {
+        if (jugador.tienePartida()) {
+            throw new UsuarioException("El jugador " + jugador.getNombre() + " ya se encuantra en el sistema");
         }
     }
 
     public void logoutJugador(Jugador jugador) {
-        jugadoresLogueados.remove(jugador);
+        jugador.abandonarPartida();
     }
 
     public void logoutAdministrador(Administrador administrador) {
-        jugadoresLogueados.remove(administrador);
+        // esperando para tomar una acción relevante
     }
 
     public void addJugador(Jugador jugador) {

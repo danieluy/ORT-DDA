@@ -13,12 +13,22 @@ public class Jugador extends Usuario {
         super(nombre, nombreCompleto, password);
     }
 
-    Jugador(String usuario) {
+    public Jugador(String usuario) {
         super(usuario);
     }
 
-    void setPartida(Partida partida) {
+    public void setPartida(Partida partida) {
         this.partida = partida;
     }
+
+    public boolean tienePartida() {
+        return partida != null;
+    }
+
+    public void abandonarPartida() {
+        partida = null;
+    }
+    
+    
 
 }
