@@ -1,5 +1,5 @@
 package modelo;
 
-class Mina {
+public class Mina {
     
 }

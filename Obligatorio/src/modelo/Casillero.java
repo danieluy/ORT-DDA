@@ -1,15 +1,30 @@
 package modelo;
 
-class Casillero {
-    Movimiento movimiento;
-    Mina mina = null;
+import java.awt.Color;
+import vistas.partida.CasilleroPanelTablero;
 
-    public Mina getMina() {
-        return mina;
-    }
+public class Casillero implements CasilleroPanelTablero {
 
-    public void setMina(Mina mina) {
-        this.mina = mina;
-    }
-    
+  private Movimiento movimiento;
+  private Mina mina = null;
+  private Color color;
+
+  public Mina getMina() {
+    return mina;
+  }
+
+  public void setMina(Mina mina) {
+    this.mina = mina;
+  }
+
+  @Override
+  public Color getColor() {
+    return color;
+  }
+
+  @Override
+  public void destapar() {
+//    TODO implementar el método
+  }
+
 }

@@ -2,7 +2,7 @@ package modelo;
 
 import java.util.ArrayList;
 
-class SistemaUsuarios {
+public class SistemaUsuarios {
 
     private ArrayList<Jugador> jugadores = new ArrayList();
     private ArrayList<Administrador> administradores = new ArrayList();

@@ -9,29 +9,29 @@ import modelo.UsuarioException;
 
 public class LoginControlador {
 
-    private Fachada modelo = Fachada.getInstancia();
-    private LoginVista vista;
+  private Fachada modelo = Fachada.getInstancia();
+  private LoginVista vista;
 
-    public LoginControlador(LoginVista vista) {
-        this.vista = vista;
-    }
+  public LoginControlador(LoginVista vista) {
+    this.vista = vista;
+  }
 
-    public void login(String usuario, String password, InicioFrame.tipoUsuario tipoUsuario) {
-        if (tipoUsuario == InicioFrame.tipoUsuario.jugador) {
-            try {
-                Jugador jugador = modelo.loginJugador(usuario, password);
-                vista.loginJugadorOk(jugador);
-            } catch (UsuarioException e) {
-                vista.loginError(e.getMessage());
-            }
-        }
-        if (tipoUsuario == InicioFrame.tipoUsuario.administrador) {
-            try {
-                Administrador administrador = modelo.loginAdministrador(usuario, password);
-                vista.loginAdministradorOk(administrador);
-            } catch (UsuarioException e) {
-                vista.loginError(e.getMessage());
-            }
-        }
+  public void login(String usuario, String password, InicioFrame.tipoUsuario tipoUsuario) {
+    if (tipoUsuario == InicioFrame.tipoUsuario.jugador) {
+      try {
+        Jugador jugador = modelo.loginJugador(usuario, password);
+        vista.loginJugadorOk(jugador);
+      } catch (UsuarioException e) {
+        vista.loginError(e.getMessage());
+      }
     }
+    if (tipoUsuario == InicioFrame.tipoUsuario.administrador) {
+      try {
+        Administrador administrador = modelo.loginAdministrador(usuario, password);
+        vista.loginAdministradorOk(administrador);
+      } catch (UsuarioException e) {
+        vista.loginError(e.getMessage());
+      }
+    }
+  }
 }

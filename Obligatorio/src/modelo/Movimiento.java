@@ -1,5 +1,5 @@
 package modelo;
 
-class Movimiento {
+public class Movimiento {
     
 }
