@@ -30,7 +30,7 @@
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="lbl_titulo" pref="380" max="32767" attributes="0"/>
+                  <Component id="lbl_titulo" max="32767" attributes="0"/>
                   <Component id="jLabel1" max="32767" attributes="0"/>
                   <Component id="txt_tamano" alignment="0" max="32767" attributes="0"/>
                   <Group type="102" attributes="0">
