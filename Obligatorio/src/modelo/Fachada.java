@@ -39,8 +39,8 @@ public class Fachada {
         sistemaUsuarios.addAdministrador(administrador);
     }
 
-    public Partida iniciarPartida(Jugador jugador) {
-        return sistemaPartidas.iniciarPartida(jugador);
+    public Partida crearPartida(Jugador jugador) throws PartidaException {
+        return sistemaPartidas.crearPartida(jugador);
     }
     
     

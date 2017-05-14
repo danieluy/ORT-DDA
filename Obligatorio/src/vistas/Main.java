@@ -12,10 +12,13 @@ public class Main {
 
         Fachada modelo = Fachada.getInstancia();
 
-        modelo.addJugador(new Jugador("Tyler", "Tyler Durden", "tfc"));
-        modelo.addJugador(new Jugador("Marla", "Marla Singer", "tfc"));
+        modelo.addJugador(new Jugador("Tyler", "Tyler Durden", "tfc", 100));
+        modelo.addJugador(new Jugador("Marla", "Marla Singer", "tfc", 100));
+        modelo.addJugador(new Jugador("Robert", "Robert Paulson", "tfc", 100));
+        modelo.addJugador(new Jugador("Angel", "Angel Face", "tfc", 100));
         
         modelo.addAdministrador(new Administrador("Daniel", "Daniel Sosa", "pass"));
+        modelo.addAdministrador(new Administrador("Eduardo", "Eduardo Cardozo", "pass"));
         
         new InicioFrame().setVisible(true);
     }

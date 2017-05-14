@@ -22,6 +22,11 @@ public class InicioFrame extends javax.swing.JFrame {
         btn_administrador = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         btn_jugador.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         btn_jugador.setText("Jugar");
@@ -71,6 +76,10 @@ public class InicioFrame extends javax.swing.JFrame {
     private void btn_administradorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_administradorActionPerformed
         new LoginFrame(tipoUsuario.administrador).setVisible(true);
     }//GEN-LAST:event_btn_administradorActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO varificar si no hay juegos activos
+    }//GEN-LAST:event_formWindowClosing
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

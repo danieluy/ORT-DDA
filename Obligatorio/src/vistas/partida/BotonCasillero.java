@@ -1,18 +1,18 @@
 package vistas.partida;
 
 import javax.swing.JButton;
-import vistas.partida.CasilleroPanelTablero;
+import vistas.partida.CasilleroPanel;
 
 public class BotonCasillero extends JButton {
 
-  private CasilleroPanelTablero casillero;
+  private CasilleroPanel casillero;
 
-  public BotonCasillero(CasilleroPanelTablero casillero) {
+  public BotonCasillero(CasilleroPanel casillero) {
     this.casillero = casillero;
     setBackground(casillero.getColor());
   }
 
-  public CasilleroPanelTablero getCasillero() {
+  public CasilleroPanel getCasillero() {
     return casillero;
   }
 
