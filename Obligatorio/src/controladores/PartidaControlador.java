@@ -5,6 +5,7 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import modelo.ApuestaException;
 import modelo.CasilleroException;
 import modelo.Fachada;
 import modelo.Jugador;
@@ -29,32 +30,16 @@ public class PartidaControlador implements Observer {
         try {
             this.jugador = jugador;
             partida = modelo.crearPartida(jugador);
-        }
-        catch (PartidaException ex) {
-            vista.mostrarError(ex.getMessage());
-        }
-        partida.addObserver(this);
+            partida.addObserver(this);
 //        Si es el jugador 1 preguntamos tamaño de tablero
-//        Si es el jugador 2 y ...
-        if (partida.getJugador2() == jugador) {
-//            ... ya está creado el tablero, empezamos
-            if (partida.tableroCreado()) {
-                iniciarTablero();
-            }
-//            ... sino, esperamos
-            else {
+//        Si es el jugador 2 y espera o inicia
+            if (partida.getJugador2() == jugador) {
                 vista.mostrarEspera("Esperando por " + partida.getJugador1().getNombreCompleto());
             }
+            vista.setTitulo(tituloPartida());
         }
-        setTituloFrame();
-    }
-
-    private void setTituloFrame() {
-        if (partida.estaIniciada()) {
-            vista.setTitulo(partida.getJugador1().getNombreCompleto() + " vs. " + partida.getJugador2().getNombreCompleto());
-        }
-        else {
-            vista.setTitulo(partida.getJugador1().getNombreCompleto() + " esperando oponente");
+        catch (PartidaException | ApuestaException ex) {
+            vista.mostrarError(ex.getMessage());
         }
     }
 
@@ -62,7 +47,7 @@ public class PartidaControlador implements Observer {
         try {
             partida.setTamanoTablero(Integer.parseInt(str_tamano));
         }
-        catch (PartidaException ex) {
+        catch (PartidaException | ApuestaException ex) {
             vista.mostrarError(ex.getMessage());
         }
         catch (NumberFormatException ex) {
@@ -79,21 +64,47 @@ public class PartidaControlador implements Observer {
         }
     }
 
-    private void iniciarTablero() {
-        vista.iniciarTablero();
+    private String getTurno() {
+        if (partida.esTurnoDe(jugador)) {
+            return "Juegas tu";
+        }
+        return "Juega tu oponente";
+    }
+
+    private String tituloPartida() {
+        String titulo;
+        if (partida.estaIniciada()) {
+            titulo = partida.getJugador1().getNombreCompleto() + " vs. " + partida.getJugador2().getNombreCompleto();
+        }
+        else {
+            titulo = partida.getJugador1().getNombreCompleto() + " esperando oponente";
+        }
+        return titulo;
+    }
+
+    private void actualizarPartida() {
         vista.mostrarTablero(partida.getTamano(), partida.getCasilleros());
+        vista.mostrarDatos(tituloPartida(), getTurno(), jugador.getSaldo(), partida.getPozo(), partida.getNumeroTurno());
+    }
+
+    public void salir() {
+        modelo.logoutJugador(jugador);
     }
 
     @Override
     public void update(Observable o, Object evento) {
         if (evento == Partida.Eventos.partidaLlena) {
-            setTituloFrame();
+            vista.setTitulo(tituloPartida());
         }
         if (evento == Partida.Eventos.tableroCreado) {
-            iniciarTablero();
+            vista.mostrarEspera("Esperando oponente");
+        }
+        if (evento == Partida.Eventos.partidaIniciada) {
+            vista.iniciarTablero();
+            actualizarPartida();
         }
         if (evento == Partida.Eventos.movimientoEfectuado) {
-            vista.mostrarTablero(partida.getTamano(), partida.getCasilleros());
+            actualizarPartida();
         }
     }
 }

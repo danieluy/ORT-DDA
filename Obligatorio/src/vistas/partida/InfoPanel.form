@@ -36,9 +36,9 @@
                           <Group type="102" attributes="0">
                               <Component id="jLabel1" max="32767" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="lbl_jugador" min="-2" pref="120" max="-2" attributes="0"/>
+                              <Component id="lbl_pozo" min="-2" pref="120" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="lbl_jugador2" alignment="0" min="-2" pref="180" max="-2" attributes="0"/>
+                          <Component id="lbl_jugadorTurno" alignment="0" min="-2" pref="180" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
@@ -52,9 +52,9 @@
                           </Group>
                       </Group>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="lbl_jugador4" max="32767" attributes="0"/>
+                          <Component id="lbl_numeroTurno" max="32767" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="lbl_jugador3" min="-2" pref="42" max="-2" attributes="0"/>
+                              <Component id="lbl_saldo" min="-2" pref="42" max="-2" attributes="0"/>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
@@ -71,15 +71,15 @@
               <Component id="lbl_titulo" min="-2" pref="30" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="lbl_jugador2" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
+                  <Component id="lbl_jugadorTurno" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
                   <Component id="lbl_jugador1" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
-                  <Component id="lbl_jugador3" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
+                  <Component id="lbl_saldo" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel1" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                  <Component id="lbl_jugador" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                  <Component id="lbl_jugador4" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                  <Component id="lbl_pozo" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                  <Component id="lbl_numeroTurno" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                   <Component id="jLabel3" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
@@ -93,7 +93,7 @@
         <Property name="text" type="java.lang.String" value="Pozo"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="lbl_jugador">
+    <Component class="javax.swing.JLabel" name="lbl_pozo">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Tahoma" size="12" style="1"/>
@@ -120,7 +120,7 @@
         <Property name="text" type="java.lang.String" value="Tyler Durden vs. Marla Singer"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="lbl_jugador2">
+    <Component class="javax.swing.JLabel" name="lbl_jugadorTurno">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Tahoma" size="10" style="1"/>
@@ -128,7 +128,7 @@
         <Property name="text" type="java.lang.String" value="Juega tu oponente"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="lbl_jugador3">
+    <Component class="javax.swing.JLabel" name="lbl_saldo">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Tahoma" size="10" style="1"/>
@@ -136,7 +136,7 @@
         <Property name="text" type="java.lang.String" value="$0"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="lbl_jugador4">
+    <Component class="javax.swing.JLabel" name="lbl_numeroTurno">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Tahoma" size="12" style="1"/>

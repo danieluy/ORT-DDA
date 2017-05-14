@@ -1,12 +1,9 @@
 package vistas;
 
+import modelo.Usuario;
 import vistas.login.LoginFrame;
 
 public class InicioFrame extends javax.swing.JFrame {
-
-    public enum tipoUsuario {
-        jugador, administrador
-    }
 
     public InicioFrame() {
         initComponents();
@@ -70,11 +67,11 @@ public class InicioFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_jugadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_jugadorActionPerformed
-        new LoginFrame(tipoUsuario.jugador).setVisible(true);
+        new LoginFrame(Usuario.TiposUsuario.jugador).setVisible(true);
     }//GEN-LAST:event_btn_jugadorActionPerformed
 
     private void btn_administradorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_administradorActionPerformed
-        new LoginFrame(tipoUsuario.administrador).setVisible(true);
+        new LoginFrame(Usuario.TiposUsuario.administrador).setVisible(true);
     }//GEN-LAST:event_btn_administradorActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing

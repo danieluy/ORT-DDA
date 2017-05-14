@@ -6,7 +6,7 @@ public class SistemaPartidas {
 
     private ArrayList<Partida> partidas = new ArrayList();
 
-    public Partida crearPartida(Jugador jugador) throws PartidaException {
+    public Partida crearPartida(Jugador jugador) throws PartidaException, ApuestaException {
         if (jugador.puedeApostar(Partida.APUESTA_INICIAL)) {
             // si no existen partidas creo la primera
             if (partidas.size() > 0) {

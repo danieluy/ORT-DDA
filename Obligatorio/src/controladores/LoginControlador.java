@@ -5,6 +5,7 @@ import modelo.Fachada;
 import vistas.InicioFrame;
 import modelo.Jugador;
 import modelo.Administrador;
+import modelo.Usuario;
 import modelo.UsuarioException;
 
 public class LoginControlador {
@@ -16,8 +17,8 @@ public class LoginControlador {
     this.vista = vista;
   }
 
-  public void login(String usuario, String password, InicioFrame.tipoUsuario tipoUsuario) {
-    if (tipoUsuario == InicioFrame.tipoUsuario.jugador) {
+  public void login(String usuario, String password, Usuario.TiposUsuario tipoUsuario) {
+    if (tipoUsuario == Usuario.TiposUsuario.jugador) {
       try {
         Jugador jugador = modelo.loginJugador(usuario, password);
         vista.loginJugadorOk(jugador);
@@ -25,7 +26,7 @@ public class LoginControlador {
         vista.loginError(e.getMessage());
       }
     }
-    if (tipoUsuario == InicioFrame.tipoUsuario.administrador) {
+    if (tipoUsuario == Usuario.TiposUsuario.administrador) {
       try {
         Administrador administrador = modelo.loginAdministrador(usuario, password);
         vista.loginAdministradorOk(administrador);

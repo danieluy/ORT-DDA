@@ -37,6 +37,11 @@ public class PartidaFrame extends javax.swing.JFrame implements PartidaVista, Ac
         setMinimumSize(new java.awt.Dimension(400, 600));
         setPreferredSize(new java.awt.Dimension(400, 600));
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         lbl_titulo.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lbl_titulo.setText("Partida");
@@ -96,6 +101,10 @@ public class PartidaFrame extends javax.swing.JFrame implements PartidaVista, Ac
       controlador.setTamanoTablero(txt_tamano.getText());
   }//GEN-LAST:event_btn_tamanoActionPerformed
 
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        controlador.salir();
+    }//GEN-LAST:event_formWindowClosing
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_tamano;
     private javax.swing.JLabel jLabel1;
@@ -118,7 +127,6 @@ public class PartidaFrame extends javax.swing.JFrame implements PartidaVista, Ac
     @Override
     public void iniciarTablero() {
         splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
-        splitPane.setTopComponent(new InfoPanel());
         splitPane.setDividerLocation(150);
         setContentPane(splitPane);
     }
@@ -129,6 +137,13 @@ public class PartidaFrame extends javax.swing.JFrame implements PartidaVista, Ac
         panelTablero.mostrarTablero(tamano, casilleros, this);
         splitPane.setBottomComponent(panelTablero);
         validate();
+    }
+
+    @Override
+    public void mostrarDatos(String tituloPartida, String turno, double saldo, double pozo, int numeroTurno) {
+        setTitle(tituloPartida);
+        InfoPanel infoPanel = new InfoPanel(tituloPartida, turno, ("$" + saldo), ("$" + pozo), ("#" + numeroTurno));
+        splitPane.setTopComponent(infoPanel);
     }
 
     @Override

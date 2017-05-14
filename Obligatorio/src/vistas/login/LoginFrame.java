@@ -11,9 +11,9 @@ import vistas.partida.PartidaFrame;
 public class LoginFrame extends java.awt.Frame implements LoginVista {
 
     private controladores.LoginControlador controlador;
-    private InicioFrame.tipoUsuario tipoUsuario;
+    private Usuario.TiposUsuario tipoUsuario;
 
-    public LoginFrame(InicioFrame.tipoUsuario tipoUsuario) {
+    public LoginFrame(Usuario.TiposUsuario tipoUsuario) {
         initComponents();
         controlador = new LoginControlador(this);
         this.tipoUsuario = tipoUsuario;

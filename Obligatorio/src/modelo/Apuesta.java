@@ -6,22 +6,22 @@ public class Apuesta {
     private double monto;
     private boolean paga = false;
 
-    public Apuesta(Jugador jugadorApuesta, Jugador jugadorPaga, double monto) throws PartidaException {
+    public Apuesta(Jugador jugadorApuesta, Jugador jugadorPaga, double monto) throws ApuestaException {
         if (!jugadorApuesta.puedeApostar(monto) && jugadorPaga.puedeApostar(monto)) {
             double apuestaMaxima = jugadorApuesta.getSaldo() < jugadorPaga.getSaldo() ? jugadorApuesta.getSaldo() : jugadorPaga.getSaldo();
-            throw new PartidaException("La apuesta máxima en este punto es de $" + apuestaMaxima);
+            throw new ApuestaException("La apuesta máxima en este punto es de $" + apuestaMaxima);
         }
-        this.jugador = jugadorApuesta;
+        jugador = jugadorApuesta;
         this.monto = monto;
         jugador.setSaldo(jugador.getSaldo() - monto);
     }
 
-    public void pagarApuesta(Jugador jugador) throws PartidaException {
+    public void pagarApuesta(Jugador jugador) throws ApuestaException {
         if (jugador == this.jugador) {
-            throw new PartidaException("El jugador " + jugador.getNombre() + " no puede pagar su apuesta");
+            throw new ApuestaException("El jugador " + jugador.getNombre() + " no puede pagar su apuesta");
         }
         if (!jugador.puedeApostar(monto)) {
-            throw new PartidaException("Saldo insuficiente");
+            throw new ApuestaException("Saldo insuficiente");
         }
         jugador.setSaldo(jugador.getSaldo() - monto);
         paga = true;

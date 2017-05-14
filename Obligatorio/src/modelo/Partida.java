@@ -11,15 +11,17 @@ public class Partida extends Observable {
     public static final int TAMANO_MAXIMO = 10;
     public static final double APUESTA_INICIAL = 10;
     private double pozo = 0;
-    private int tamano;
-    private Color[] colores = {Color.CYAN, Color.YELLOW};
+    private int tamano = 0;
+    private Color color1 = Color.CYAN;
+    private Color color2 = Color.YELLOW;
     private Apuesta apuesta;
-    private Jugador[] jugadores = new Jugador[2]; // Asegura el límite de dos jugadores
+    private Jugador jugador1;
+    private Jugador jugador2;
     private ArrayList<Casillero> casilleros = new ArrayList();
     private ArrayList<Movimiento> movimientos = new ArrayList();
 
     public enum Eventos {
-        tableroCreado, partidaLlena, apuestasIniciadas, partidaTerminada, movimientoEfectuado
+        tableroCreado, partidaLlena, partidaTerminada, movimientoEfectuado, partidaIniciada
     }
 
     private void notificar(Object evento) {
@@ -27,29 +29,21 @@ public class Partida extends Observable {
         notifyObservers(evento);
     }
 
-    public Partida(Jugador jugador1) throws PartidaException {
-        jugadores[0] = jugador1;
-        jugador1.setColor(colores[0]);
+    public Partida(Jugador jugador) throws PartidaException {
+        jugador1 = jugador;
+        jugador1.setColor(color1);
         jugador1.setPartida(this);
     }
 
-    public void setJugador2(Jugador jugador2) throws PartidaException {
-        jugadores[1] = jugador2;
-        jugador2.setColor(colores[1]);
+    public void setJugador2(Jugador jugador) throws ApuestaException {
+        jugador2 = jugador;
+        jugador2.setColor(color2);
         jugador2.setPartida(this);
-        iniciarApuestas();
         notificar(Eventos.partidaLlena);
+        iniciarPartida();
     }
 
-    public Jugador getJugador1() {
-        return jugadores[0];
-    }
-
-    public Jugador getJugador2() {
-        return jugadores[1];
-    }
-
-    public void setTamanoTablero(int tamano) throws PartidaException {
+    public void setTamanoTablero(int tamano) throws PartidaException, ApuestaException {
         if (tamano < TAMANO_MINIMO) {
             throw new PartidaException("El tamaño mínimo del tablero es de " + TAMANO_MINIMO + (TAMANO_MINIMO == 1 ? " casillero" : " casilleros"));
         }
@@ -60,36 +54,59 @@ public class Partida extends Observable {
         for (int i = 0; i < (tamano * tamano); i++) {
             casilleros.add(new Casillero());
         }
+        agregarMina();
         notificar(Eventos.tableroCreado);
-        iniciarApuestas();
+        iniciarPartida();
     }
 
-    private void iniciarApuestas() throws PartidaException {
+    private void iniciarPartida() throws ApuestaException {
         if (estaIniciada()) {
-            apuesta = new Apuesta(jugadores[0], jugadores[1], APUESTA_INICIAL);
-            apuesta.pagarApuesta(jugadores[1]);
-            notificar(Eventos.apuestasIniciadas);
+            iniciarApuestas();
+            notificar(Eventos.partidaIniciada);
+        }
+    }
+
+    private void iniciarApuestas() throws ApuestaException {
+        apuesta = new Apuesta(jugador1, jugador2, APUESTA_INICIAL);
+        apuesta.pagarApuesta(jugador2);
+    }
+
+    private void agregarMina() {
+        if (esTurnoDe(jugador1)) {
+            System.out.println("Plantando mina");
+            boolean minaColocada = false;
+            while (!minaColocada) {
+                int indice = (int) Math.round(Math.random() * (tamano * tamano));
+                if (casilleros.get(indice).getMina() == null) {
+                    casilleros.get(indice).setMina(new Mina());
+                    System.out.println("Mina plantada");
+                    minaColocada = true;
+                }
+            }
         }
     }
 
     public boolean estaIniciada() {
-        return (jugadores[1] != null && tamano >= TAMANO_MINIMO);
+        return (jugador2 != null && tamano >= TAMANO_MINIMO);
     }
 
     public boolean tableroCreado() {
-        return (tamano >= TAMANO_MINIMO);
+        return tamano >= TAMANO_MINIMO;
     }
 
-    public void destapar(CasilleroPanel casillero, Jugador jugador) throws PartidaException, CasilleroException {
+    public void destapar(CasilleroPanel casilleroPanel, Jugador jugador) throws PartidaException, CasilleroException {
         if (!esTurnoDe(jugador)) {
             throw new PartidaException("Movimiento fuera de turno");
         }
-        Casillero c = (Casillero) casillero;
+        Casillero casillero = (Casillero) casilleroPanel;
         casillero.destapar(jugador);
-        if (c.tieneMina()) {
+        movimientos.add(new Movimiento(casillero, jugador, pozo));
+        if (casillero.tieneMina()) {
             terminarPartida();
         }
-        movimientos.add(new Movimiento(c, jugador, pozo));
+        else {
+            agregarMina();
+        }
         notificar(Eventos.movimientoEfectuado);
     }
 
@@ -97,9 +114,9 @@ public class Partida extends Observable {
         notificar(Eventos.partidaTerminada);
     }
 
-    private boolean esTurnoDe(Jugador jugador) {
+    public boolean esTurnoDe(Jugador jugador) {
         if (movimientos.size() == 0) {
-            return jugador == jugadores[0];
+            return jugador == jugador1;
         }
         return jugador != movimientos.get(movimientos.size() - 1).getJugador();
     }
@@ -113,4 +130,20 @@ public class Partida extends Observable {
         return casilleros;
     }
 
+    public double getPozo() {
+        return pozo;
+    }
+
+    public int getNumeroTurno() {
+        int cantMov = movimientos.size();
+        return cantMov <= 2 ? 1 : (cantMov - (cantMov % 2)) / 2;
+    }
+
+    public Jugador getJugador1() {
+        return jugador1;
+    }
+
+    public Jugador getJugador2() {
+        return jugador2;
+    }
 }

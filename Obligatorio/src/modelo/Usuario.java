@@ -5,6 +5,10 @@ public class Usuario {
     private String nombre;
     private String password;
     private String nombreCompleto;
+    
+    public enum TiposUsuario{
+        jugador, administrador
+    }
 
     public Usuario(String nombre, String nombreCompleto, String password) {
         this.nombre = nombre;
