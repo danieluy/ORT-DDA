@@ -152,6 +152,7 @@ public class PartidaFrame extends javax.swing.JFrame implements PartidaVista, Ac
         JLabel esperandoLabel = new JLabel(mensaje);
         esperandoPanel.add(esperandoLabel);
         setContentPane(esperandoPanel);
+        validate();
     }
 
     @Override

@@ -93,17 +93,17 @@ public class PartidaControlador implements Observer {
 
     @Override
     public void update(Observable o, Object evento) {
-        if (evento == Partida.Eventos.partidaLlena) {
+        if (evento == Partida.Eventos.partidaLlena) {// ya ingresaron ambos jugadores
             vista.setTitulo(tituloPartida());
         }
-        if (evento == Partida.Eventos.tableroCreado) {
+        if (evento == Partida.Eventos.tableroCreado) {// jugador uno ya está y ya inició el tablero
             vista.mostrarEspera("Esperando oponente");
         }
-        if (evento == Partida.Eventos.partidaIniciada) {
+        if (evento == Partida.Eventos.partidaIniciada) {// ya ingresaron ambos jugadores y ya se inició el tablero
             vista.iniciarTablero();
             actualizarPartida();
         }
-        if (evento == Partida.Eventos.movimientoEfectuado) {
+        if (evento == Partida.Eventos.movimientoEfectuado) {// se efectuó un movimiento
             actualizarPartida();
         }
     }
