@@ -11,8 +11,6 @@ public interface PartidaVista {
 
     public void mostrarTablero(int tamano, ArrayList casilleros);
 
-    public void iniciarTablero();
-
     public void mostrarEspera(String mensaje);
 
     public void mostrarDatos(String tituloPartida, String turno, double saldo, double pozo, int numeroTurno);

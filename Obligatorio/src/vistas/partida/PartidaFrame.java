@@ -125,14 +125,10 @@ public class PartidaFrame extends javax.swing.JFrame implements PartidaVista, Ac
     }
 
     @Override
-    public void iniciarTablero() {
+    public void mostrarTablero(int tamano, ArrayList casilleros) {
         splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
         splitPane.setDividerLocation(150);
         setContentPane(splitPane);
-    }
-
-    @Override
-    public void mostrarTablero(int tamano, ArrayList casilleros) {
         PanelTablero panelTablero = new PanelTablero();
         panelTablero.mostrarTablero(tamano, casilleros, this);
         splitPane.setBottomComponent(panelTablero);

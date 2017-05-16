@@ -4,7 +4,7 @@ public class Apuesta {
 
     private Jugador jugador;
     private double monto;
-    private boolean paga = false;
+    private boolean estaPaga = false;
 
     public Apuesta(Jugador jugadorApuesta, Jugador jugadorPaga, double monto) throws ApuestaException {
         if (!jugadorApuesta.puedeApostar(monto) && jugadorPaga.puedeApostar(monto)) {
@@ -24,7 +24,7 @@ public class Apuesta {
             throw new ApuestaException("Saldo insuficiente");
         }
         jugador.setSaldo(jugador.getSaldo() - monto);
-        paga = true;
+        estaPaga = true;
     }
 
 //    Getters & Setters
@@ -32,8 +32,11 @@ public class Apuesta {
         return jugador;
     }
 
-    public boolean isPaga() {
-        return paga;
+    public boolean estaPaga() {
+        return estaPaga;
     }
 
+    public double getMonto() {
+        return monto;
+    }
 }

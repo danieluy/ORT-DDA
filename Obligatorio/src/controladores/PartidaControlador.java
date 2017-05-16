@@ -32,9 +32,14 @@ public class PartidaControlador implements Observer {
             partida = modelo.crearPartida(jugador);
             partida.addObserver(this);
 //        Si es el jugador 1 preguntamos tamaño de tablero
-//        Si es el jugador 2 y espera o inicia
+//        Si es el jugador 2 espera
             if (partida.getJugador2() == jugador) {
-                vista.mostrarEspera("Esperando por " + partida.getJugador1().getNombreCompleto());
+                if (partida.estaIniciada()) {
+                    actualizarPartida();
+                }
+                else {
+                    vista.mostrarEspera("Esperando por " + partida.getJugador1().getNombreCompleto());
+                }
             }
             vista.setTitulo(tituloPartida());
         }
@@ -93,17 +98,20 @@ public class PartidaControlador implements Observer {
 
     @Override
     public void update(Observable o, Object evento) {
-        if (evento == Partida.Eventos.partidaLlena) {// ya ingresaron ambos jugadores
+        // ya ingresaron ambos jugadores
+        if (evento == Partida.Eventos.partidaLlena) {
             vista.setTitulo(tituloPartida());
         }
-        if (evento == Partida.Eventos.tableroCreado) {// jugador uno ya está y ya inició el tablero
+        // jugador uno ya está y ya inició el tablero
+        if (evento == Partida.Eventos.tableroCreado) {
             vista.mostrarEspera("Esperando oponente");
         }
-        if (evento == Partida.Eventos.partidaIniciada) {// ya ingresaron ambos jugadores y ya se inició el tablero
-            vista.iniciarTablero();
+        // ya ingresaron ambos jugadores y ya se inició el tablero, o se efectuó un movimiento
+        if (evento == Partida.Eventos.partidaIniciada || evento == Partida.Eventos.movimientoEfectuado) {
             actualizarPartida();
         }
-        if (evento == Partida.Eventos.movimientoEfectuado) {// se efectuó un movimiento
+        // estos eventos actualizan solo los datos
+        if (evento == Partida.Eventos.apuestaRealizada || evento == Partida.Eventos.apuestaPaga) {
             actualizarPartida();
         }
     }
