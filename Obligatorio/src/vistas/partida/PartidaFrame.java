@@ -164,4 +164,9 @@ public class PartidaFrame extends javax.swing.JFrame implements PartidaVista, Ac
         controlador.destapar(casillero);
     }
 
+    @Override
+    public void cerrar() {
+        dispose();
+    }
+
 }

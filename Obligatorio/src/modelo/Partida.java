@@ -100,14 +100,15 @@ public class Partida extends Observable {
     public void pagarApuesta(Jugador jugadorPaga) throws ApuestaException {
         if (estaIniciada() && !apuesta.estaPaga()) {
             apuesta.pagar(jugadorPaga);
-            pozo += apuesta.getMonto();
+            pozo += apuesta.getApostado();
             notificar(Eventos.apuestaPaga);
         }
     }
 
-    public void subirApuesta(Jugador jugador, int monto) throws ApuestaException {
+    public void subirApuesta(Jugador jugador, double monto) throws ApuestaException {
         if (estaIniciada() && !apuesta.estaPaga()) {
             apuesta.subir(jugador, monto);
+            pozo += (apuesta.getApostado() + monto);
             notificar(Eventos.apuestaAumentada);
         }
     }

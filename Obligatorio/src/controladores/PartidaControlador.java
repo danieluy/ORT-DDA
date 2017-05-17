@@ -45,6 +45,7 @@ public class PartidaControlador implements Observer {
         }
         catch (PartidaException | ApuestaException ex) {
             vista.mostrarError(ex.getMessage());
+            vista.cerrar();
         }
     }
 
@@ -89,17 +90,18 @@ public class PartidaControlador implements Observer {
 
     private void actualizarPartida() {
         vista.mostrarTablero(partida.getTamano(), partida.getCasilleros());
-        vista.mostrarDatos(tituloPartida(), getTurno(), jugador.getSaldo(), partida.getPozo(), partida.getApuesta().getMontoActual(), partida.getNumeroTurno());
+        vista.mostrarDatos(tituloPartida(), getTurno(), jugador.getSaldo(), partida.getPozo(), partida.getApuesta().getTotalApostado(), partida.getNumeroTurno());
     }
 
     public void salir() {
+        partida.deleteObserver(this);
         partida.terminarPartida();
         modelo.logoutJugador(jugador);
     }
 
     public void apostar(String str_monto) {
         try {
-            partida.apostar(jugador, Integer.parseInt(str_monto));
+            partida.apostar(jugador, Double.parseDouble(str_monto));
         }
         catch (ApuestaException ex) {
             vista.mostrarError(ex.getMessage());
@@ -152,7 +154,7 @@ public class PartidaControlador implements Observer {
             actualizarPartida();
         }
         // estos eventos actualizan solo los datos
-        if (evento == Partida.Eventos.apuestaRealizada || evento == Partida.Eventos.apuestaPaga) {
+        if (evento == Partida.Eventos.apuestaRealizada || evento == Partida.Eventos.apuestaAumentada || evento == Partida.Eventos.apuestaPaga) {
             actualizarPartida();
         }
         if (evento == Partida.Eventos.partidaTerminada) {

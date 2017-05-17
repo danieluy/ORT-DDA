@@ -3,7 +3,8 @@ package modelo;
 public class Apuesta {
 
     private Jugador jugador;
-    private double monto;
+    private double apostado;
+    private double totalApostado;
     private boolean estaPaga = false;
 
     public Apuesta(Jugador jugadorApuesta, Jugador jugadorPaga, double monto) throws ApuestaException {
@@ -12,31 +13,35 @@ public class Apuesta {
             throw new ApuestaException("La apuesta máxima en este punto es de $" + apuestaMaxima);
         }
         jugador = jugadorApuesta;
-        this.monto = monto;
+        apostado = monto;
+        totalApostado = monto;
         jugador.setSaldo(jugador.getSaldo() - monto);
     }
 
-    public void pagar(Jugador jugador) throws ApuestaException {
-        if (jugador == this.jugador) {
-            throw new ApuestaException("El jugador " + jugador.getNombre() + " no puede pagar su apuesta");
+    public void pagar(Jugador jugadorPaga) throws ApuestaException {
+        if (jugadorPaga == this.jugador) {
+            throw new ApuestaException("El jugador " + jugadorPaga.getNombre() + " no puede pagar su apuesta");
         }
-        if (!jugador.puedeApostar(monto)) {
+        if (!jugadorPaga.puedeApostar(apostado)) {
             throw new ApuestaException("Saldo insuficiente");
         }
-        jugador.setSaldo(jugador.getSaldo() - monto);
+        totalApostado += apostado;
+        jugadorPaga.setSaldo(jugadorPaga.getSaldo() - apostado);
         estaPaga = true;
     }
 
-    public void subir(Jugador jugador, int monto) throws ApuestaException {
-        if (jugador == this.jugador) {
-            throw new ApuestaException("El jugador " + jugador.getNombre() + " no puede aumentar su apuesta");
+    public void subir(Jugador jugadorAumenta, double aumento) throws ApuestaException {
+        if (jugadorAumenta == this.jugador) {
+            throw new ApuestaException("El jugador " + jugadorAumenta.getNombre() + " no puede aumentar su apuesta");
         }
-        if (!jugador.puedeApostar(monto)) {
+        if (!jugadorAumenta.puedeApostar(apostado + aumento)) {
             throw new ApuestaException("Saldo insuficiente");
         }
-        jugador.setSaldo(jugador.getSaldo() - monto);
-        this.jugador = jugador;
-        this.monto += monto;
+        jugador = jugadorAumenta;
+        double nuevaApuesta = apostado + aumento;
+        apostado = aumento;
+        totalApostado += nuevaApuesta;
+        jugadorAumenta.setSaldo(jugadorAumenta.getSaldo() - nuevaApuesta);
     }
 
 //    Getters & Setters
@@ -48,14 +53,14 @@ public class Apuesta {
         return estaPaga;
     }
 
-    public double getMontoActual() {
+    public double getTotalApostado() {
         if (!estaPaga) {
-            return monto;
+            return totalApostado;
         }
         return 0;
     }
 
-    public double getMonto() {
-        return monto;
+    public double getApostado() {
+        return apostado;
     }
 }

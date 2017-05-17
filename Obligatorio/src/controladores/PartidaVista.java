@@ -16,4 +16,6 @@ public interface PartidaVista {
     public void mostrarDatos(String tituloPartida, String turno, double saldo, double pozo, double apuestaActual, int numeroTurno);
 
     public void mostarMensaje(String string);
+
+    public void cerrar();
 }
