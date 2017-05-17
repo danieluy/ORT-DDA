@@ -1,5 +1,6 @@
 package vistas.partida;
 
+import controladores.PartidaVista;
 import controladores.PartidaControlador;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -36,7 +37,6 @@ public class PartidaFrame extends javax.swing.JFrame implements PartidaVista, Ac
         setMaximumSize(new java.awt.Dimension(400, 600));
         setMinimumSize(new java.awt.Dimension(400, 600));
         setPreferredSize(new java.awt.Dimension(400, 600));
-        setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
@@ -68,11 +68,11 @@ public class PartidaFrame extends javax.swing.JFrame implements PartidaVista, Ac
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lbl_titulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txt_tamano)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btn_tamano, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txt_tamano))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -86,7 +86,7 @@ public class PartidaFrame extends javax.swing.JFrame implements PartidaVista, Ac
                 .addComponent(txt_tamano, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btn_tamano, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 76, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 83, Short.MAX_VALUE)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -125,6 +125,11 @@ public class PartidaFrame extends javax.swing.JFrame implements PartidaVista, Ac
     }
 
     @Override
+    public void mostarMensaje(String mensaje) {
+        JOptionPane.showMessageDialog(this, mensaje);
+    }
+
+    @Override
     public void mostrarTablero(int tamano, ArrayList casilleros) {
         splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
         splitPane.setDividerLocation(150);
@@ -136,9 +141,9 @@ public class PartidaFrame extends javax.swing.JFrame implements PartidaVista, Ac
     }
 
     @Override
-    public void mostrarDatos(String tituloPartida, String turno, double saldo, double pozo, int numeroTurno) {
+    public void mostrarDatos(String tituloPartida, String turno, double saldo, double pozo, double apuestaActual, int numeroTurno) {
         setTitle(tituloPartida);
-        InfoPanel infoPanel = new InfoPanel(tituloPartida, turno, ("$" + saldo), ("$" + pozo), ("#" + numeroTurno));
+        PanelInformacion infoPanel = new PanelInformacion(controlador, tituloPartida, turno, ("$" + saldo), ("$" + pozo), ("$" + apuestaActual), ("#" + numeroTurno));
         splitPane.setTopComponent(infoPanel);
     }
 
@@ -153,6 +158,7 @@ public class PartidaFrame extends javax.swing.JFrame implements PartidaVista, Ac
 
     @Override
     public void actionPerformed(ActionEvent evt) {
+        System.out.println(evt.getSource().toString());
         BotonCasillero boton = (BotonCasillero) evt.getSource();
         CasilleroPanel casillero = boton.getCasillero();
         controlador.destapar(casillero);

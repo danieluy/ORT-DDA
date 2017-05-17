@@ -1,5 +1,6 @@
 package vistas.login;
 
+import controladores.LoginVista;
 import controladores.LoginControlador;
 import javax.swing.JOptionPane;
 import modelo.Administrador;

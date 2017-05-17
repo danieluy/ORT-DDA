@@ -1,4 +1,4 @@
-package vistas.login;
+package controladores;
 
 import modelo.Administrador;
 import modelo.Jugador;

@@ -48,8 +48,8 @@ public class Jugador extends Usuario {
         this.saldo = saldo;
     }
 
-    public boolean puedeApostar(double saldoMinimo) {
-        return saldo >= saldoMinimo;
+    public boolean puedeApostar(double montoApuesta) {
+        return saldo >= montoApuesta;
     }
 
 }

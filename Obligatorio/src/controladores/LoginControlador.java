@@ -1,6 +1,5 @@
 package controladores;
 
-import vistas.login.LoginVista;
 import modelo.Fachada;
 import vistas.InicioFrame;
 import modelo.Jugador;

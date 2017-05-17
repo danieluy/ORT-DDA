@@ -22,7 +22,7 @@ public class Partida extends Observable {
     private ArrayList<Movimiento> movimientos = new ArrayList();
 
     public enum Eventos {
-        tableroCreado, partidaLlena, partidaTerminada, movimientoEfectuado, partidaIniciada, apuestaRealizada, apuestaPaga
+        tableroCreado, partidaLlena, partidaTerminada, movimientoEfectuado, partidaIniciada, apuestaRealizada, apuestaPaga, apuestaAumentada
     }
 
     private void notificar(Object evento) {
@@ -41,7 +41,7 @@ public class Partida extends Observable {
         jugador2.setColor(color2);
         jugador2.setPartida(this);
         notificar(Eventos.partidaLlena);
-        iniciarPartida();
+        iniciarPartidaIf();
     }
 
     public void setTamanoTablero(int tamano) throws PartidaException, ApuestaException {
@@ -57,15 +57,17 @@ public class Partida extends Observable {
         }
         agregarMina();
         notificar(Eventos.tableroCreado);
-        iniciarPartida();
+        iniciarPartidaIf();
     }
 
-    private void iniciarPartida() throws ApuestaException {
-        iniciarApuestas();
-        notificar(Eventos.partidaIniciada);
+    private void iniciarPartidaIf() throws ApuestaException {
+        if (estaIniciada()) {
+            iniciarApuestas();
+            notificar(Eventos.partidaIniciada);
+        }
     }
 
-    private void terminarPartida() {
+    public void terminarPartida() {
         if (estaIniciada()) {
             termino = true;
             if (esTurnoDe(jugador1)) {
@@ -83,23 +85,39 @@ public class Partida extends Observable {
     }
 
     private void iniciarApuestas() throws ApuestaException {
-        apostar(jugador1, jugador2, APUESTA_INICIAL);
+        apostar(jugador1, APUESTA_INICIAL);
         pagarApuesta(jugador2);
     }
 
-    private void apostar(Jugador jugadorApuesta, Jugador jugadorPaga, double monto) throws ApuestaException {
+    public void apostar(Jugador jugadorApuesta, double monto) throws ApuestaException {
         if (estaIniciada()) {
-            apuesta = new Apuesta(jugadorApuesta, jugadorPaga, monto);
+            apuesta = new Apuesta(jugadorApuesta, getOponente(jugadorApuesta), monto);
             pozo += monto;
             notificar(Eventos.apuestaRealizada);
         }
     }
 
-    private void pagarApuesta(Jugador jugadorPaga) throws ApuestaException {
-        if (estaIniciada()) {
-            apuesta.pagarApuesta(jugadorPaga);
+    public void pagarApuesta(Jugador jugadorPaga) throws ApuestaException {
+        if (estaIniciada() && !apuesta.estaPaga()) {
+            apuesta.pagar(jugadorPaga);
             pozo += apuesta.getMonto();
             notificar(Eventos.apuestaPaga);
+        }
+    }
+
+    public void subirApuesta(Jugador jugador, int monto) throws ApuestaException {
+        if (estaIniciada() && !apuesta.estaPaga()) {
+            apuesta.subir(jugador, monto);
+            notificar(Eventos.apuestaAumentada);
+        }
+    }
+
+    private Jugador getOponente(Jugador jugador) {
+        if (jugador == jugador1) {
+            return jugador2;
+        }
+        else {
+            return jugador1;
         }
     }
 
@@ -122,10 +140,13 @@ public class Partida extends Observable {
         return tamano >= TAMANO_MINIMO;
     }
 
-    public void destapar(CasilleroPanel casilleroPanel, Jugador jugador) throws PartidaException, CasilleroException {
+    public void destapar(CasilleroPanel casilleroPanel, Jugador jugador) throws PartidaException, CasilleroException, ApuestaException {
         if (estaIniciada()) {
             if (!esTurnoDe(jugador)) {
                 throw new PartidaException("Movimiento fuera de turno");
+            }
+            if (!apuesta.estaPaga()) {
+                throw new ApuestaException("Apuesta en curso");
             }
             Casillero casillero = (Casillero) casilleroPanel;
             casillero.destapar(jugador);
@@ -171,5 +192,9 @@ public class Partida extends Observable {
 
     public Jugador getJugador2() {
         return jugador2;
+    }
+
+    public Apuesta getApuesta() {
+        return apuesta;
     }
 }

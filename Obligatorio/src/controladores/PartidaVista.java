@@ -1,4 +1,4 @@
-package vistas.partida;
+package controladores;
 
 import java.util.ArrayList;
 import modelo.Casillero;
@@ -13,5 +13,7 @@ public interface PartidaVista {
 
     public void mostrarEspera(String mensaje);
 
-    public void mostrarDatos(String tituloPartida, String turno, double saldo, double pozo, int numeroTurno);
+    public void mostrarDatos(String tituloPartida, String turno, double saldo, double pozo, double apuestaActual, int numeroTurno);
+
+    public void mostarMensaje(String string);
 }

@@ -6,8 +6,8 @@ import modelo.Jugador;
 
 public interface CasilleroPanel {
 
-  public Color getColor();
+    public Color getColor();
 
-  public void destapar(Jugador jugador) throws CasilleroException;
+    public void destapar(Jugador jugador) throws CasilleroException;
 
 }

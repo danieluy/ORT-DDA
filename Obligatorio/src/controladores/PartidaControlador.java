@@ -5,13 +5,13 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JTextField;
 import modelo.ApuestaException;
 import modelo.CasilleroException;
 import modelo.Fachada;
 import modelo.Jugador;
 import modelo.Partida;
 import modelo.PartidaException;
-import vistas.partida.PartidaVista;
 import vistas.partida.CasilleroPanel;
 
 public class PartidaControlador implements Observer {
@@ -64,7 +64,7 @@ public class PartidaControlador implements Observer {
         try {
             partida.destapar(casillero, jugador);
         }
-        catch (PartidaException | CasilleroException ex) {
+        catch (PartidaException | CasilleroException | ApuestaException ex) {
             vista.mostrarError(ex.getMessage());
         }
     }
@@ -89,11 +89,52 @@ public class PartidaControlador implements Observer {
 
     private void actualizarPartida() {
         vista.mostrarTablero(partida.getTamano(), partida.getCasilleros());
-        vista.mostrarDatos(tituloPartida(), getTurno(), jugador.getSaldo(), partida.getPozo(), partida.getNumeroTurno());
+        vista.mostrarDatos(tituloPartida(), getTurno(), jugador.getSaldo(), partida.getPozo(), partida.getApuesta().getMontoActual(), partida.getNumeroTurno());
     }
 
     public void salir() {
+        partida.terminarPartida();
         modelo.logoutJugador(jugador);
+    }
+
+    public void apostar(String str_monto) {
+        try {
+            partida.apostar(jugador, Integer.parseInt(str_monto));
+        }
+        catch (ApuestaException ex) {
+            vista.mostrarError(ex.getMessage());
+        }
+        catch (NumberFormatException ex) {
+            vista.mostrarError("El monto apostado debe ser un número");
+        }
+    }
+
+    public void pagar() {
+        try {
+            partida.pagarApuesta(jugador);
+        }
+        catch (ApuestaException ex) {
+            vista.mostrarError(ex.getMessage());
+        }
+    }
+
+    public void subir(String str_monto) {
+        try {
+            partida.subirApuesta(jugador, Integer.parseInt(str_monto));
+        }
+        catch (ApuestaException ex) {
+            vista.mostrarError(ex.getMessage());
+        }
+        catch (NumberFormatException ex) {
+            vista.mostrarError("El monto apostado debe ser un número");
+        }
+    }
+
+    private String getInfoFinPartida() {
+        if (partida.esTurnoDe(jugador)) {
+            return "Has ganado la partida!";
+        }
+        return "Has perdido";
     }
 
     @Override
@@ -113,6 +154,10 @@ public class PartidaControlador implements Observer {
         // estos eventos actualizan solo los datos
         if (evento == Partida.Eventos.apuestaRealizada || evento == Partida.Eventos.apuestaPaga) {
             actualizarPartida();
+        }
+        if (evento == Partida.Eventos.partidaTerminada) {
+            actualizarPartida();
+            vista.mostarMensaje(getInfoFinPartida());
         }
     }
 }
