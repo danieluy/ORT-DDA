@@ -1,7 +1,7 @@
-package controladores;
+package controlador;
 
 import modelo.Fachada;
-import vistas.InicioFrame;
+import vista.FrameInicio;
 import modelo.Jugador;
 import modelo.Administrador;
 import modelo.Usuario;

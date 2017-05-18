@@ -1,4 +1,4 @@
-package controladores;
+package controlador;
 
 import java.util.ArrayList;
 import java.util.Observable;
@@ -12,7 +12,7 @@ import modelo.Fachada;
 import modelo.Jugador;
 import modelo.Partida;
 import modelo.PartidaException;
-import vistas.partida.CasilleroPanel;
+import vista.PanelCasillero;
 
 public class PartidaControlador implements Observer {
 
@@ -61,7 +61,7 @@ public class PartidaControlador implements Observer {
         }
     }
 
-    public void destapar(CasilleroPanel casillero) {
+    public void destapar(PanelCasillero casillero) {
         try {
             partida.destapar(casillero, jugador);
         }
@@ -82,7 +82,10 @@ public class PartidaControlador implements Observer {
         if (partida.estaIniciada()) {
             titulo = partida.getJugador1().getNombreCompleto() + " vs. " + partida.getJugador2().getNombreCompleto();
         }
-        else {
+        else if(partida.haTerminado()){
+            titulo = "Partida finalizada";
+        }
+        else{
             titulo = partida.getJugador1().getNombreCompleto() + " esperando oponente";
         }
         return titulo;

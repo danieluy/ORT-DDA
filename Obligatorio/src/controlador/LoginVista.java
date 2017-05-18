@@ -1,4 +1,4 @@
-package controladores;
+package controlador;
 
 import modelo.Administrador;
 import modelo.Jugador;

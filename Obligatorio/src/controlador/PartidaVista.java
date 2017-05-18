@@ -1,4 +1,4 @@
-package controladores;
+package controlador;
 
 import java.util.ArrayList;
 import modelo.Casillero;

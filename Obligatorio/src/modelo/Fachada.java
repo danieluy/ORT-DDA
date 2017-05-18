@@ -15,6 +15,7 @@ public class Fachada {
         return instancia;
     }
 
+//    Sistema de Usuarios
     public Jugador loginJugador(String usuario, String password) throws UsuarioException {
         return sistemaUsuarios.loginJugador(usuario, password);
     }
@@ -39,10 +40,13 @@ public class Fachada {
         sistemaUsuarios.addAdministrador(administrador);
     }
 
+//    Sistema de Partidas
     public Partida crearPartida(Jugador jugador) throws PartidaException, ApuestaException {
         return sistemaPartidas.crearPartida(jugador);
     }
-    
-    
+
+    public void validarCerrarInicio() throws PartidaException {
+        sistemaPartidas.validarCerrarInicio();
+    }
 
 }

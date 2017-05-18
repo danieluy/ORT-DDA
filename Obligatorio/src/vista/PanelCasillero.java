@@ -1,10 +1,10 @@
-package vistas.partida;
+package vista;
 
 import java.awt.Color;
 import modelo.CasilleroException;
 import modelo.Jugador;
 
-public interface CasilleroPanel {
+public interface PanelCasillero {
 
     public Color getColor();
 

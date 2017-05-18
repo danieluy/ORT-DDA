@@ -1,6 +1,6 @@
 package modelo;
 
-import vistas.partida.CasilleroPanel;
+import vista.PanelCasillero;
 
 public class Movimiento {
 

@@ -1,4 +1,4 @@
-package vistas;
+package vista;
 
 import modelo.Administrador;
 import modelo.Fachada;
@@ -20,7 +20,7 @@ public class Main {
         modelo.addAdministrador(new Administrador("Daniel", "Daniel Sosa", "pass"));
         modelo.addAdministrador(new Administrador("Eduardo", "Eduardo Cardozo", "pass"));
         
-        new InicioFrame().setVisible(true);
+        new FrameInicio().setVisible(true);
     }
 
 }

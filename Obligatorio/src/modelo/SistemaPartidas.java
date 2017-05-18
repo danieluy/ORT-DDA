@@ -27,4 +27,12 @@ public class SistemaPartidas {
         throw new PartidaException("Para jugar es necesario un saldo mínimo de $" + Partida.APUESTA_INICIAL);
     }
 
+    public void validarCerrarInicio() throws PartidaException {
+        for (Partida partida : partidas) {
+            if (!partida.haTerminado()) {
+                throw new PartidaException("Hay juegos activos");
+            }
+        }
+    }
+
 }

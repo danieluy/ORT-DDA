@@ -1,9 +1,9 @@
 package modelo;
 
 import java.awt.Color;
-import vistas.partida.CasilleroPanel;
+import vista.PanelCasillero;
 
-public class Casillero implements CasilleroPanel {
+public class Casillero implements PanelCasillero {
 
     private Movimiento movimiento;
     private Mina mina;
