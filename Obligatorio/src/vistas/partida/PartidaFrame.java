@@ -158,7 +158,6 @@ public class PartidaFrame extends javax.swing.JFrame implements PartidaVista, Ac
 
     @Override
     public void actionPerformed(ActionEvent evt) {
-        System.out.println(evt.getSource().toString());
         BotonCasillero boton = (BotonCasillero) evt.getSource();
         CasilleroPanel casillero = boton.getCasillero();
         controlador.destapar(casillero);

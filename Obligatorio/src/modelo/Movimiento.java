@@ -3,7 +3,7 @@ package modelo;
 import vistas.partida.CasilleroPanel;
 
 public class Movimiento {
-    
+
     private Jugador jugador;
     private Casillero casillero;
     private double pozo;
@@ -21,6 +21,10 @@ public class Movimiento {
 //    Getters & Setters
     public Jugador getJugador() {
         return jugador;
+    }
+
+    public Casillero getCasillero() {
+        return casillero;
     }
 
 }

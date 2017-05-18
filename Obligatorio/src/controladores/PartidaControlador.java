@@ -95,7 +95,7 @@ public class PartidaControlador implements Observer {
 
     public void salir() {
         partida.deleteObserver(this);
-        partida.terminarPartida();
+        partida.rendirse(jugador);
         modelo.logoutJugador(jugador);
     }
 
@@ -160,6 +160,10 @@ public class PartidaControlador implements Observer {
         if (evento == Partida.Eventos.partidaTerminada) {
             actualizarPartida();
             vista.mostarMensaje(getInfoFinPartida());
+        }
+        if (evento == Partida.Eventos.jugadorSeHaRendido) {
+            actualizarPartida();
+            vista.mostarMensaje("Has ganado la partida!");
         }
     }
 }
