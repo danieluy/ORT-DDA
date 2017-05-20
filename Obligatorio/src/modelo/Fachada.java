@@ -1,5 +1,7 @@
 package modelo;
 
+import java.util.ArrayList;
+
 public class Fachada {
 
     private static Fachada instancia = new Fachada();
@@ -47,6 +49,10 @@ public class Fachada {
 
     public void validarCerrarInicio() throws PartidaException {
         sistemaPartidas.validarCerrarInicio();
+    }
+
+    public ArrayList<Partida> getPartidas() {
+        return sistemaPartidas.getPartidas();
     }
 
 }

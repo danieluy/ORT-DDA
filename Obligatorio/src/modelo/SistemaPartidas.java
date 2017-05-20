@@ -35,4 +35,8 @@ public class SistemaPartidas {
         }
     }
 
+    public ArrayList<Partida> getPartidas() {
+        return partidas;
+    }
+
 }
