@@ -20,7 +20,7 @@ public class Main {
         modelo.addAdministrador(new Administrador("Daniel", "Daniel Sosa", "pass"));
         modelo.addAdministrador(new Administrador("Eduardo", "Eduardo Cardozo", "pass"));
         
-        new FrameInicio().setVisible(true);
+        new InicioFrame().setVisible(true);
     }
 
 }

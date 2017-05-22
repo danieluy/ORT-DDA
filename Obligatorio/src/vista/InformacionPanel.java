@@ -3,22 +3,22 @@ package vista;
 import controlador.PartidaControlador;
 import java.awt.event.ActionListener;
 
-public class PanelInformacion extends javax.swing.JPanel {
+public class InformacionPanel extends javax.swing.JPanel {
 
-    private PartidaControlador controlador;
+  private PartidaControlador controlador;
 
-    public PanelInformacion(PartidaControlador controlador, String tituloPartida, String turno, String saldo, String pozo, String apuestaActual, String numeroTurno) {
-        initComponents();
-        this.controlador = controlador;
-        lbl_titulo.setText(tituloPartida);
-        lbl_jugadorTurno.setText(turno);
-        lbl_saldo.setText(saldo);
-        lbl_pozo.setText(pozo);
-        lbl_numeroTurno.setText(numeroTurno);
-        lbl_totalApuesta.setText(apuestaActual);
-    }
+  public InformacionPanel(PartidaControlador controlador, String tituloPartida, String turno, String saldo, String pozo, String apuestaActual, String numeroTurno) {
+    initComponents();
+    this.controlador = controlador;
+    lbl_titulo.setText(tituloPartida);
+    lbl_jugadorTurno.setText(turno);
+    lbl_saldo.setText(saldo);
+    lbl_pozo.setText(pozo);
+    lbl_numeroTurno.setText(numeroTurno);
+    lbl_totalApuesta.setText(apuestaActual);
+  }
 
-    @SuppressWarnings("unchecked")
+  @SuppressWarnings("unchecked")
   // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
   private void initComponents() {
 
@@ -50,7 +50,7 @@ public class PanelInformacion extends javax.swing.JPanel {
     lbl_jugador1.setText("Tu saldo es de");
 
     lbl_titulo.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-    lbl_titulo.setText("Tyler Durden vs. Marla Singer");
+    lbl_titulo.setText("Jugador 1 vs. Jugador 2");
 
     lbl_jugadorTurno.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
     lbl_jugadorTurno.setText("Juega tu oponente");
@@ -108,7 +108,7 @@ public class PanelInformacion extends javax.swing.JPanel {
           .addGroup(layout.createSequentialGroup()
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
               .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 211, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lbl_pozo, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
               .addComponent(lbl_jugadorTurno, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -126,19 +126,17 @@ public class PanelInformacion extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                   .addGroup(layout.createSequentialGroup()
                     .addComponent(lbl_jugador1)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE))
                   .addGroup(layout.createSequentialGroup()
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGap(26, 26, 26)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                   .addComponent(lbl_numeroTurno, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                  .addGroup(layout.createSequentialGroup()
-                    .addComponent(lbl_saldo, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 4, Short.MAX_VALUE))))
+                  .addComponent(lbl_saldo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
               .addGroup(layout.createSequentialGroup()
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lbl_totalApuesta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                .addComponent(lbl_totalApuesta, javax.swing.GroupLayout.DEFAULT_SIZE, 64, Short.MAX_VALUE)))))
         .addContainerGap())
     );
     layout.setVerticalGroup(
@@ -159,28 +157,28 @@ public class PanelInformacion extends javax.swing.JPanel {
           .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-          .addComponent(txt_montoApuesta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-          .addComponent(btn_apostar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-          .addComponent(btn_pagar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-          .addComponent(btn_subir)
+          .addComponent(txt_montoApuesta, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addComponent(btn_apostar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addComponent(btn_pagar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addComponent(btn_subir, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
           .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
           .addComponent(lbl_totalApuesta, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-        .addContainerGap(8, Short.MAX_VALUE))
+        .addContainerGap(9, Short.MAX_VALUE))
     );
 
     lbl_pozo.getAccessibleContext().setAccessibleName("lbl_jugador");
   }// </editor-fold>//GEN-END:initComponents
 
     private void btn_apostarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_apostarActionPerformed
-        controlador.apostar(txt_montoApuesta.getText());
+      controlador.apostar(txt_montoApuesta.getText());
     }//GEN-LAST:event_btn_apostarActionPerformed
 
     private void btn_pagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_pagarActionPerformed
-        controlador.pagar();
+      controlador.pagar();
     }//GEN-LAST:event_btn_pagarActionPerformed
 
     private void btn_subirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_subirActionPerformed
-        controlador.subir(txt_montoApuesta.getText());
+      controlador.subir(txt_montoApuesta.getText());
     }//GEN-LAST:event_btn_subirActionPerformed
 
 

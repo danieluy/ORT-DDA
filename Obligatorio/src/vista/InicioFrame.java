@@ -6,11 +6,11 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import modelo.Usuario;
 
-public class FrameInicio extends javax.swing.JFrame implements InicioVista {
+public class InicioFrame extends javax.swing.JFrame implements InicioVista {
 
   private InicioControlador controlador;
 
-  public FrameInicio() {
+  public InicioFrame() {
     initComponents();
     setTitle("Buscaminas");
     setLocationRelativeTo(null);
@@ -91,12 +91,12 @@ public class FrameInicio extends javax.swing.JFrame implements InicioVista {
 
   @Override
   public void loginJugador() {
-    new FrameLogin(Usuario.TiposUsuario.jugador).setVisible(true);
+    new LoginFrame(Usuario.TiposUsuario.jugador).setVisible(true);
   }
 
   @Override
   public void loginAdministrador() {
-    new FrameLogin(Usuario.TiposUsuario.administrador).setVisible(true);
+    new LoginFrame(Usuario.TiposUsuario.administrador).setVisible(true);
   }
 
   @Override

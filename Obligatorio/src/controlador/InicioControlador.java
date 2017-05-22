@@ -5,7 +5,7 @@ import java.util.logging.Logger;
 import javax.swing.JFrame;
 import modelo.Fachada;
 import modelo.PartidaException;
-import vista.FrameInicio;
+import vista.InicioFrame;
 
 public class InicioControlador {
 

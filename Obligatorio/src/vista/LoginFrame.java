@@ -7,12 +7,12 @@ import modelo.Administrador;
 import modelo.Jugador;
 import modelo.Usuario;
 
-public class FrameLogin extends java.awt.Frame implements LoginVista {
+public class LoginFrame extends java.awt.Frame implements LoginVista {
 
   private controlador.LoginControlador controlador;
   private Usuario.TiposUsuario tipoUsuario;
 
-  public FrameLogin(Usuario.TiposUsuario tipoUsuario) {
+  public LoginFrame(Usuario.TiposUsuario tipoUsuario) {
     initComponents();
     controlador = new LoginControlador(this);
     this.tipoUsuario = tipoUsuario;
@@ -98,13 +98,13 @@ public class FrameLogin extends java.awt.Frame implements LoginVista {
   @Override
   public void loginJugadorOk(Jugador jugador) {
     // inicio partida
-    new FramePartida(jugador).setVisible(true);
+    new PartidaFrame(jugador).setVisible(true);
     dispose();
   }
 
   @Override
   public void loginAdministradorOk(Administrador administrador) {
-    new FrameListaPartidas().setVisible(true);
+    new ListaPartidasFrame().setVisible(true);
     dispose();
   }
 

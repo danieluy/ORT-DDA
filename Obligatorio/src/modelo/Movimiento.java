@@ -1,30 +1,54 @@
 package modelo;
 
-import vista.PanelCasillero;
+import java.util.ArrayList;
+import vista.CasilleroPanel;
 
 public class Movimiento {
 
-    private Jugador jugador;
-    private Casillero casillero;
-    private double pozo;
+  private Jugador jugadorTurno;
+  private ArrayList<Casillero> estadoTablero;
+  private double pozo;
+  private int numeroTurno;
 
-    public Movimiento(Jugador jugador) {
-        this.jugador = jugador;
-    }
+  public Movimiento(ArrayList<Casillero> casilleros, Jugador jugador, double pozo, int numeroTurno) {
+    jugadorTurno = jugador;
+    this.pozo = pozo;
+    this.numeroTurno = numeroTurno;
+    estadoTablero = getEstado(casilleros);
+  }
 
-    public Movimiento(Casillero casillero, Jugador jugador, double pozo) {
-        this.casillero = casillero;
-        this.jugador = jugador;
-        this.pozo = pozo;
+  private ArrayList<Casillero> getEstado(ArrayList<Casillero> casilleros) {
+    ArrayList<Casillero> estado = new ArrayList();
+    for (Casillero c : casilleros) {
+      Casillero casillero = new Casillero();
+      casillero.setMina(c.getMina());
+      casillero.setColor(c.getColor());
+      estado.add(casillero);
     }
+    return estado;
+  }
 
 //    Getters & Setters
-    public Jugador getJugador() {
-        return jugador;
-    }
+  public Jugador getJugadorTurno() {
+    return jugadorTurno;
+  }
 
-    public Casillero getCasillero() {
-        return casillero;
+  public double getPozo() {
+    return pozo;
+  }
+
+  public int getNumeroTurno() {
+    return numeroTurno;
+  }
+  
+  public ArrayList<Casillero> getEstadoTablero(){
+    return estadoTablero;
+  }
+
+  void destaparMinas() {
+    for(Casillero c : estadoTablero){
+      c.destaparMinas();
     }
+  }
 
 }

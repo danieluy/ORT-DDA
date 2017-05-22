@@ -1,8 +1,5 @@
 package vista;
 
-import vista.PanelTablero;
-import vista.PanelInformacion;
-import vista.BotonCasillero;
 import controlador.PartidaVista;
 import controlador.PartidaControlador;
 import java.awt.event.ActionEvent;
@@ -13,14 +10,13 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import modelo.Jugador;
-import vista.PanelCasillero;
 
-public class FramePartida extends javax.swing.JFrame implements PartidaVista, ActionListener {
+public class PartidaFrame extends javax.swing.JFrame implements PartidaVista, ActionListener {
 
     private PartidaControlador controlador;
     private JSplitPane splitPanel;
 
-    public FramePartida(Jugador jugador) {
+    public PartidaFrame(Jugador jugador) {
         initComponents();
         controlador = new PartidaControlador(this);
         controlador.crearPartida(jugador);
@@ -137,7 +133,7 @@ public class FramePartida extends javax.swing.JFrame implements PartidaVista, Ac
         splitPanel.setDividerLocation(150);
         splitPanel.setDividerSize(0);
         setContentPane(splitPanel);
-        PanelTablero panelTablero = new PanelTablero();
+        TableroPanel panelTablero = new TableroPanel();
         panelTablero.mostrarTablero(tamano, casilleros, this);
         splitPanel.setBottomComponent(panelTablero);
         validate();
@@ -146,7 +142,7 @@ public class FramePartida extends javax.swing.JFrame implements PartidaVista, Ac
     @Override
     public void mostrarDatos(String tituloPartida, String turno, double saldo, double pozo, double apuestaActual, int numeroTurno) {
         setTitle(tituloPartida);
-        PanelInformacion infoPanel = new PanelInformacion(controlador, tituloPartida, turno, ("$" + saldo), ("$" + pozo), ("$" + apuestaActual), ("#" + numeroTurno));
+        InformacionPanel infoPanel = new InformacionPanel(controlador, tituloPartida, turno, ("$" + saldo), ("$" + pozo), ("$" + apuestaActual), ("#" + numeroTurno));
         splitPanel.setTopComponent(infoPanel);
     }
 
@@ -162,7 +158,7 @@ public class FramePartida extends javax.swing.JFrame implements PartidaVista, Ac
     @Override
     public void actionPerformed(ActionEvent evt) {
         BotonCasillero boton = (BotonCasillero) evt.getSource();
-        PanelCasillero casillero = boton.getCasillero();
+        CasilleroPanel casillero = boton.getCasillero();
         controlador.destapar(casillero);
     }
 

@@ -4,7 +4,7 @@ import java.awt.Color;
 import modelo.CasilleroException;
 import modelo.Jugador;
 
-public interface PanelCasillero {
+public interface CasilleroPanel {
 
     public Color getColor();
 

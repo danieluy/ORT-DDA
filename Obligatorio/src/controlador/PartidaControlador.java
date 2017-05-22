@@ -1,18 +1,14 @@
 package controlador;
 
-import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JTextField;
 import modelo.ApuestaException;
 import modelo.CasilleroException;
 import modelo.Fachada;
 import modelo.Jugador;
 import modelo.Partida;
 import modelo.PartidaException;
-import vista.PanelCasillero;
+import vista.CasilleroPanel;
 
 public class PartidaControlador implements Observer {
 
@@ -61,7 +57,7 @@ public class PartidaControlador implements Observer {
         }
     }
 
-    public void destapar(PanelCasillero casillero) {
+    public void destapar(CasilleroPanel casillero) {
         try {
             partida.destapar(casillero, jugador);
         }
