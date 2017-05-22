@@ -83,7 +83,6 @@ public class InicioFrame extends javax.swing.JFrame implements InicioVista {
       setDefaultCloseOperation(controlador.validarCerrar());
     }//GEN-LAST:event_formWindowClosing
 
-
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JButton btn_administrador;
   private javax.swing.JButton btn_jugador;

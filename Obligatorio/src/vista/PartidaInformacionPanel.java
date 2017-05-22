@@ -3,11 +3,11 @@ package vista;
 import controlador.PartidaControlador;
 import java.awt.event.ActionListener;
 
-public class InformacionPanel extends javax.swing.JPanel {
+public class PartidaInformacionPanel extends javax.swing.JPanel {
 
   private PartidaControlador controlador;
 
-  public InformacionPanel(PartidaControlador controlador, String tituloPartida, String turno, String saldo, String pozo, String apuestaActual, String numeroTurno) {
+  public PartidaInformacionPanel(PartidaControlador controlador, String tituloPartida, String turno, String saldo, String pozo, String apuestaActual, String numeroTurno) {
     initComponents();
     this.controlador = controlador;
     lbl_titulo.setText(tituloPartida);
@@ -108,7 +108,7 @@ public class InformacionPanel extends javax.swing.JPanel {
           .addGroup(layout.createSequentialGroup()
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
               .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 211, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lbl_pozo, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
               .addComponent(lbl_jugadorTurno, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -126,7 +126,7 @@ public class InformacionPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                   .addGroup(layout.createSequentialGroup()
                     .addComponent(lbl_jugador1)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                   .addGroup(layout.createSequentialGroup()
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGap(26, 26, 26)))
@@ -136,7 +136,7 @@ public class InformacionPanel extends javax.swing.JPanel {
               .addGroup(layout.createSequentialGroup()
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lbl_totalApuesta, javax.swing.GroupLayout.DEFAULT_SIZE, 64, Short.MAX_VALUE)))))
+                .addComponent(lbl_totalApuesta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
         .addContainerGap())
     );
     layout.setVerticalGroup(
@@ -180,7 +180,6 @@ public class InformacionPanel extends javax.swing.JPanel {
     private void btn_subirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_subirActionPerformed
       controlador.subir(txt_montoApuesta.getText());
     }//GEN-LAST:event_btn_subirActionPerformed
-
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JButton btn_apostar;

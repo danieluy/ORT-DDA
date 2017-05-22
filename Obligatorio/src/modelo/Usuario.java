@@ -2,53 +2,53 @@ package modelo;
 
 public class Usuario {
 
-    private String nombre;
-    private String password;
-    private String nombreCompleto;
-    
-    public enum TiposUsuario{
-        jugador, administrador
-    }
+  private String nombre;
+  private String password;
+  private String nombreCompleto;
 
-    public Usuario(String nombre, String nombreCompleto, String password) {
-        this.nombre = nombre;
-        this.nombreCompleto = nombreCompleto;
-        this.password = password;
-    }
+  public enum TiposUsuario {
+    jugador, administrador
+  }
 
-    public Usuario(String nombre) {
-        this.nombre = nombre;
-    }
+  public Usuario(String nombre, String nombreCompleto, String password) {
+    this.nombre = nombre;
+    this.nombreCompleto = nombreCompleto;
+    this.password = password;
+  }
 
-    public String getNombre() {
-        return nombre;
-    }
+  public Usuario(String nombre) {
+    this.nombre = nombre;
+  }
 
-    public String getPassword() {
-        return password;
-    }
+  public String getNombre() {
+    return nombre;
+  }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+  public String getPassword() {
+    return password;
+  }
 
-    public String getNombreCompleto() {
-        return nombreCompleto;
-    }
+  public void setPassword(String password) {
+    this.password = password;
+  }
 
-    public void setNombreCompleto(String nombreCompleto) {
-        this.nombreCompleto = nombreCompleto;
-    }
+  public String getNombreCompleto() {
+    return nombreCompleto;
+  }
 
-    public void validar() throws UsuarioException {
-        if (nombre.isEmpty() || password.isEmpty() || nombreCompleto.isEmpty()) {
-            throw new UsuarioException("Error creando un usuario");
-        }
+  public void setNombreCompleto(String nombreCompleto) {
+    this.nombreCompleto = nombreCompleto;
+  }
+
+  public void validar() throws UsuarioException {
+    if (nombre.isEmpty() || password.isEmpty() || nombreCompleto.isEmpty()) {
+      throw new UsuarioException("Error creando un usuario");
     }
-    
-    @Override
-    public boolean equals(Object o){
-        return ((Usuario) o).getNombre().equalsIgnoreCase(nombre);
-    }
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    return ((Usuario) o).getNombre().equalsIgnoreCase(nombre);
+  }
 
 }

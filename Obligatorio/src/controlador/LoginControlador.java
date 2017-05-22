@@ -21,7 +21,8 @@ public class LoginControlador {
       try {
         Jugador jugador = modelo.loginJugador(usuario, password);
         vista.loginJugadorOk(jugador);
-      } catch (UsuarioException e) {
+      }
+      catch (UsuarioException e) {
         vista.loginError(e.getMessage());
       }
     }
@@ -29,7 +30,8 @@ public class LoginControlador {
       try {
         Administrador administrador = modelo.loginAdministrador(usuario, password);
         vista.loginAdministradorOk(administrador);
-      } catch (UsuarioException e) {
+      }
+      catch (UsuarioException e) {
         vista.loginError(e.getMessage());
       }
     }

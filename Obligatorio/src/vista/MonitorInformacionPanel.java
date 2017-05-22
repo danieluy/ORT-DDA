@@ -3,11 +3,11 @@ package vista;
 import controlador.PartidaControlador;
 import java.awt.event.ActionListener;
 
-public class InformacionMonitorPanel extends javax.swing.JPanel {
+public class MonitorInformacionPanel extends javax.swing.JPanel {
 
   private PartidaControlador controlador;
 
-  public InformacionMonitorPanel(String tituloPartida, String pozo, String numeroTurno, String turnoDe) {
+  public MonitorInformacionPanel(String tituloPartida, String pozo, String numeroTurno, String turnoDe) {
     initComponents();
     this.controlador = controlador;
     lbl_titulo.setText(tituloPartida);
@@ -93,7 +93,6 @@ public class InformacionMonitorPanel extends javax.swing.JPanel {
 
     lbl_pozo.getAccessibleContext().setAccessibleName("lbl_jugador");
   }// </editor-fold>//GEN-END:initComponents
-
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JLabel jLabel1;

@@ -2,6 +2,7 @@ package controlador;
 
 import java.util.Observable;
 import java.util.Observer;
+import modelo.Jugador;
 import modelo.Movimiento;
 import modelo.Partida;
 
@@ -19,7 +20,7 @@ public class MonitorControlador implements Observer {
   }
 
   public void actualizarVista() {
-    if (partida.haIniciado() || partida.haTerminado()) {
+    if (partida.haIniciado()) {
       vista.mostrarDatos(tituloPartida(), partida.getPozo(), partida.getNumeroTurno(), getTurnoDe());
       vista.mostrarTablero(partida.getTamano(), partida.getCasilleros());
     }
@@ -30,30 +31,28 @@ public class MonitorControlador implements Observer {
 
   private String tituloPartida() {
     String titulo;
-    if (partida.haIniciado()) {
+    if (!partida.haIniciado()) {
+      titulo = partida.getJugador1().getNombreCompleto() + " esperando oponente";
+    }
+    else if (partida.haIniciado() && !partida.haTerminado()) {
       titulo = partida.getJugador1().getNombreCompleto() + " vs. " + partida.getJugador2().getNombreCompleto();
     }
-    else if (partida.haTerminado()) {
-      titulo = getGanador();
-    }
     else {
-      titulo = partida.getJugador1().getNombreCompleto() + " esperando oponente";
+      titulo = getGanador();
     }
     return titulo;
   }
 
   private String getGanador() {
-    if (partida.esTurnoDe(partida.getJugador1())) {
-      return partida.getJugador1().getNombreCompleto() + " ha ganado la partida";
+    Jugador ganador = partida.getGanador();
+    if (ganador == null) {
+      return "Partida finalizada. Ganador deconocido";
     }
-    return partida.getJugador2().getNombreCompleto() + " ha ganado la partida";
+    return ganador.getNombreCompleto() + " ha ganado la partida";
   }
 
   private String getTurnoDe() {
-    if (partida.esTurnoDe(partida.getJugador1())) {
-      return partida.getJugador1().getNombreCompleto();
-    }
-    return partida.getJugador2().getNombreCompleto();
+    return partida.getJugadorTurno().getNombreCompleto();
   }
 
   public void salir() {
@@ -77,7 +76,7 @@ public class MonitorControlador implements Observer {
   private void reproducir() {
     if (partida.haTerminado()) {
       Movimiento movimiento = partida.getMovimientos().get(posicionReproductor);
-      String turnoDe = movimiento.getJugadorTurno() == null ? "" : movimiento.getJugadorTurno().getNombreCompleto();
+      String turnoDe = movimiento.getJugador() == null ? "" : movimiento.getJugador().getNombreCompleto();
       vista.mostrarDatos(tituloPartida(), movimiento.getPozo(), movimiento.getNumeroTurno(), turnoDe);
       vista.mostrarTablero(partida.getTamano(), movimiento.getEstadoTablero());
     }

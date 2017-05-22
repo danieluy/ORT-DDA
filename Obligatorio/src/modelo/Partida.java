@@ -11,9 +11,9 @@ public class Partida extends Observable {
   public static final int TAMANO_MINIMO = 3;
   public static final int TAMANO_MAXIMO = 10;
   public static final double APUESTA_INICIAL = 10;
-  private boolean termino = false;
   private double pozo = 0;
   private int tamano = 0;
+  private Jugador ganador;
   private Color color1 = Color.CYAN;
   private Color color2 = Color.YELLOW;
   private Apuesta apuesta;
@@ -39,7 +39,7 @@ public class Partida extends Observable {
     apuestaAumentada,
     movimientoEfectuado,
     partidaCancelada,
-    jugador2SeRetira
+    jugador2NoJuega
   }
 
   private void notificar(Object evento) {
@@ -53,6 +53,11 @@ public class Partida extends Observable {
     jugador2.setPartida(this);
     notificar(Eventos.partidaLlena);
     iniciarPartida();
+  }
+
+  public void quitarJugador2() {
+    jugador2.abandonarPartida();
+    jugador2 = null;
   }
 
   public void setTamanoTablero(int tamano) throws PartidaException, ApuestaException {
@@ -81,25 +86,27 @@ public class Partida extends Observable {
 
   public void salir(Jugador jugador) {
     if (haIniciado() && !haTerminado()) {
-      termino = true;
-      Jugador ganador = getOponente(jugador);
+      ganador = getOponente(jugador);
       ganador.setSaldo(ganador.getSaldo() + pozo);
       notificar(Eventos.jugadorSeHaRendido);
     }
     else if (!haIniciado() && jugador == jugador1) {
       notificar(Eventos.partidaCancelada);
     }
+    else if (!haIniciado() && jugador == jugador2) {
+      notificar(Eventos.jugador2NoJuega);
+    }
   }
 
   public void terminarPartida() {
     if (haIniciado() && !haTerminado()) {
-      termino = true;
       if (esTurnoDe(jugador1)) {
-        jugador1.setSaldo(jugador1.getSaldo() + pozo);
+        ganador = jugador1;
       }
       else {
-        jugador2.setSaldo(jugador2.getSaldo() + pozo);
+        ganador = jugador2;
       }
+      ganador.setSaldo(ganador.getSaldo() + pozo);
       notificar(Eventos.partidaTerminada);
     }
   }
@@ -151,7 +158,7 @@ public class Partida extends Observable {
       boolean minaColocada = false;
       while (!minaColocada) {
         int indice = (int) Math.round(Math.random() * ((tamano * tamano) - 1));
-        if (!casilleros.get(indice).tieneMina()) {
+        if (!casilleros.get(indice).tieneMina() && casilleros.get(indice).getColor() == Color.LIGHT_GRAY) {
           casilleros.get(indice).setMina(new Mina());
           minaColocada = true;
         }
@@ -209,10 +216,10 @@ public class Partida extends Observable {
   }
 
   public boolean esTurnoDe(Jugador jugador) {
-    if (movimientos.isEmpty()) {
+    if (movimientos.size() <= 1) {// el primer movimiento son todos los casillero tapados
       return jugador == jugador1;
     }
-    return jugador != movimientos.get(movimientos.size() - 1).getJugadorTurno();
+    return jugador != movimientos.get(movimientos.size() - 1).getJugador();
   }
 
 //    Getters & Setters
@@ -246,10 +253,24 @@ public class Partida extends Observable {
   }
 
   public boolean haTerminado() {
-    return termino;
+    return ganador != null;
   }
 
   public ArrayList<Movimiento> getMovimientos() {
     return movimientos;
+  }
+
+  public Jugador getGanador() {
+    if (haTerminado()) {
+      return ganador;
+    }
+    return null;
+  }
+
+  public Jugador getJugadorTurno() {
+    if (esTurnoDe(jugador1)) {
+      return jugador1;
+    }
+    return jugador2;
   }
 }

@@ -3,7 +3,7 @@ package vista;
 import controlador.MonitorControlador;
 
 public class ReproductorPanel extends javax.swing.JPanel {
-  
+
   private MonitorControlador controlador;
 
   public ReproductorPanel(MonitorControlador controlador) {
@@ -17,6 +17,10 @@ public class ReproductorPanel extends javax.swing.JPanel {
 
     btn_adelante = new javax.swing.JButton();
     btn_atras = new javax.swing.JButton();
+
+    setMaximumSize(new java.awt.Dimension(100, 550));
+    setMinimumSize(new java.awt.Dimension(100, 550));
+    setPreferredSize(new java.awt.Dimension(100, 550));
 
     btn_adelante.setText("Adelante");
     btn_adelante.addActionListener(new java.awt.event.ActionListener() {
@@ -41,16 +45,16 @@ public class ReproductorPanel extends javax.swing.JPanel {
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
           .addComponent(btn_adelante, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
           .addComponent(btn_atras, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        .addContainerGap(315, Short.MAX_VALUE))
+        .addContainerGap(15, Short.MAX_VALUE))
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(layout.createSequentialGroup()
         .addContainerGap()
-        .addComponent(btn_adelante, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addComponent(btn_adelante, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(btn_atras, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addContainerGap(203, Short.MAX_VALUE))
+        .addComponent(btn_atras, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addContainerGap(413, Short.MAX_VALUE))
     );
   }// </editor-fold>//GEN-END:initComponents
 
@@ -61,7 +65,6 @@ public class ReproductorPanel extends javax.swing.JPanel {
   private void btn_atrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_atrasActionPerformed
     controlador.atras();
   }//GEN-LAST:event_btn_atrasActionPerformed
-
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JButton btn_adelante;

@@ -5,13 +5,13 @@ import vista.CasilleroPanel;
 
 public class Movimiento {
 
-  private Jugador jugadorTurno;
+  private Jugador jugador;
   private ArrayList<Casillero> estadoTablero;
   private double pozo;
   private int numeroTurno;
 
   public Movimiento(ArrayList<Casillero> casilleros, Jugador jugador, double pozo, int numeroTurno) {
-    jugadorTurno = jugador;
+    this.jugador = jugador;
     this.pozo = pozo;
     this.numeroTurno = numeroTurno;
     estadoTablero = getEstado(casilleros);
@@ -29,8 +29,8 @@ public class Movimiento {
   }
 
 //    Getters & Setters
-  public Jugador getJugadorTurno() {
-    return jugadorTurno;
+  public Jugador getJugador() {
+    return jugador;
   }
 
   public double getPozo() {
@@ -40,13 +40,13 @@ public class Movimiento {
   public int getNumeroTurno() {
     return numeroTurno;
   }
-  
-  public ArrayList<Casillero> getEstadoTablero(){
+
+  public ArrayList<Casillero> getEstadoTablero() {
     return estadoTablero;
   }
 
   void destaparMinas() {
-    for(Casillero c : estadoTablero){
+    for (Casillero c : estadoTablero) {
       c.destaparMinas();
     }
   }

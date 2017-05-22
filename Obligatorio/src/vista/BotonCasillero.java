@@ -4,15 +4,15 @@ import javax.swing.JButton;
 
 public class BotonCasillero extends JButton {
 
-    private CasilleroPanel casillero;
+  private CasilleroPanel casillero;
 
-    public BotonCasillero(CasilleroPanel casillero) {
-        this.casillero = casillero;
-        setBackground(casillero.getColor());
-    }
+  public BotonCasillero(CasilleroPanel casillero) {
+    this.casillero = casillero;
+    setBackground(casillero.getColor());
+  }
 
-    public CasilleroPanel getCasillero() {
-        return casillero;
-    }
+  public CasilleroPanel getCasillero() {
+    return casillero;
+  }
 
 }

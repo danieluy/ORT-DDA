@@ -3,10 +3,7 @@ package vista;
 import controlador.ListaPartidaVista;
 import controlador.ListaPartidasControlador;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import modelo.Partida;
 
 public class ListaPartidasFrame extends javax.swing.JFrame implements ListaPartidaVista {
 
@@ -80,7 +77,12 @@ public class ListaPartidasFrame extends javax.swing.JFrame implements ListaParti
   private void seleccionarPartida() {
     int pos = lista_partidas.getSelectedIndex();
     if (pos != -1) {
-      new MonitorFrame(controlador.getPartida(pos)).setVisible(true);
+      try {
+        new MonitorFrame(controlador.getPartida(pos)).setVisible(true);
+      }
+      catch (VistaException ex) {
+        JOptionPane.showMessageDialog(this, ex.getMessage());
+      }
     }
   }
 

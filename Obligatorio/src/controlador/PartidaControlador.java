@@ -2,8 +2,6 @@ package controlador;
 
 import java.util.Observable;
 import java.util.Observer;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import modelo.ApuestaException;
 import modelo.CasilleroException;
 import modelo.Fachada;
@@ -70,7 +68,7 @@ public class PartidaControlador implements Observer {
     }
   }
 
-  private String getTurno() {
+  private String getNombreTurno() {
     if (partida.esTurnoDe(jugador)) {
       return "Juegas tu";
     }
@@ -93,7 +91,7 @@ public class PartidaControlador implements Observer {
 
   private void actualizarPartida() {
     vista.mostrarTablero(partida.getTamano(), partida.getCasilleros());
-    vista.mostrarDatos(tituloPartida(), getTurno(), jugador.getSaldo(), partida.getPozo(), partida.getApuesta().getTotalApostado(), partida.getNumeroTurno());
+    vista.mostrarDatos(tituloPartida(), getNombreTurno(), jugador.getSaldo(), partida.getPozo(), partida.getApuesta().getTotalApostado(), partida.getNumeroTurno());
   }
 
   public void salir() {
@@ -144,6 +142,10 @@ public class PartidaControlador implements Observer {
     return "Has perdido";
   }
 
+  private void quitarJugador2() {
+    partida.quitarJugador2();
+  }
+
   @Override
   public void update(Observable o, Object evento) {
     // ya ingresaron ambos jugadores
@@ -169,6 +171,13 @@ public class PartidaControlador implements Observer {
     if (evento == Partida.Eventos.jugadorSeHaRendido) {
       actualizarPartida();
       vista.mostarMensaje("Has ganado la partida!");
+    }
+    if (evento == Partida.Eventos.jugador2NoJuega) {
+      quitarJugador2();
+    }
+    if (evento == Partida.Eventos.partidaCancelada) {
+      vista.mostrarError(partida.getJugador1().getNombreCompleto() + " ha cancelado la partida");
+      vista.cerrar();
     }
   }
 }
