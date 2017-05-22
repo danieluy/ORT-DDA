@@ -13,17 +13,17 @@ import modelo.Jugador;
 
 public class PartidaFrame extends javax.swing.JFrame implements PartidaVista, ActionListener {
 
-    private PartidaControlador controlador;
-    private JSplitPane splitPanel;
+  private PartidaControlador controlador;
+  private JSplitPane splitPanel;
 
-    public PartidaFrame(Jugador jugador) {
-        initComponents();
-        controlador = new PartidaControlador(this);
-        controlador.crearPartida(jugador);
-        setLocationRelativeTo(null);
-    }
+  public PartidaFrame(Jugador jugador) {
+    initComponents();
+    setLocationRelativeTo(null);
+    controlador = new PartidaControlador(this);
+    controlador.crearPartida(jugador);
+  }
 
-    @SuppressWarnings("unchecked")
+  @SuppressWarnings("unchecked")
   // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
   private void initComponents() {
 
@@ -96,11 +96,11 @@ public class PartidaFrame extends javax.swing.JFrame implements PartidaVista, Ac
   }// </editor-fold>//GEN-END:initComponents
 
   private void btn_tamanoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_tamanoActionPerformed
-      controlador.setTamanoTablero(txt_tamano.getText());
+    controlador.setTamanoTablero(txt_tamano.getText());
   }//GEN-LAST:event_btn_tamanoActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        controlador.salir();
+      controlador.salir();
     }//GEN-LAST:event_formWindowClosing
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -111,60 +111,60 @@ public class PartidaFrame extends javax.swing.JFrame implements PartidaVista, Ac
   private javax.swing.JTextField txt_tamano;
   // End of variables declaration//GEN-END:variables
 
-    @Override
-    public void setTitulo(String titulo) {
-        setTitle(titulo);
-        lbl_titulo.setText(titulo);
-    }
+  @Override
+  public void setTitulo(String titulo) {
+    setTitle(titulo);
+    lbl_titulo.setText(titulo);
+  }
 
-    @Override
-    public void mostrarError(String mensaje) {
-        JOptionPane.showMessageDialog(this, mensaje);
-    }
+  @Override
+  public void mostrarError(String mensaje) {
+    JOptionPane.showMessageDialog(this, mensaje);
+  }
 
-    @Override
-    public void mostarMensaje(String mensaje) {
-        JOptionPane.showMessageDialog(this, mensaje);
-    }
+  @Override
+  public void mostarMensaje(String mensaje) {
+    JOptionPane.showMessageDialog(this, mensaje);
+  }
 
-    @Override
-    public void mostrarTablero(int tamano, ArrayList casilleros) {
-        splitPanel = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
-        splitPanel.setDividerLocation(150);
-        splitPanel.setDividerSize(0);
-        setContentPane(splitPanel);
-        TableroPanel panelTablero = new TableroPanel();
-        panelTablero.mostrarTablero(tamano, casilleros, this);
-        splitPanel.setBottomComponent(panelTablero);
-        validate();
-    }
+  @Override
+  public void mostrarTablero(int tamano, ArrayList casilleros) {
+    splitPanel = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+    splitPanel.setDividerLocation(150);
+    splitPanel.setDividerSize(0);
+    setContentPane(splitPanel);
+    TableroPanel panelTablero = new TableroPanel();
+    panelTablero.mostrarTablero(tamano, casilleros, this);
+    splitPanel.setBottomComponent(panelTablero);
+    validate();
+  }
 
-    @Override
-    public void mostrarDatos(String tituloPartida, String turno, double saldo, double pozo, double apuestaActual, int numeroTurno) {
-        setTitle(tituloPartida);
-        InformacionPanel infoPanel = new InformacionPanel(controlador, tituloPartida, turno, ("$" + saldo), ("$" + pozo), ("$" + apuestaActual), ("#" + numeroTurno));
-        splitPanel.setTopComponent(infoPanel);
-    }
+  @Override
+  public void mostrarDatos(String tituloPartida, String turno, double saldo, double pozo, double apuestaActual, int numeroTurno) {
+    setTitle(tituloPartida);
+    InformacionPanel infoPanel = new InformacionPanel(controlador, tituloPartida, turno, ("$" + saldo), ("$" + pozo), ("$" + apuestaActual), ("#" + numeroTurno));
+    splitPanel.setTopComponent(infoPanel);
+  }
 
-    @Override
-    public void mostrarEspera(String mensaje) {
-        JPanel esperandoPanel = new JPanel();
-        JLabel esperandoLabel = new JLabel(mensaje);
-        esperandoPanel.add(esperandoLabel);
-        setContentPane(esperandoPanel);
-        validate();
-    }
+  @Override
+  public void mostrarEspera(String mensaje) {
+    JPanel esperandoPanel = new JPanel();
+    JLabel esperandoLabel = new JLabel(mensaje);
+    esperandoPanel.add(esperandoLabel);
+    setContentPane(esperandoPanel);
+    validate();
+  }
 
-    @Override
-    public void actionPerformed(ActionEvent evt) {
-        BotonCasillero boton = (BotonCasillero) evt.getSource();
-        CasilleroPanel casillero = boton.getCasillero();
-        controlador.destapar(casillero);
-    }
+  @Override
+  public void actionPerformed(ActionEvent evt) {
+    BotonCasillero boton = (BotonCasillero) evt.getSource();
+    CasilleroPanel casillero = boton.getCasillero();
+    controlador.destapar(casillero);
+  }
 
-    @Override
-    public void cerrar() {
-        dispose();
-    }
+  @Override
+  public void cerrar() {
+    dispose();
+  }
 
 }

@@ -19,7 +19,7 @@ public class MonitorControlador implements Observer {
   }
 
   public void actualizarVista() {
-    if (partida.estaIniciada() || partida.haTerminado()) {
+    if (partida.haIniciado() || partida.haTerminado()) {
       vista.mostrarDatos(tituloPartida(), partida.getPozo(), partida.getNumeroTurno(), getTurnoDe());
       vista.mostrarTablero(partida.getTamano(), partida.getCasilleros());
     }
@@ -30,7 +30,7 @@ public class MonitorControlador implements Observer {
 
   private String tituloPartida() {
     String titulo;
-    if (partida.estaIniciada()) {
+    if (partida.haIniciado()) {
       titulo = partida.getJugador1().getNombreCompleto() + " vs. " + partida.getJugador2().getNombreCompleto();
     }
     else if (partida.haTerminado()) {

@@ -57,8 +57,8 @@ public class Fachada extends Observable {
     return sistemaPartidas.crearPartida(jugador);
   }
 
-  public void validarCerrarInicio() throws PartidaException {
-    sistemaPartidas.validarCerrarInicio();
+  public boolean hayJuegosActivos() {
+    return sistemaPartidas.hayJuegosActivos();
   }
 
   public ArrayList<Partida> getPartidas() {

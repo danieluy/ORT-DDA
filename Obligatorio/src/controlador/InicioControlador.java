@@ -18,13 +18,12 @@ public class InicioControlador {
   }
 
   public int validarCerrar() {
-    try {
-      modelo.validarCerrarInicio();
-      return JFrame.EXIT_ON_CLOSE;
-    }
-    catch (PartidaException ex) {
-      vista.mostrarError(ex.getMessage());
+    if (modelo.hayJuegosActivos()) {
+      vista.mostrarError("Hay juegos activos");
       return JFrame.DO_NOTHING_ON_CLOSE;
+    }
+    else {
+      return JFrame.EXIT_ON_CLOSE;
     }
   }
 

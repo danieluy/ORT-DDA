@@ -41,12 +41,26 @@ public class SistemaPartidas implements Observer {
     partidas.add(partida);
   }
 
-  public void validarCerrarInicio() throws PartidaException {
-    for (Partida partida : partidas) {
-      if (!partida.haTerminado()) {
-        throw new PartidaException("Hay juegos activos");
+  public void purgarPartidas() {
+    ArrayList<Integer> purgar = new ArrayList();
+    for (int i = 0; i < partidas.size(); i++) {
+      if (!partidas.get(i).haIniciado()) {
+        purgar.add(i);
       }
     }
+    for (int j : purgar) {
+      partidas.remove(j);
+    }
+    Fachada.getInstancia().notificar(Fachada.Eventos.listaPartidasActualizada);
+  }
+
+  public boolean hayJuegosActivos() {
+    for (Partida partida : partidas) {
+      if (!partida.haTerminado()) {
+        return true;
+      }
+    }
+    return false;
   }
 
   public ArrayList<Partida> getPartidas() {
@@ -58,6 +72,9 @@ public class SistemaPartidas implements Observer {
     Fachada.getInstancia().notificar(Fachada.Eventos.listaPartidasActualizada);
     if (evento == Partida.Eventos.partidaTerminada) {
       o.deleteObserver(this);
+    }
+    if (evento == Partida.Eventos.partidaCancelada) {
+      purgarPartidas();
     }
   }
 

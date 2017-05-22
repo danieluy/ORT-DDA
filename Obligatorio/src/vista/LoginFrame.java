@@ -87,7 +87,6 @@ public class LoginFrame extends java.awt.Frame implements LoginVista {
   }// </editor-fold>//GEN-END:initComponents
 
     private void exitForm(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_exitForm
-//        System.exit(0);
       dispose();
     }//GEN-LAST:event_exitForm
 
