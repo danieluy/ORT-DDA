@@ -6,9 +6,7 @@ import java.util.ArrayList;
 public class Jugador extends Usuario {
 
   private Color color;
-  private ArrayList<Apuesta> apuestas;
   private Partida partida;
-  private ArrayList<Movimiento> movimientos;
   private double saldo;
 
   public Jugador(String nombre, String nombreCompleto, String password, double saldoInicial) {
@@ -16,20 +14,27 @@ public class Jugador extends Usuario {
     saldo = saldoInicial;
   }
 
-  public Jugador(String usuario) {
-    super(usuario);
+  public void abandonarPartida() {
+    partida = null;
   }
 
+  public boolean puedeApostar(double montoApuesta) {
+    return saldo >= montoApuesta;
+  }
+
+  public void puedeJugar() throws JugadorException {
+    if (saldo < Partida.APUESTA_INICIAL) {
+      throw new JugadorException("Saldo insuficiente");
+    }
+  }
+
+//  Getters & Setters
   public void setPartida(Partida partida) {
     this.partida = partida;
   }
 
   public boolean tienePartida() {
     return partida != null;
-  }
-
-  public void abandonarPartida() {
-    partida = null;
   }
 
   public Color getColor() {
@@ -46,16 +51,6 @@ public class Jugador extends Usuario {
 
   public void setSaldo(double saldo) {
     this.saldo = saldo;
-  }
-
-  public boolean puedeApostar(double montoApuesta) {
-    return saldo >= montoApuesta;
-  }
-
-  public void puedeJugar() throws JugadorException {
-    if (saldo < Partida.APUESTA_INICIAL) {
-      throw new JugadorException("Saldo insuficiente");
-    }
   }
 
 }

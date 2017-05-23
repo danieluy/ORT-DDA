@@ -3,7 +3,7 @@ package modelo;
 public class Apuesta {
 
   private Jugador jugador;
-  private double apostado;
+  private double apostado;  
   private double totalApostado;
   private boolean estaPaga = false;
 

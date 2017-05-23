@@ -3,7 +3,6 @@ package modelo;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.awt.Color;
-import java.util.Observer;
 import vista.CasilleroPanel;
 
 public class Partida extends Observable {
@@ -206,7 +205,7 @@ public class Partida extends Observable {
 
   private void destaparMinas() {
     for (Casillero c : casilleros) {
-      c.destaparMinas();
+      c.destaparMina();
     }
     movimientos.get(movimientos.size() - 1).destaparMinas();
   }

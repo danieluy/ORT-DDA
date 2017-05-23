@@ -12,6 +12,12 @@ public class Casillero implements CasilleroPanel {
     color = Color.LIGHT_GRAY;
   }
 
+  public void destaparMina() {
+    if (tieneMina()) {
+      color = mina.getColor();
+    }
+  }
+
   public Mina getMina() {
     return mina;
   }
@@ -43,12 +49,6 @@ public class Casillero implements CasilleroPanel {
     }
     else {
       color = jugador.getColor();
-    }
-  }
-
-  public void destaparMinas() {
-    if (tieneMina()) {
-      color = mina.getColor();
     }
   }
 

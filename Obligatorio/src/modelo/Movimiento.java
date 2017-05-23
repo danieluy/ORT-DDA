@@ -1,7 +1,6 @@
 package modelo;
 
 import java.util.ArrayList;
-import vista.CasilleroPanel;
 
 public class Movimiento {
 
@@ -14,10 +13,10 @@ public class Movimiento {
     this.jugador = jugador;
     this.pozo = pozo;
     this.numeroTurno = numeroTurno;
-    estadoTablero = getEstado(casilleros);
+    estadoTablero = clonarEstadoTablero(casilleros);
   }
 
-  private ArrayList<Casillero> getEstado(ArrayList<Casillero> casilleros) {
+  private ArrayList<Casillero> clonarEstadoTablero(ArrayList<Casillero> casilleros) {
     ArrayList<Casillero> estado = new ArrayList();
     for (Casillero c : casilleros) {
       Casillero casillero = new Casillero();
@@ -26,6 +25,12 @@ public class Movimiento {
       estado.add(casillero);
     }
     return estado;
+  }
+
+  public void destaparMinas() {
+    for (Casillero c : estadoTablero) {
+      c.destaparMina();
+    }
   }
 
 //    Getters & Setters
@@ -43,12 +48,6 @@ public class Movimiento {
 
   public ArrayList<Casillero> getEstadoTablero() {
     return estadoTablero;
-  }
-
-  void destaparMinas() {
-    for (Casillero c : estadoTablero) {
-      c.destaparMinas();
-    }
   }
 
 }
