@@ -7,11 +7,9 @@ import java.util.Observer;
 public class SistemaPartidas implements Observer {
 
   private ArrayList<Partida> partidas;
-  private Fachada fachada;
 
   public SistemaPartidas() {
     partidas = new ArrayList();
-    fachada = Fachada.getInstancia();
   }
 
   public Partida crearPartida(Jugador jugador) throws PartidaException, ApuestaException {

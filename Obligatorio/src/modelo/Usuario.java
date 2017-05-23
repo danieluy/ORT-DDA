@@ -42,7 +42,7 @@ public class Usuario {
 
   public void validar() throws UsuarioException {
     if (nombre.isEmpty() || password.isEmpty() || nombreCompleto.isEmpty()) {
-      throw new UsuarioException("Error creando un usuario");
+      throw new UsuarioException("Faltan datos de usuario");
     }
   }
 

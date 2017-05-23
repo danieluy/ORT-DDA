@@ -110,10 +110,6 @@ public class Partida extends Observable {
     }
   }
 
-  public boolean haIniciado() {
-    return (jugador2 != null && tamano >= TAMANO_MINIMO);
-  }
-
   private void iniciarApuestas() throws ApuestaException {
     apostar(jugador1, APUESTA_INICIAL);
     pagarApuesta(jugador2);
@@ -165,7 +161,7 @@ public class Partida extends Observable {
     }
 //        contadorMinas();
   }
-//    Solo para desarrollo
+//    Solo para desarrollo, no aparece en diagrama
 
   private void contadorMinas() {
     int minas = 0;
@@ -204,9 +200,11 @@ public class Partida extends Observable {
   }
 
   private void destaparMinas() {
+    // minas de la partida
     for (Casillero c : casilleros) {
       c.destaparMina();
     }
+    // minas del estado del movimiento
     movimientos.get(movimientos.size() - 1).destaparMinas();
   }
 
@@ -219,6 +217,14 @@ public class Partida extends Observable {
       return jugador == jugador1;
     }
     return jugador != movimientos.get(movimientos.size() - 1).getJugador();
+  }
+
+  public boolean haIniciado() {
+    return (jugador2 != null && tamano >= TAMANO_MINIMO);
+  }
+
+  public boolean haTerminado() {
+    return ganador != null;
   }
 
 //    Getters & Setters
@@ -249,10 +255,6 @@ public class Partida extends Observable {
 
   public Apuesta getApuesta() {
     return apuesta;
-  }
-
-  public boolean haTerminado() {
-    return ganador != null;
   }
 
   public ArrayList<Movimiento> getMovimientos() {

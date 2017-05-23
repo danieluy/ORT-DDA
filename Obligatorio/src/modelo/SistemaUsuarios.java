@@ -36,29 +36,14 @@ public class SistemaUsuarios {
     jugador.abandonarPartida();
   }
 
-  public void logoutAdministrador(Administrador administrador) {
-    // esperando para tomar una acción relevante
+  public void addJugador(Jugador jugador) throws UsuarioException {
+    jugador.validar();
+    jugadores.add(jugador);
   }
 
-  public void addJugador(Jugador jugador) {
-    try {
-      jugador.validar();
-      jugadores.add(jugador);
-    }
-    catch (UsuarioException ex) {
-      // manejar error
-    }
-  }
-
-  public void addAdministrador(Administrador administrador) {
-    try {
-      administrador.validar();
-      administradores.add(administrador);
-    }
-    catch (UsuarioException ex) {
-      // manejar error
-    }
-
+  public void addAdministrador(Administrador administrador) throws UsuarioException {
+    administrador.validar();
+    administradores.add(administrador);
   }
 
 }
