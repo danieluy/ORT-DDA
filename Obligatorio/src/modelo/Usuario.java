@@ -16,10 +16,13 @@ public class Usuario {
     this.password = password;
   }
 
-  public Usuario(String nombre) {
-    this.nombre = nombre;
+  public void validar() throws UsuarioException {
+    if (nombre.isEmpty() || password.isEmpty() || nombreCompleto.isEmpty()) {
+      throw new UsuarioException("Faltan datos de usuario");
+    }
   }
 
+//Getters & Setters
   public String getNombre() {
     return nombre;
   }
@@ -38,12 +41,6 @@ public class Usuario {
 
   public void setNombreCompleto(String nombreCompleto) {
     this.nombreCompleto = nombreCompleto;
-  }
-
-  public void validar() throws UsuarioException {
-    if (nombre.isEmpty() || password.isEmpty() || nombreCompleto.isEmpty()) {
-      throw new UsuarioException("Faltan datos de usuario");
-    }
   }
 
   @Override

@@ -16,7 +16,6 @@ public class PartidaControlador implements Observer {
   private Fachada modelo = Fachada.getInstancia();
   private PartidaVista vista;
   private Partida partida;
-  private int tamano;
   private Jugador jugador;
 
   public PartidaControlador(PartidaVista vista) {

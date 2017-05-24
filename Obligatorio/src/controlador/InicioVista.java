@@ -6,6 +6,6 @@ public interface InicioVista {
 
   public void loginAdministrador();
 
-  public void mostrarError(String message);
+  public void mostrarError(String mensaje);
 
 }

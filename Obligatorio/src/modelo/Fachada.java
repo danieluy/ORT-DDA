@@ -44,11 +44,11 @@ public class Fachada extends Observable {
     sistemaUsuarios.logoutAdministrador(administrador);
   }
 
-  public void addJugador(Jugador jugador) {
+  public void addJugador(Jugador jugador) throws UsuarioException {
     sistemaUsuarios.addJugador(jugador);
   }
 
-  public void addAdministrador(Administrador administrador) {
+  public void addAdministrador(Administrador administrador) throws UsuarioException {
     sistemaUsuarios.addAdministrador(administrador);
   }
 

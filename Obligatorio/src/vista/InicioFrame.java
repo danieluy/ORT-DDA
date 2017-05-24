@@ -2,7 +2,6 @@ package vista;
 
 import controlador.InicioControlador;
 import controlador.InicioVista;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import modelo.Usuario;
 

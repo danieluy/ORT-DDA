@@ -1,11 +1,7 @@
 package controlador;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFrame;
 import modelo.Fachada;
-import modelo.PartidaException;
-import vista.InicioFrame;
 
 public class InicioControlador {
 
@@ -14,7 +10,6 @@ public class InicioControlador {
 
   public InicioControlador(InicioVista vista) {
     this.vista = vista;
-
   }
 
   public int validarCerrar() {

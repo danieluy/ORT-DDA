@@ -1,7 +1,6 @@
 package controlador;
 
 import modelo.Fachada;
-import vista.InicioFrame;
 import modelo.Jugador;
 import modelo.Administrador;
 import modelo.Usuario;
@@ -16,7 +15,7 @@ public class LoginControlador {
     this.vista = vista;
   }
 
-  public void login(String usuario, String password, Usuario.TiposUsuario tipoUsuario) {
+  public void login(String usuario, String password, Enum tipoUsuario) {
     if (tipoUsuario == Usuario.TiposUsuario.jugador) {
       try {
         Jugador jugador = modelo.loginJugador(usuario, password);
