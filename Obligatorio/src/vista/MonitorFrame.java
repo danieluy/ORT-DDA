@@ -10,11 +10,10 @@ import modelo.Partida;
 public class MonitorFrame extends javax.swing.JFrame implements MonitorVista {
 
   private MonitorControlador controlador;
-  private Partida partida;
   private JSplitPane splitGeneral;
   private JSplitPane splitTableroInfo;
 
-  MonitorFrame(Partida partida) throws VistaException {
+  public MonitorFrame(Partida partida) throws VistaException {
     if (!partida.haIniciado()) {
       throw new VistaException("Partida no iniciada");
     }

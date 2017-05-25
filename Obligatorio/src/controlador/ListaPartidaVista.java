@@ -1,7 +1,6 @@
 package controlador;
 
 import java.util.ArrayList;
-import modelo.Partida;
 
 public interface ListaPartidaVista {
 

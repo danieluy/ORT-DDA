@@ -1,15 +1,9 @@
 package vista;
 
-import controlador.PartidaControlador;
-import java.awt.event.ActionListener;
-
 public class MonitorInformacionPanel extends javax.swing.JPanel {
-
-  private PartidaControlador controlador;
 
   public MonitorInformacionPanel(String tituloPartida, String pozo, String numeroTurno, String turnoDe) {
     initComponents();
-    this.controlador = controlador;
     lbl_titulo.setText(tituloPartida);
     lbl_pozo.setText(pozo);
     lbl_numeroTurno.setText(numeroTurno);

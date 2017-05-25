@@ -1,7 +1,6 @@
 package vista;
 
 import controlador.PartidaControlador;
-import java.awt.event.ActionListener;
 
 public class PartidaInformacionPanel extends javax.swing.JPanel {
 
