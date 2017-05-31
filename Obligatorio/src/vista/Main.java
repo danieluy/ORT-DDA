@@ -24,6 +24,7 @@ public class Main {
     modelo.addAdministrador(new Administrador("Eduardo", "Eduardo Cardozo", "pass"));
 
     new InicioFrame().setVisible(true);
+    // Added to save empty commit on GIT
   }
 
 }
