@@ -30,14 +30,11 @@ public class PartidaControlador implements Observer {
       partida.addObserver(this);
       // Si es el jugador 1 preguntamos tamaño de tablero
       // Si es el jugador 2 espera
-      if (partida.getJugador2() == jugador) {
-        if (partida.haIniciado()) {
+      if (partida.getJugador2() == jugador)
+        if (partida.haIniciado())
           actualizarPartida();
-        }
-        else {
+        else
           vista.mostrarEspera("Esperando por " + partida.getJugador1().getNombreCompleto());
-        }
-      }
       vista.setTitulo(tituloPartida());
     }
     catch (PartidaException | ApuestaException | JugadorException ex) {
@@ -60,7 +57,7 @@ public class PartidaControlador implements Observer {
 
   public void destapar(CasilleroPanel casillero) {
     try {
-      partida.destapar(casillero, jugador);
+      partida.destaparCasillero(casillero, jugador);
     }
     catch (PartidaException | CasilleroException | ApuestaException ex) {
       vista.mostrarError(ex.getMessage());
@@ -68,23 +65,19 @@ public class PartidaControlador implements Observer {
   }
 
   private String getNombreTurno() {
-    if (partida.esTurnoDe(jugador)) {
+    if (partida.esTurnoDe(jugador))
       return "Juegas tu";
-    }
     return "Juega tu oponente";
   }
 
   private String tituloPartida() {
     String titulo;
-    if (partida.haIniciado()) {
+    if (partida.haIniciado())
       titulo = partida.getJugador1().getNombreCompleto() + " vs. " + partida.getJugador2().getNombreCompleto();
-    }
-    else if (partida.haTerminado()) {
+    else if (partida.haTerminado())
       titulo = "Partida finalizada";
-    }
-    else {
+    else
       titulo = partida.getJugador1().getNombreCompleto() + " esperando oponente";
-    }
     return titulo;
   }
 
@@ -135,10 +128,9 @@ public class PartidaControlador implements Observer {
   }
 
   private String getInfoFinPartida() {
-    if (partida.esTurnoDe(jugador)) {
-      return "Has ganado la partida!";
-    }
-    return "Has perdido";
+    if (partida.esTurnoDe(jugador))
+      return "Has perdido";
+    return "Has ganado la partida!";
   }
 
   private void quitarJugador2() {
@@ -148,21 +140,17 @@ public class PartidaControlador implements Observer {
   @Override
   public void update(Observable o, Object evento) {
     // ya ingresaron ambos jugadores
-    if (evento == Partida.Eventos.partidaLlena) {
+    if (evento == Partida.Eventos.partidaLlena)
       vista.setTitulo(tituloPartida());
-    }
     // jugador uno ya está y ya inició el tablero
-    if (evento == Partida.Eventos.tableroCreado) {
+    if (evento == Partida.Eventos.tableroCreado)
       vista.mostrarEspera("Esperando oponente");
-    }
     // ya ingresaron ambos jugadores y ya se inició el tablero, o se efectuó un movimiento
-    if (evento == Partida.Eventos.partidaIniciada || evento == Partida.Eventos.movimientoEfectuado) {
+    if (evento == Partida.Eventos.partidaIniciada || evento == Partida.Eventos.movimientoEfectuado)
       actualizarPartida();
-    }
     // estos eventos actualizan solo los datos
-    if (evento == Partida.Eventos.apuestaRealizada || evento == Partida.Eventos.apuestaAumentada || evento == Partida.Eventos.apuestaPaga) {
+    if (evento == Partida.Eventos.apuestaRealizada || evento == Partida.Eventos.apuestaAumentada || evento == Partida.Eventos.apuestaPaga)
       actualizarPartida();
-    }
     if (evento == Partida.Eventos.partidaTerminada) {
       actualizarPartida();
       vista.mostarMensaje(getInfoFinPartida());
@@ -171,9 +159,8 @@ public class PartidaControlador implements Observer {
       actualizarPartida();
       vista.mostarMensaje("Has ganado la partida!");
     }
-    if (evento == Partida.Eventos.jugador2NoJuega) {
+    if (evento == Partida.Eventos.jugador2NoJuega)
       quitarJugador2();
-    }
     if (evento == Partida.Eventos.partidaCancelada) {
       vista.mostrarError(partida.getJugador1().getNombreCompleto() + " ha cancelado la partida");
       vista.cerrar();

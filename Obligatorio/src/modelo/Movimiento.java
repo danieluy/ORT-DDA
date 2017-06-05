@@ -28,9 +28,8 @@ public class Movimiento {
   }
 
   public void destaparMinas() {
-    for (Casillero c : estadoTablero) {
+    for (Casillero c : estadoTablero)
       c.destaparMina();
-    }
   }
 
 //    Getters & Setters

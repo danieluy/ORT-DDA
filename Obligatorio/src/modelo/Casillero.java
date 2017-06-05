@@ -13,9 +13,8 @@ public class Casillero implements CasilleroPanel {
   }
 
   public void destaparMina() {
-    if (tieneMina()) {
+    if (tieneMina())
       color = mina.getColor();
-    }
   }
 
   public Mina getMina() {
@@ -34,22 +33,42 @@ public class Casillero implements CasilleroPanel {
     this.color = color;
   }
 
+  private void setColor(Jugador jugador) {
+    if (tieneMina())
+      color = mina.getColor();
+    else
+      color = jugador.getColor();
+  }
+
+  public void validarDestapar(Jugador jugador) throws CasilleroException {
+    if (destapado())
+      throw new CasilleroException("Casillero ya destapado");
+  }
+  
+  private boolean destapado(){
+    return !color.equals(Color.LIGHT_GRAY);
+  }
+
+  public void destapar(Partida partida) throws CasilleroException {
+    Jugador jugador = partida.getJugadorTurno();
+    validarDestapar(jugador);
+    setColor(jugador);
+    if (tieneMina())
+      mina.activar(partida);
+    else
+      partida.continuar();
+  }
+
   @Override
   public Color getColor() {
     return color;
   }
 
   @Override
-  public void destapar(Jugador jugador) throws CasilleroException {
-    if (!color.equals(Color.LIGHT_GRAY)) {
-      throw new CasilleroException("Casillero ya destapado");
-    }
-    if (tieneMina()) {
-      color = mina.getColor();
-    }
-    else {
-      color = jugador.getColor();
-    }
+  public String getTipoMina() {
+    if (destapado() && tieneMina())
+      return mina.getTipo();
+    return null;
   }
 
 }

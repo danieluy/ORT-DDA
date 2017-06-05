@@ -3,7 +3,7 @@ package modelo;
 public class Apuesta {
 
   private Jugador jugador;
-  private double apostado;  
+  private double apostado;
   private double totalApostado;
   private boolean estaPaga = false;
 
@@ -19,24 +19,20 @@ public class Apuesta {
   }
 
   public void pagar(Jugador jugadorPaga) throws ApuestaException {
-    if (jugadorPaga == this.jugador) {
+    if (jugadorPaga == this.jugador)
       throw new ApuestaException("El jugador " + jugadorPaga.getNombre() + " no puede pagar su apuesta");
-    }
-    if (!jugadorPaga.puedeApostar(apostado)) {
+    if (!jugadorPaga.puedeApostar(apostado))
       throw new ApuestaException("Saldo insuficiente");
-    }
     totalApostado += apostado;
     jugadorPaga.setSaldo(jugadorPaga.getSaldo() - apostado);
     estaPaga = true;
   }
 
   public void subir(Jugador jugadorAumenta, double aumento) throws ApuestaException {
-    if (jugadorAumenta == this.jugador) {
+    if (jugadorAumenta == this.jugador)
       throw new ApuestaException("El jugador " + jugadorAumenta.getNombre() + " no puede aumentar su apuesta");
-    }
-    if (!jugadorAumenta.puedeApostar(apostado + aumento)) {
+    if (!jugadorAumenta.puedeApostar(apostado + aumento))
       throw new ApuestaException("Saldo insuficiente");
-    }
     jugador = jugadorAumenta;
     double nuevaApuesta = apostado + aumento;
     apostado = aumento;
@@ -54,9 +50,8 @@ public class Apuesta {
   }
 
   public double getTotalApostado() {
-    if (!estaPaga) {
+    if (!estaPaga)
       return totalApostado;
-    }
     return 0;
   }
 

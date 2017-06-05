@@ -44,9 +44,8 @@ public class ListaPartidasControlador implements Observer {
 
   @Override
   public void update(Observable o, Object evento) {
-    if (evento == Fachada.Eventos.listaPartidasActualizada) {
+    if (evento == Fachada.Eventos.listaPartidasActualizada)
       mostrarPartidas();
-    }
   }
 
 }

@@ -8,7 +8,12 @@ public class BotonCasillero extends JButton {
 
   public BotonCasillero(CasilleroPanel casillero) {
     this.casillero = casillero;
+    mostrar();
+  }
+
+  private void mostrar() {
     setBackground(casillero.getColor());
+    setText(casillero.getTipoMina());
   }
 
   public CasilleroPanel getCasillero() {

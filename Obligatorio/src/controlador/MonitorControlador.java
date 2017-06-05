@@ -24,30 +24,25 @@ public class MonitorControlador implements Observer {
       vista.mostrarDatos(tituloPartida(), partida.getPozo(), partida.getNumeroTurno(), getTurnoDe());
       vista.mostrarTablero(partida.getTamano(), partida.getCasilleros());
     }
-    else {
+    else
       vista.mostrarError("La partida no ha iniciado aún");
-    }
   }
 
   private String tituloPartida() {
     String titulo;
-    if (!partida.haIniciado()) {
+    if (!partida.haIniciado())
       titulo = partida.getJugador1().getNombreCompleto() + " esperando oponente";
-    }
-    else if (partida.haIniciado() && !partida.haTerminado()) {
+    else if (partida.haIniciado() && !partida.haTerminado())
       titulo = partida.getJugador1().getNombreCompleto() + " vs. " + partida.getJugador2().getNombreCompleto();
-    }
-    else {
+    else
       titulo = getGanador();
-    }
     return titulo;
   }
 
   private String getGanador() {
     Jugador ganador = partida.getGanador();
-    if (ganador == null) {
+    if (ganador == null)
       return "Partida finalizada. Ganador deconocido";
-    }
     return ganador.getNombreCompleto() + " ha ganado la partida";
   }
 
@@ -80,9 +75,8 @@ public class MonitorControlador implements Observer {
       vista.mostrarDatos(tituloPartida(), movimiento.getPozo(), movimiento.getNumeroTurno(), turnoDe);
       vista.mostrarTablero(partida.getTamano(), movimiento.getEstadoTablero());
     }
-    else {
+    else
       vista.mostrarError("La partida no ha terminado");
-    }
   }
 
   private void actualizarEstadoReproductor() {

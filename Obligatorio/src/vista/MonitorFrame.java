@@ -14,9 +14,8 @@ public class MonitorFrame extends javax.swing.JFrame implements MonitorVista {
   private JSplitPane splitTableroInfo;
 
   public MonitorFrame(Partida partida) throws VistaException {
-    if (!partida.haIniciado()) {
+    if (!partida.haIniciado())
       throw new VistaException("Partida no iniciada");
-    }
     initComponents();
     controlador = new MonitorControlador(this, partida);
     iniciarReproductor();

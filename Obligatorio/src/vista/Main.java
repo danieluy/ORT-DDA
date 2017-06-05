@@ -13,7 +13,6 @@ public class Main {
 
     Fachada modelo = Fachada.getInstancia();
 
-    
     modelo.addJugador(new Jugador("Tyler", "Tyler Durden", "tfc", 100));
     modelo.addJugador(new Jugador("Marla", "Marla Singer", "tfc", 100));
     modelo.addJugador(new Jugador("Robert", "Robert Paulson", "tfc", 100));

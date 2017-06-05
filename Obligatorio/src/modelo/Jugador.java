@@ -23,9 +23,8 @@ public class Jugador extends Usuario {
   }
 
   public void puedeJugar() throws JugadorException {
-    if (saldo < Partida.APUESTA_INICIAL) {
+    if (saldo < Partida.APUESTA_INICIAL)
       throw new JugadorException("Saldo insuficiente");
-    }
   }
 
 //  Getters & Setters

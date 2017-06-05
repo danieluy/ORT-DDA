@@ -18,16 +18,13 @@ public class SistemaPartidas implements Observer {
       if (partidas.size() > 0) {
         // si la ultima partida no está llena la completo
         Partida ultimaPartida = partidas.get(partidas.size() - 1);
-        if (ultimaPartida.getJugador2() == null) {
+        if (ultimaPartida.getJugador2() == null)
           ultimaPartida.setJugador2(jugador);
-        }
-        else {
+        else
           registrarPartida(jugador);
-        }
       }
-      else {
+      else
         registrarPartida(jugador);
-      }
       return partidas.get(partidas.size() - 1);
     }
     throw new PartidaException("Para jugar es necesario un saldo mínimo de $" + Partida.APUESTA_INICIAL);
@@ -41,23 +38,18 @@ public class SistemaPartidas implements Observer {
 
   public void purgarPartidas() {
     ArrayList<Integer> purgar = new ArrayList();
-    for (int i = 0; i < partidas.size(); i++) {
-      if (!partidas.get(i).haIniciado()) {
+    for (int i = 0; i < partidas.size(); i++)
+      if (!partidas.get(i).haIniciado())
         purgar.add(i);
-      }
-    }
-    for (int j : purgar) {
+    for (int j : purgar)
       partidas.remove(j);
-    }
     Fachada.getInstancia().notificar(Fachada.Eventos.listaPartidasActualizada);
   }
 
   public boolean hayJuegosActivos() {
-    for (Partida partida : partidas) {
-      if (!partida.haTerminado()) {
+    for (Partida partida : partidas)
+      if (!partida.haTerminado())
         return true;
-      }
-    }
     return false;
   }
 
@@ -68,12 +60,10 @@ public class SistemaPartidas implements Observer {
   @Override
   public void update(Observable o, Object evento) {
     Fachada.getInstancia().notificar(Fachada.Eventos.listaPartidasActualizada);
-    if (evento == Partida.Eventos.partidaTerminada) {
+    if (evento == Partida.Eventos.partidaTerminada)
       o.deleteObserver(this);
-    }
-    if (evento == Partida.Eventos.partidaCancelada) {
+    if (evento == Partida.Eventos.partidaCancelada)
       purgarPartidas();
-    }
   }
 
 }

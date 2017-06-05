@@ -63,9 +63,8 @@ public class ListaPartidasFrame extends javax.swing.JFrame implements ListaParti
   }// </editor-fold>//GEN-END:initComponents
 
   private void lista_partidasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lista_partidasMouseClicked
-    if (evt.getClickCount() == 2) {
+    if (evt.getClickCount() == 2)
       seleccionarPartida();
-    }
   }//GEN-LAST:event_lista_partidasMouseClicked
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -76,14 +75,13 @@ public class ListaPartidasFrame extends javax.swing.JFrame implements ListaParti
 
   private void seleccionarPartida() {
     int pos = lista_partidas.getSelectedIndex();
-    if (pos != -1) {
+    if (pos != -1)
       try {
         new MonitorFrame(controlador.getPartida(pos)).setVisible(true);
       }
       catch (VistaException ex) {
         JOptionPane.showMessageDialog(this, ex.getMessage());
       }
-    }
   }
 
   @Override

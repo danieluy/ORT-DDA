@@ -17,9 +17,8 @@ public class InicioControlador {
       vista.mostrarError("Hay juegos activos");
       return JFrame.DO_NOTHING_ON_CLOSE;
     }
-    else {
+    else
       return JFrame.EXIT_ON_CLOSE;
-    }
   }
 
 }

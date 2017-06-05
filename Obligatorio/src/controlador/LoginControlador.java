@@ -16,7 +16,7 @@ public class LoginControlador {
   }
 
   public void login(String usuario, String password, Enum tipoUsuario) {
-    if (tipoUsuario == Usuario.TiposUsuario.jugador) {
+    if (tipoUsuario == Usuario.TiposUsuario.jugador)
       try {
         Jugador jugador = modelo.loginJugador(usuario, password);
         vista.loginJugadorOk(jugador);
@@ -24,8 +24,7 @@ public class LoginControlador {
       catch (UsuarioException e) {
         vista.loginError(e.getMessage());
       }
-    }
-    if (tipoUsuario == Usuario.TiposUsuario.administrador) {
+    if (tipoUsuario == Usuario.TiposUsuario.administrador)
       try {
         Administrador administrador = modelo.loginAdministrador(usuario, password);
         vista.loginAdministradorOk(administrador);
@@ -33,6 +32,5 @@ public class LoginControlador {
       catch (UsuarioException e) {
         vista.loginError(e.getMessage());
       }
-    }
   }
 }

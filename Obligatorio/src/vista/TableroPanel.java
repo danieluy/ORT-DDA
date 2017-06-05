@@ -14,9 +14,8 @@ public class TableroPanel extends JPanel {
     setLayout(gridLayout);
     for (CasilleroPanel casillero : casilleros) {
       BotonCasillero botonCasillero = new BotonCasillero(casillero);
-      if (listener != null) {
+      if (listener != null)
         botonCasillero.addActionListener(listener);
-      }
       add(botonCasillero);
     }
   }
