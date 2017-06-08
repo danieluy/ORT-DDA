@@ -40,11 +40,10 @@ public class ProcesoX extends Observable implements Runnable {
   }
 
   public void mostrar() {
-    //System.out.println("MOSTRAR");
     if (!correr && !finalizado) {
       correr = true;
       hilo = new Thread(this);
-      hilo.start();
+    hilo.start();
     }
   }
 
@@ -54,6 +53,17 @@ public class ProcesoX extends Observable implements Runnable {
       hilo.interrupt();
       notificar(Eventos.estado);
     }
+  }
+
+  public String getName() {
+    return nombre;
+  }
+
+  public String toString() {
+    String fin = "";
+    if (finalizado)
+      fin = " FIN!";
+    return getName() + " : " + x + " [" + correr + "]" + fin;
   }
 
   @Override
@@ -70,17 +80,6 @@ public class ProcesoX extends Observable implements Runnable {
     }
     correr = false;
     notificar(Eventos.estado);
-  }
-
-  public String getName() {
-    return nombre;
-  }
-
-  public String toString() {
-    String fin = "";
-    if (finalizado)
-      fin = " FIN!";
-    return getName() + " : " + x + " [" + correr + "]" + fin;
   }
 
 }

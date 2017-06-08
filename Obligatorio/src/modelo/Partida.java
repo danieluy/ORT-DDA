@@ -3,12 +3,14 @@ package modelo;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.awt.Color;
+import java.util.Observer;
 import vista.CasilleroPanel;
 
-public class Partida extends Observable {
+public class Partida extends Observable implements Observer {
 
   public static final int TAMANO_MINIMO = 3;
   public static final int TAMANO_MAXIMO = 10;
+  public static final int TIEMPO_TURNO = 5; // agregar a diagrama !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   public static final double APUESTA_INICIAL = 10;
   private double pozo = 0;
   private int tamano = 0;
@@ -20,6 +22,7 @@ public class Partida extends Observable {
   private Jugador jugador2;
   private ArrayList<Casillero> casilleros = new ArrayList();
   private ArrayList<Movimiento> movimientos = new ArrayList();
+  private Temporizador temporizador;
 
   public Partida(Jugador jugador) throws PartidaException {
     jugador1 = jugador;
@@ -77,6 +80,7 @@ public class Partida extends Observable {
       iniciarApuestas();
       addMovimiento(null);
       notificar(Eventos.partidaIniciada);
+      temporizador = new Temporizador(TIEMPO_TURNO, this);
     }
   }
 
@@ -171,13 +175,15 @@ public class Partida extends Observable {
       throws PartidaException, CasilleroException, ApuestaException {
     if (haIniciado()) {
       if (!esTurnoDe(jugador))
-        throw new PartidaException("Movimiento fuera de turno");
+        throw new PartidaException("No es tu turno");
       if (!apuesta.estaPaga())
         throw new ApuestaException("Apuesta en curso");
+      temporizador.detener();
       Casillero casillero = (Casillero) casilleroPanel;
       casillero.validarDestapar(jugador);
       casillero.destapar(this);
       addMovimiento(jugador);
+      temporizador = new Temporizador(TIEMPO_TURNO, this);
     }
   }
 
@@ -261,5 +267,15 @@ public class Partida extends Observable {
     if (esTurnoDe(jugador1))
       return jugador1;
     return jugador2;
+  }
+
+  @Override
+  public void update(Observable o, Object evento) {
+    if (evento == Temporizador.Eventos.temporizador_detenido)
+      System.out.println("Nuevo turno");
+    if (evento == Temporizador.Eventos.tiempo_agotado)
+      System.out.println("Partida terminada");
+    if (evento == Temporizador.Eventos.interrupted_exception)
+      System.out.println("Error de temporizador");
   }
 }
