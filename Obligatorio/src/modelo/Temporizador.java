@@ -12,13 +12,14 @@ public class Temporizador extends Observable implements Runnable {
   public static enum Eventos {
     tiempo_agotado,
     temporizador_detenido,
-    interrupted_exception
+    interrupted_exception,
+    tiempo
   }
 
   public Temporizador(int tiempo_segundos, Observer observador) {
-    hilo = new Thread();
     this.tiempo_segundos = tiempo_segundos;
     addObserver(observador);
+    hilo = new Thread(this);
     hilo.start();
   }
 
@@ -32,9 +33,14 @@ public class Temporizador extends Observable implements Runnable {
     notifyObservers(evento);
   }
 
+  public int getTiempo() {
+    return tiempo_segundos;
+  }  
+
   @Override
   public void run() {
     while (tiempo_segundos > 0 && !detenido) {
+      notificar(Eventos.tiempo);
       try {
         Thread.currentThread().sleep(1000);
         tiempo_segundos--;
@@ -48,7 +54,7 @@ public class Temporizador extends Observable implements Runnable {
       notificar(Eventos.temporizador_detenido);
     else
       notificar(Eventos.tiempo_agotado);
-//    deleteObservers();
+    deleteObservers();
   }
 
 }

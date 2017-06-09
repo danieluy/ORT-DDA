@@ -11,8 +11,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+/**
+ *
+ * @author docenteFI
+ */
 public class Test {
 
+  /**
+   * @param args the command line arguments
+   */
   public static void main(String[] args) {
     try {
       // TODO code application logic here
@@ -24,7 +31,7 @@ public class Test {
       System.out.println("Conectado!");
 
       //CAMBIOS
-        Statement stmt = conexion.createStatement();
+      Statement stmt = conexion.createStatement();
       String sql;
       /*sql = "INSERT INTO usuario (nombre,password) " +
                          " values ('juan','j')";*/

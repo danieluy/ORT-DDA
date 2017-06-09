@@ -83,7 +83,7 @@ public class PartidaControlador implements Observer {
 
   private void actualizarPartida() {
     vista.mostrarTablero(partida.getTamano(), partida.getCasilleros());
-    vista.mostrarDatos(tituloPartida(), getNombreTurno(), jugador.getSaldo(), partida.getPozo(), partida.getApuesta().getTotalApostado(), partida.getNumeroTurno());
+    vista.mostrarDatos(tituloPartida(), getNombreTurno(), jugador.getSaldo(), partida.getPozo(), partida.getApuesta().getTotalApostado(), partida.getNumeroTurno(), partida.getTiempoTurno());
   }
 
   public void salir() {
@@ -129,8 +129,8 @@ public class PartidaControlador implements Observer {
 
   private String getInfoFinPartida() {
     if (partida.esTurnoDe(jugador))
-      return "Has perdido";
-    return "Has ganado la partida!";
+      return "Has ganado la partida!";
+    return "Has perdido";
   }
 
   private void quitarJugador2() {
@@ -145,11 +145,9 @@ public class PartidaControlador implements Observer {
     // jugador uno ya está y ya inició el tablero
     if (evento == Partida.Eventos.tableroCreado)
       vista.mostrarEspera("Esperando oponente");
-    // ya ingresaron ambos jugadores y ya se inició el tablero, o se efectuó un movimiento
     if (evento == Partida.Eventos.partidaIniciada || evento == Partida.Eventos.movimientoEfectuado)
       actualizarPartida();
-    // estos eventos actualizan solo los datos
-    if (evento == Partida.Eventos.apuestaRealizada || evento == Partida.Eventos.apuestaAumentada || evento == Partida.Eventos.apuestaPaga)
+    if (evento == Partida.Eventos.apuesta)
       actualizarPartida();
     if (evento == Partida.Eventos.partidaTerminada) {
       actualizarPartida();
@@ -161,6 +159,8 @@ public class PartidaControlador implements Observer {
     }
     if (evento == Partida.Eventos.jugador2NoJuega)
       quitarJugador2();
+    if (evento == Partida.Eventos.tiempo)
+//      actualizarPartida();
     if (evento == Partida.Eventos.partidaCancelada) {
       vista.mostrarError(partida.getJugador1().getNombreCompleto() + " ha cancelado la partida");
       vista.cerrar();

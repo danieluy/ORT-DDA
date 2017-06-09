@@ -10,7 +10,7 @@ public class Partida extends Observable implements Observer {
 
   public static final int TAMANO_MINIMO = 3;
   public static final int TAMANO_MAXIMO = 10;
-  public static final int TIEMPO_TURNO = 5; // agregar a diagrama !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  public static final int TIEMPO_TURNO = 15; // agregar a diagrama !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   public static final double APUESTA_INICIAL = 10;
   private double pozo = 0;
   private int tamano = 0;
@@ -36,12 +36,11 @@ public class Partida extends Observable implements Observer {
     partidaIniciada,
     jugadorSeHaRendido,
     partidaTerminada,
-    apuestaRealizada,
-    apuestaPaga,
-    apuestaAumentada,
+    apuesta,
     movimientoEfectuado,
     partidaCancelada,
-    jugador2NoJuega
+    jugador2NoJuega,
+    tiempo
   }
 
   private void notificar(Object evento) {
@@ -104,6 +103,7 @@ public class Partida extends Observable implements Observer {
         ganador = jugador1;
       ganador.setSaldo(ganador.getSaldo() + pozo);
       notificar(Eventos.partidaTerminada);
+      temporizador.detener();
     }
   }
 
@@ -116,7 +116,7 @@ public class Partida extends Observable implements Observer {
     if (haIniciado()) {
       apuesta = new Apuesta(jugadorApuesta, getOponente(jugadorApuesta), monto);
       pozo += monto;
-      notificar(Eventos.apuestaRealizada);
+      notificar(Eventos.apuesta);
     }
   }
 
@@ -124,7 +124,7 @@ public class Partida extends Observable implements Observer {
     if (haIniciado() && !apuesta.estaPaga()) {
       apuesta.pagar(jugadorPaga);
       pozo += apuesta.getApostado();
-      notificar(Eventos.apuestaPaga);
+      notificar(Eventos.apuesta);
     }
   }
 
@@ -132,7 +132,7 @@ public class Partida extends Observable implements Observer {
     if (haIniciado() && !apuesta.estaPaga()) {
       apuesta.subir(jugador, monto);
       pozo += (apuesta.getApostado() + monto);
-      notificar(Eventos.apuestaAumentada);
+      notificar(Eventos.apuesta);
     }
   }
 
@@ -269,12 +269,18 @@ public class Partida extends Observable implements Observer {
     return jugador2;
   }
 
+  public int getTiempoTurno() {
+    if (temporizador != null)
+      return temporizador.getTiempo();
+    return 0;
+  }
+
   @Override
   public void update(Observable o, Object evento) {
-    if (evento == Temporizador.Eventos.temporizador_detenido)
-      System.out.println("Nuevo turno");
+    if (evento == Temporizador.Eventos.tiempo)
+      notificar(Eventos.tiempo);
     if (evento == Temporizador.Eventos.tiempo_agotado)
-      System.out.println("Partida terminada");
+      terminarPartida();
     if (evento == Temporizador.Eventos.interrupted_exception)
       System.out.println("Error de temporizador");
   }

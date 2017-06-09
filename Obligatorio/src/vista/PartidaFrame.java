@@ -140,9 +140,9 @@ public class PartidaFrame extends javax.swing.JFrame implements PartidaVista, Ac
   }
 
   @Override
-  public void mostrarDatos(String tituloPartida, String turno, double saldo, double pozo, double apuestaActual, int numeroTurno) {
+  public void mostrarDatos(String tituloPartida, String turno, double saldo, double pozo, double apuestaActual, int numeroTurno, int tiempoTurno) {
     setTitle(tituloPartida);
-    PartidaInformacionPanel infoPanel = new PartidaInformacionPanel(controlador, tituloPartida, turno, ("$" + saldo), ("$" + pozo), ("$" + apuestaActual), ("#" + numeroTurno));
+    PartidaInformacionPanel infoPanel = new PartidaInformacionPanel(controlador, tituloPartida, turno, ("$" + saldo), ("$" + pozo), ("$" + apuestaActual), ("#" + numeroTurno), (tiempoTurno + " seg."));
     splitPanel.setTopComponent(infoPanel);
   }
 

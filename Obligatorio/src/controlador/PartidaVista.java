@@ -13,7 +13,7 @@ public interface PartidaVista {
 
   public void mostrarEspera(String mensaje);
 
-  public void mostrarDatos(String tituloPartida, String turno, double saldo, double pozo, double apuestaActual, int numeroTurno);
+  public void mostrarDatos(String tituloPartida, String turno, double saldo, double pozo, double apuestaActual, int numeroTurno, int tiempoTurno);
 
   public void mostarMensaje(String string);
 
