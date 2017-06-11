@@ -148,10 +148,9 @@ public class Partida extends Observable implements Observer {
       boolean minaColocada = false;
       while (!minaColocada) {
         int indice = (int) Math.round(Math.random() * ((tamano * tamano) - 1));
-        Casillero cas = casilleros.get(indice);
-        if (!cas.tieneMina() && !cas.destapado()) {
-          int casillerosRestantes = (tamano * tamano) - (movimientos.size() - 1);
-          cas.setMina(new Mina(casillerosRestantes));
+        Casillero casillero = casilleros.get(indice);
+        if (!casillero.tieneMina() && !casillero.destapado()) {
+          casillero.setMina(new Mina());
           minaColocada = true;
         }
       }
@@ -223,6 +222,10 @@ public class Partida extends Observable implements Observer {
   }
 
 //    Getters & Setters
+  public int getCasillerosTapados() {
+    return (tamano * tamano) - (movimientos.size() - 1);
+  }
+
   public int getTamano() {
     return tamano;
   }

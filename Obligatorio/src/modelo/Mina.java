@@ -6,19 +6,16 @@ public class Mina {
 
   private Color color = Color.RED;
   private TipoMina tipo;
+  private String descripcion;
   private TipoMina[] tipos = {
-    new TipoMinaExplosiva(),
-    new TipoMinaTrampa(),
-    new TipoMinaSuerte()
+    new MinaExplosiva(),
+    new MinaTrampa(),
+    new MinaSuerte()
   };
-
-  public Mina(int casillerosRestantes) {
-    setTipo(casillerosRestantes);
-  }
 
   private void setTipo(int casillerosRestantes) {
     if (casillerosRestantes <= 2)
-      tipo = new TipoMinaExplosiva();
+      tipo = new MinaExplosiva();
     else {
       int indice = (int) Math.round(Math.random() * ((tipos.length) - 1));
       tipo = tipos[indice];
@@ -35,6 +32,10 @@ public class Mina {
 
   public void activar(Partida partida) {
     tipo.activar(partida);
+  }
+  
+  public String getDescripcion() {
+    return descripcion;
   }
 
 }

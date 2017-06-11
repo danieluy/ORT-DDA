@@ -1,8 +1,8 @@
 package modelo;
 
-public class TipoMinaTrampa extends TipoMina {
+public class MinaTrampa extends TipoMina {
 
-  public TipoMinaTrampa(){
+  public MinaTrampa(){
     super("T");
   }
 
