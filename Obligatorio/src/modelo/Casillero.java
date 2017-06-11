@@ -45,7 +45,7 @@ public class Casillero implements CasilleroPanel {
       throw new CasilleroException("Casillero ya destapado");
   }
   
-  private boolean destapado(){
+  public boolean destapado(){
     return !color.equals(Color.LIGHT_GRAY);
   }
 

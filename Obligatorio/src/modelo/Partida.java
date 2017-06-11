@@ -148,24 +148,23 @@ public class Partida extends Observable implements Observer {
       boolean minaColocada = false;
       while (!minaColocada) {
         int indice = (int) Math.round(Math.random() * ((tamano * tamano) - 1));
-        if (!casilleros.get(indice).tieneMina() && casilleros.get(indice).getColor() == Color.LIGHT_GRAY) {
+        Casillero cas = casilleros.get(indice);
+        if (!cas.tieneMina() && !cas.destapado()) {
           int casillerosRestantes = (tamano * tamano) - (movimientos.size() - 1);
-          casilleros.get(indice).setMina(new Mina(casillerosRestantes));
+          cas.setMina(new Mina(casillerosRestantes));
           minaColocada = true;
         }
       }
     }
 //        contadorMinas();
   }
-//    Solo para desarrollo, no aparece en diagrama
-
-  private void contadorMinas() {
-    int minas = 0;
-    for (Casillero casillero : casilleros)
-      if (casillero.tieneMina())
-        minas++;
-    System.out.println("Minas: " + minas);
-  }
+//  private void contadorMinas() {//  Solo para desarrollo, no aparece en diagrama
+//    int minas = 0;
+//    for (Casillero casillero : casilleros)
+//      if (casillero.tieneMina())
+//        minas++;
+//    System.out.println("Minas: " + minas);
+//  }
 
   public boolean tableroCreado() {
     return tamano >= TAMANO_MINIMO;

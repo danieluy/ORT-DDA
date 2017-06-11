@@ -139,10 +139,8 @@ public class PartidaControlador implements Observer {
 
   @Override
   public void update(Observable o, Object evento) {
-    // ya ingresaron ambos jugadores
     if (evento == Partida.Eventos.partidaLlena)
       vista.setTitulo(tituloPartida());
-    // jugador uno ya está y ya inició el tablero
     if (evento == Partida.Eventos.tableroCreado)
       vista.mostrarEspera("Esperando oponente");
     if (evento == Partida.Eventos.partidaIniciada || evento == Partida.Eventos.movimientoEfectuado)
@@ -160,7 +158,7 @@ public class PartidaControlador implements Observer {
     if (evento == Partida.Eventos.jugador2NoJuega)
       quitarJugador2();
     if (evento == Partida.Eventos.tiempo)
-//      actualizarPartida();
+      actualizarPartida();
     if (evento == Partida.Eventos.partidaCancelada) {
       vista.mostrarError(partida.getJugador1().getNombreCompleto() + " ha cancelado la partida");
       vista.cerrar();
