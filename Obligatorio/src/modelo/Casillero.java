@@ -12,7 +12,7 @@ public class Casillero implements CasilleroPanel {
     color = Color.LIGHT_GRAY;
   }
 
-  public void destaparMina() {
+  public void activarMina() {
     if (tieneMina())
       color = mina.getColor();
   }

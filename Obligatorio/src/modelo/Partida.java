@@ -197,7 +197,7 @@ public class Partida extends Observable implements Observer {
   protected void destaparMinas() {
     // minas de la partida
     for (Casillero c : casilleros)
-      c.destaparMina();
+      c.activarMina();
     // minas del estado del movimiento
     movimientos.get(movimientos.size() - 1).destaparMinas();
   }
