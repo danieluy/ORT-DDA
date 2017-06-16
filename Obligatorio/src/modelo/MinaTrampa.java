@@ -1,6 +1,6 @@
 package modelo;
 
-public class MinaTrampa extends TipoMina {
+public class MinaTrampa extends Mina {
 
   public MinaTrampa(){
     super("T");

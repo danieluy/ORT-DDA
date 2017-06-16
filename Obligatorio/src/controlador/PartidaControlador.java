@@ -128,7 +128,9 @@ public class PartidaControlador implements Observer {
   }
 
   private String getInfoFinPartida() {
-    if (partida.esTurnoDe(jugador))
+    if(partida.getGanador() == null)
+      return "Aún no hay ganador";
+    if (partida.getGanador() == jugador)
       return "Has ganado la partida!";
     return "Has perdido";
   }

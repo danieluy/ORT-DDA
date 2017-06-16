@@ -2,24 +2,13 @@ package modelo;
 
 import java.awt.Color;
 
-public class Mina {
+public abstract class Mina {
 
   private Color color = Color.RED;
-  private TipoMina tipo;
-  private String descripcion;
-  private TipoMina[] tipos = {
-    new MinaExplosiva(),
-    new MinaTrampa(),
-    new MinaSuerte()
-  };
+  private String tipo;
 
-  private void setTipo(int casillerosRestantes) {
-    if (casillerosRestantes <= 2)
-      tipo = new MinaExplosiva();
-    else {
-      int indice = (int) Math.round(Math.random() * ((tipos.length) - 1));
-      tipo = tipos[indice];
-    }
+  protected Mina(String tipo) {
+    this.tipo = tipo;
   }
 
   public Color getColor() {
@@ -27,15 +16,9 @@ public class Mina {
   }
 
   public String getTipo() {
-    return tipo.getDescripcion();
+    return tipo;
   }
 
-  public void activar(Partida partida) {
-    tipo.activar(partida);
-  }
-  
-  public String getDescripcion() {
-    return descripcion;
-  }
+  public abstract void activar(Partida partida);
 
 }

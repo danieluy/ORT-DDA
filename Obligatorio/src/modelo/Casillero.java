@@ -7,6 +7,7 @@ public class Casillero implements CasilleroPanel {
 
   private Mina mina;
   private Color color;
+  private Mina[] minas = {new MinaExplosiva(), new MinaTrampa(), new MinaSuerte()};
 
   public Casillero() {
     color = Color.LIGHT_GRAY;
@@ -21,8 +22,20 @@ public class Casillero implements CasilleroPanel {
     return mina;
   }
 
-  public void setMina(Mina mina) {
-    this.mina = mina;
+  public void agregarMina(Partida partida) {
+    System.out.println("partida.getCasillerosRestantes()" + (partida.getCasillerosRestantes()));
+    if (!tieneMina() && !destapado()) {
+      if (partida.getCasillerosRestantes() <= 2) {
+        System.out.println("Entroooooooooooooooooo!!!!!!!!!!!!!!!!!!");
+        mina = minas[0];
+      }
+      else {
+        int i = (int) Math.round(Math.random() * ((minas.length) - 1));
+        mina = minas[i];
+      }
+      System.out.println("Mina plantada, tipo " + mina.getTipo());
+    }
+    System.out.println("Mina NO plantada");
   }
 
   public boolean tieneMina() {
@@ -31,6 +44,10 @@ public class Casillero implements CasilleroPanel {
 
   public void setColor(Color color) {
     this.color = color;
+  }
+
+  public void setMina(Mina mina) {
+    this.mina = mina;
   }
 
   private void setColor(Jugador jugador) {
@@ -44,14 +61,14 @@ public class Casillero implements CasilleroPanel {
     if (destapado())
       throw new CasilleroException("Casillero ya destapado");
   }
-  
-  public boolean destapado(){
+
+  public boolean destapado() {
     return !color.equals(Color.LIGHT_GRAY);
   }
 
   public void destapar(Partida partida) throws CasilleroException {
     Jugador jugador = partida.getJugadorTurno();
-    validarDestapar(jugador);
+    validarDestapar(jugador); // un jugador no puede apostar dos veces !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     setColor(jugador);
     if (tieneMina())
       mina.activar(partida);

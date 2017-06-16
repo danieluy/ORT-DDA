@@ -1,6 +1,6 @@
 package modelo;
 
-public class MinaExplosiva extends TipoMina {
+public class MinaExplosiva extends Mina {
 
   public MinaExplosiva(){
     super("E");
