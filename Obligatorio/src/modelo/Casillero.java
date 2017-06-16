@@ -23,8 +23,8 @@ public class Casillero implements CasilleroPanel {
   }
 
   public void agregarMina(Partida partida) {
-    System.out.println("partida.getCasillerosRestantes()" + (partida.getCasillerosRestantes()));
     if (!tieneMina() && !destapado()) {
+      System.out.println("Casilleros Rest: " + (partida.getCasillerosRestantes()));
       if (partida.getCasillerosRestantes() <= 2) {
         System.out.println("Entroooooooooooooooooo!!!!!!!!!!!!!!!!!!");
         mina = minas[0];
@@ -33,9 +33,8 @@ public class Casillero implements CasilleroPanel {
         int i = (int) Math.round(Math.random() * ((minas.length) - 1));
         mina = minas[i];
       }
-      System.out.println("Mina plantada, tipo " + mina.getTipo());
+      System.out.println("Mina tipo " + mina.getTipo());
     }
-    System.out.println("Mina NO plantada");
   }
 
   public boolean tieneMina() {

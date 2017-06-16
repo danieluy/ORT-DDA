@@ -12,11 +12,11 @@ public class Partida extends Observable implements Observer {
   public static final int TAMANO_MAXIMO = 10;
   public static final int TIEMPO_TURNO = 15; // agregar a diagrama !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   public static final double APUESTA_INICIAL = 10;
+  private final Color COLOR_1 = Color.CYAN;
+  private final Color COLOR_2 = Color.YELLOW;
   private double pozo = 0;
   private int tamano = 0;
   private Jugador ganador;
-  private Color color1 = Color.CYAN;
-  private Color color2 = Color.YELLOW;
   private Apuesta apuesta;
   private Jugador jugador1;
   private Jugador jugador2;
@@ -26,7 +26,7 @@ public class Partida extends Observable implements Observer {
 
   public Partida(Jugador jugador) throws PartidaException {
     jugador1 = jugador;
-    jugador1.setColor(color1);
+    jugador1.setColor(COLOR_1);
     jugador1.setPartida(this);
   }
 
@@ -50,7 +50,7 @@ public class Partida extends Observable implements Observer {
 
   public void setJugador2(Jugador jugador) throws ApuestaException {
     jugador2 = jugador;
-    jugador2.setColor(color2);
+    jugador2.setColor(COLOR_2);
     jugador2.setPartida(this);
     notificar(Eventos.partidaLlena);
     iniciarPartida();
@@ -77,7 +77,7 @@ public class Partida extends Observable implements Observer {
   private void iniciarPartida() throws ApuestaException {
     if (haIniciado()) {
       iniciarApuestas();
-      addMovimiento(null);
+      addMovimiento();
       notificar(Eventos.partidaIniciada);
       temporizador = new Temporizador(TIEMPO_TURNO, this);
     }
@@ -96,6 +96,7 @@ public class Partida extends Observable implements Observer {
   }
 
   protected void continuar() {
+    addMovimiento();
     plantarMina();
     temporizador = new Temporizador(TIEMPO_TURNO, this);
   }
@@ -128,7 +129,6 @@ public class Partida extends Observable implements Observer {
       Casillero casillero = (Casillero) casilleroPanel;
       casillero.validarDestapar(jugador);
       casillero.destapar(this);
-      addMovimiento(jugador);
     }
   }
 
@@ -169,7 +169,7 @@ public class Partida extends Observable implements Observer {
   }
 
   private void plantarMina() {
-    if (movimientos.size() % 2 == 0) {
+    if (esTurnoDe(jugador1) || movimientos.size() == 0) {
       boolean minaColocada = false;
       while (!minaColocada) {
         int indice = (int) Math.round(Math.random() * ((tamano * tamano) - 1));
@@ -200,7 +200,8 @@ public class Partida extends Observable implements Observer {
     movimientos.get(movimientos.size() - 1).destaparMinas();
   }
 
-  protected void addMovimiento(Jugador jugador) {
+  protected void addMovimiento() {
+    Jugador jugador = esTurnoDe(jugador1) ? jugador1 : jugador2;
     movimientos.add(new Movimiento(casilleros, jugador, pozo, this.getNumeroTurno()));
     notificar(Eventos.movimientoEfectuado);
   }
@@ -280,8 +281,8 @@ public class Partida extends Observable implements Observer {
   public void update(Observable o, Object evento) {
     if (evento == Temporizador.Eventos.tiempo)
 //      notificar(Eventos.tiempo);
-    if (evento == Temporizador.Eventos.tiempo_agotado)
-      terminar();
+      if (evento == Temporizador.Eventos.tiempo_agotado)
+        terminar();
     if (evento == Temporizador.Eventos.interrupted_exception)
       System.out.println("Error de temporizador");
   }
