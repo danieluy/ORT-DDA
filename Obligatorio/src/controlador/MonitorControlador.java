@@ -20,7 +20,7 @@ public class MonitorControlador implements Observer {
   }
 
   public void actualizarVista() {
-    if (partida.haIniciado()) {
+    if (partida.iniciada()) {
       vista.mostrarDatos(tituloPartida(), partida.getPozo(), partida.getNumeroTurno(), getTurnoDe());
       vista.mostrarTablero(partida.getTamano(), partida.getCasilleros());
     }
@@ -30,9 +30,9 @@ public class MonitorControlador implements Observer {
 
   private String tituloPartida() {
     String titulo;
-    if (!partida.haIniciado())
+    if (!partida.iniciada())
       titulo = partida.getJugador1().getNombreCompleto() + " esperando oponente";
-    else if (partida.haIniciado() && !partida.haTerminado())
+    else if (partida.iniciada() && !partida.terminada())
       titulo = partida.getJugador1().getNombreCompleto() + " vs. " + partida.getJugador2().getNombreCompleto();
     else
       titulo = getGanador();
@@ -55,21 +55,21 @@ public class MonitorControlador implements Observer {
   }
 
   public void adelante() {
-    if (partida.haTerminado() && posicionReproductor < partida.getMovimientos().size() - 1) {
+    if (partida.terminada() && posicionReproductor < partida.getMovimientos().size() - 1) {
       posicionReproductor++;
       reproducir();
     }
   }
 
   public void atras() {
-    if (partida.haTerminado() && posicionReproductor > 0) {
+    if (partida.terminada() && posicionReproductor > 0) {
       posicionReproductor--;
       reproducir();
     }
   }
 
   private void reproducir() {
-    if (partida.haTerminado()) {
+    if (partida.terminada()) {
       Movimiento movimiento = partida.getMovimientos().get(posicionReproductor);
       String turnoDe = movimiento.getJugador() == null ? "" : movimiento.getJugador().getNombreCompleto();
       vista.mostrarDatos(tituloPartida(), movimiento.getPozo(), movimiento.getNumeroTurno(), turnoDe);

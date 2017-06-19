@@ -29,7 +29,7 @@ public class ListaPartidasControlador implements Observer {
       String j1Info = j1.getNombre() + " ($ " + j1.getSaldo() + ")";
       Jugador j2 = p.getJugador2();
       String j2Info = j2 != null ? j2.getNombre() + " ($ " + j2.getSaldo() + ")" : "Esperando jugador";
-      partidas.add("[" + i + "] [" + (p.haTerminado() ? "Finalizada" : "En Juego") + "] [" + p.getNumeroTurno() + "] " + j1Info + " - " + j2Info + " : $" + p.getPozo());
+      partidas.add("[" + i + "] [" + (p.terminada() ? "Finalizada" : "En Juego") + "] [" + p.getNumeroTurno() + "] " + j1Info + " - " + j2Info + " : $" + p.getPozo());
     }
     vistaLista.mostrarPartidas(partidas);
   }

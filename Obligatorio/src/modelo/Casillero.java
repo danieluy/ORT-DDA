@@ -7,12 +7,17 @@ public class Casillero implements CasilleroPanel {
 
   private Mina mina;
   private Color color;
+  private Mina[] minas = {
+    new MinaExplosiva(),
+    new MinaTrampa(),
+    new MinaSuerte()
+  };
 
   public Casillero() {
     color = Color.LIGHT_GRAY;
   }
 
-  public void destaparMina() {
+  public void activarMina() {
     if (tieneMina())
       color = mina.getColor();
   }
@@ -21,8 +26,15 @@ public class Casillero implements CasilleroPanel {
     return mina;
   }
 
-  public void setMina(Mina mina) {
-    this.mina = mina;
+  public boolean agregarMina(Partida partida) {
+    if (!tieneMina() && !destapado()) {
+      if (partida.cantCasillerosTapados() - partida.cantMinasColocadas() <= 2)
+        mina = minas[0];
+      else
+        mina = minas[Auxiliar.random((minas.length) - 1)];
+      return true;
+    }
+    return false;
   }
 
   public boolean tieneMina() {
@@ -31,6 +43,10 @@ public class Casillero implements CasilleroPanel {
 
   public void setColor(Color color) {
     this.color = color;
+  }
+
+  public void setMina(Mina mina) {
+    this.mina = mina;
   }
 
   private void setColor(Jugador jugador) {
@@ -44,8 +60,8 @@ public class Casillero implements CasilleroPanel {
     if (destapado())
       throw new CasilleroException("Casillero ya destapado");
   }
-  
-  public boolean destapado(){
+
+  public boolean destapado() {
     return !color.equals(Color.LIGHT_GRAY);
   }
 

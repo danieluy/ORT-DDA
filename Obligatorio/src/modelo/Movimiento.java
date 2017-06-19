@@ -29,7 +29,7 @@ public class Movimiento {
 
   public void destaparMinas() {
     for (Casillero c : estadoTablero)
-      c.destaparMina();
+      c.activarMina();
   }
 
 //    Getters & Setters

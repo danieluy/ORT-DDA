@@ -1,6 +1,7 @@
 package vista;
 
 import modelo.Administrador;
+import modelo.Auxiliar;
 import modelo.Fachada;
 import modelo.Jugador;
 import modelo.UsuarioException;
@@ -23,7 +24,6 @@ public class Main {
     modelo.addAdministrador(new Administrador("Eduardo", "Eduardo Cardozo", "pass"));
 
     new InicioFrame().setVisible(true);
-    // Added to save empty commit on GIT
   }
 
 }

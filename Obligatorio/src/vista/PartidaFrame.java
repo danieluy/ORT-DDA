@@ -128,22 +128,27 @@ public class PartidaFrame extends javax.swing.JFrame implements PartidaVista, Ac
   }
 
   @Override
-  public void mostrarTablero(int tamano, ArrayList casilleros) {
+  public void iniciarTablero() {
     splitPanel = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
     splitPanel.setDividerLocation(150);
     splitPanel.setDividerSize(0);
     setContentPane(splitPanel);
+  }
+
+  @Override
+  public void mostrarTablero(int tamano, ArrayList casilleros) {
     TableroPanel panelTablero = new TableroPanel();
-    panelTablero.mostrarTablero(tamano, casilleros, this);
     splitPanel.setBottomComponent(panelTablero);
+    panelTablero.mostrarTablero(tamano, casilleros, this);
     validate();
   }
 
   @Override
   public void mostrarDatos(String tituloPartida, String turno, double saldo, double pozo, double apuestaActual, int numeroTurno, int tiempoTurno) {
-    setTitle(tituloPartida);
-    PartidaInformacionPanel infoPanel = new PartidaInformacionPanel(controlador, tituloPartida, turno, ("$" + saldo), ("$" + pozo), ("$" + apuestaActual), ("#" + numeroTurno), (tiempoTurno + " seg."));
+    PartidaInformacionPanel infoPanel = new PartidaInformacionPanel(controlador);
     splitPanel.setTopComponent(infoPanel);
+    setTitle(tituloPartida);
+    infoPanel.mostrarDatos(tituloPartida, turno, ("$" + saldo), ("$" + pozo), ("$" + apuestaActual), ("#" + numeroTurno), (tiempoTurno + " seg."));
   }
 
   @Override
