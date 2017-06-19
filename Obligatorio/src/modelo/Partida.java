@@ -10,7 +10,7 @@ public class Partida extends Observable implements Observer {
 
   public static final int TAMANO_MINIMO = 3;
   public static final int TAMANO_MAXIMO = 10;
-  public static final int TIEMPO_TURNO = 15; // agregar a diagrama !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  public static final int TIEMPO_TURNO = 15;
   public static final double APUESTA_INICIAL = 10;
   private final Color COLOR_1 = Color.CYAN;
   private final Color COLOR_2 = Color.YELLOW;
@@ -18,6 +18,7 @@ public class Partida extends Observable implements Observer {
   private int tamano = 0;
   private Jugador ganador;
   private Apuesta apuesta;
+  private Jugador turno;
   private Jugador jugador1;
   private Jugador jugador2;
   private ArrayList<Casillero> casilleros = new ArrayList();
@@ -40,7 +41,8 @@ public class Partida extends Observable implements Observer {
     movimientoEfectuado,
     partidaCancelada,
     jugador2NoJuega,
-    tiempo
+    tiempo,
+    partidaActualizada
   }
 
   private void notificar(Object evento) {
@@ -53,7 +55,7 @@ public class Partida extends Observable implements Observer {
     jugador2.setColor(COLOR_2);
     jugador2.setPartida(this);
     notificar(Eventos.partidaLlena);
-    iniciarPartida();
+    iniciar();
   }
 
   public void quitarJugador2() {
@@ -67,67 +69,75 @@ public class Partida extends Observable implements Observer {
     if (tamano > TAMANO_MAXIMO)
       throw new PartidaException("El tamaño máximo del tablero es de " + TAMANO_MAXIMO + " casilleros");
     this.tamano = tamano;
-    for (int i = 0; i < (tamano * tamano); i++)
+    for (int i = 0; i < cantCasilleros(); i++)
       casilleros.add(new Casillero());
     plantarMina();
     notificar(Eventos.tableroCreado);
-    iniciarPartida();
+    iniciar();
   }
 
-  private void iniciarPartida() throws ApuestaException {
-    if (haIniciado()) {
+  private void iniciar() throws ApuestaException {
+    if (iniciada()) { // necesario porque deben cumplirse dos condiciones no simultáneas para poder iniciar
       iniciarApuestas();
-      addMovimiento();
+      registrarMovimiento();
       notificar(Eventos.partidaIniciada);
       temporizador = new Temporizador(TIEMPO_TURNO, this);
     }
   }
 
-  public void salir(Jugador jugador) {
-    if (haIniciado() && !haTerminado()) {
-      ganador = getOponente(jugador);
-      ganador.setSaldo(ganador.getSaldo() + pozo);
-      notificar(Eventos.jugadorSeHaRendido);
+  protected void continuar() {
+    if (iniciada() && !terminada()) {
+      // Cambios de estado
+      plantarMina();
+      temporizador = new Temporizador(TIEMPO_TURNO, this);
+      cambiarTurno();
+      // Registrar cambios de estado
+      registrarMovimiento();
+      // Notificar cambios de estado
+      notificar(Eventos.partidaActualizada);
     }
-    else if (!haIniciado() && jugador == jugador1)
+  }
+
+  public void terminar() {
+    if (iniciada() && !terminada()) {
+      // Cambios de estado
+      temporizador.detener();
+      destaparMinas();
+      ganador = getOponente(turno);
+      ganador.setSaldo(ganador.getSaldo() + pozo);
+      // Registrar cambios de estado
+      registrarMovimiento();
+      // Notificar cambios de estado
+      notificar(Eventos.partidaTerminada);
+    }
+  }
+
+  public void salir(Jugador jugador) {
+    if (iniciada() && !terminada()) {
+      turno = jugador;
+      terminar();
+    }
+    else if (!iniciada() && jugador == jugador1)
       notificar(Eventos.partidaCancelada);
-    else if (!haIniciado() && jugador == jugador2)
+    else if (!iniciada() && jugador == jugador2)
       notificar(Eventos.jugador2NoJuega);
   }
 
-  protected void continuar() {
-    addMovimiento();
-    plantarMina();
-    temporizador = new Temporizador(TIEMPO_TURNO, this);
-  }
-
-  protected void terminar() {
-    destaparMinas();
-    terminarPartida();
-  }
-
-  public void terminarPartida() {
-    if (haIniciado() && !haTerminado()) {
-      if (esTurnoDe(jugador1))
-        ganador = jugador2;
-      else
-        ganador = jugador1;
-      ganador.setSaldo(ganador.getSaldo() + pozo);
-      notificar(Eventos.partidaTerminada);
-      temporizador.detener();
-    }
+  private void cambiarTurno() {
+    turno = getOponente(turno);
   }
 
   public void destaparCasillero(CasilleroPanel casilleroPanel, Jugador jugador)
       throws PartidaException, CasilleroException, ApuestaException {
-    if (haIniciado()) {
+    if (iniciada()) {
       if (!esTurnoDe(jugador))
         throw new PartidaException("No es tu turno");
       if (!apuesta.estaPaga())
         throw new ApuestaException("Apuesta en curso");
+      if (turno == null)
+        turno = jugador;
       temporizador.detener();
       Casillero casillero = (Casillero) casilleroPanel;
-      casillero.validarDestapar(jugador);
       casillero.destapar(this);
     }
   }
@@ -138,7 +148,7 @@ public class Partida extends Observable implements Observer {
   }
 
   public void apostar(Jugador jugadorApuesta, double monto) throws ApuestaException {
-    if (haIniciado()) {
+    if (iniciada()) {
       apuesta = new Apuesta(jugadorApuesta, getOponente(jugadorApuesta), monto);
       pozo += monto;
       notificar(Eventos.apuesta);
@@ -146,7 +156,7 @@ public class Partida extends Observable implements Observer {
   }
 
   public void pagarApuesta(Jugador jugadorPaga) throws ApuestaException {
-    if (haIniciado() && !apuesta.estaPaga()) {
+    if (iniciada() && !apuesta.estaPaga()) {
       apuesta.pagar(jugadorPaga);
       pozo += apuesta.getApostado();
       notificar(Eventos.apuesta);
@@ -154,7 +164,7 @@ public class Partida extends Observable implements Observer {
   }
 
   public void subirApuesta(Jugador jugador, double monto) throws ApuestaException {
-    if (haIniciado() && !apuesta.estaPaga()) {
+    if (iniciada() && !apuesta.estaPaga()) {
       apuesta.subir(jugador, monto);
       pozo += (apuesta.getApostado() + monto);
       notificar(Eventos.apuesta);
@@ -169,61 +179,65 @@ public class Partida extends Observable implements Observer {
   }
 
   private void plantarMina() {
-    if (esTurnoDe(jugador1) || movimientos.size() == 0) {
+    if (esTurnoDe(jugador2) || cantCasillerosDestapados() == 0) {
       boolean minaColocada = false;
-      while (!minaColocada) {
-        int indice = (int) Math.round(Math.random() * ((tamano * tamano) - 1));
-        Casillero casillero = casilleros.get(indice);
-        casillero.agregarMina(this);
-        minaColocada = casillero.tieneMina();
+      for (int i = 0; i < cantCasilleros() && !minaColocada; i++) {
+        int random = Auxiliar.random(cantCasilleros() - 1);
+        Casillero casillero = casilleros.get(random);
+        minaColocada = casillero.agregarMina(this);
       }
     }
-//        contadorMinas();
   }
-//  private void contadorMinas() {//  Solo para desarrollo, no aparece en diagrama
-//    int minas = 0;
-//    for (Casillero casillero : casilleros)
-//      if (casillero.tieneMina())
-//        minas++;
-//    System.out.println("Minas: " + minas);
-//  }
 
   public boolean tableroCreado() {
     return tamano >= TAMANO_MINIMO;
   }
 
-  protected void destaparMinas() { // revisar estooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
-    // minas de la partida
+  protected void destaparMinas() {
     for (Casillero c : casilleros)
       c.activarMina();
-    // minas del estado del movimiento
-    movimientos.get(movimientos.size() - 1).destaparMinas();
   }
 
-  protected void addMovimiento() {
-    Jugador jugador = esTurnoDe(jugador1) ? jugador1 : jugador2;
-    movimientos.add(new Movimiento(casilleros, jugador, pozo, this.getNumeroTurno()));
+  protected void registrarMovimiento() {
+    movimientos.add(new Movimiento(casilleros, getJugadorTurno(), pozo, this.getNumeroTurno()));
     notificar(Eventos.movimientoEfectuado);
   }
 
   public boolean esTurnoDe(Jugador jugador) {
-    if (movimientos.size() <= 1)// el primer movimiento son todos los casillero tapados
+    if (turno == null)
       return jugador == jugador1;
-    return jugador != movimientos.get(movimientos.size() - 1).getJugador();
+    return jugador == turno;
   }
 
-  public boolean haIniciado() {
+  public boolean iniciada() {
     return (jugador2 != null && tamano >= TAMANO_MINIMO);
   }
 
-  public boolean haTerminado() {
+  public boolean terminada() {
     return ganador != null;
   }
 
 //    Getters & Setters
-  public int getCasillerosRestantes() {
-    int casillerosDestapados = movimientos.size() - 1 < 0 ? 0 : movimientos.size() - 1;
-    return (tamano * tamano) - casillerosDestapados;
+  private int cantCasilleros() {
+    return tamano * tamano;
+  }
+
+  private int cantCasillerosDestapados() {
+    // -1 porque el primero movimiento son todos los casileros tapados
+    return movimientos.size() - 1 < 0 ? 0 : movimientos.size() - 1;
+  }
+
+  public int cantCasillerosTapados() {
+    return cantCasilleros() - cantCasillerosDestapados();
+  }
+
+  public int cantMinasColocadas() {
+    int minasColocadas = 0;
+    for (Casillero c : casilleros) {
+      if (c.tieneMina())
+        minasColocadas++;
+    }
+    return minasColocadas;
   }
 
   public int getTamano() {
@@ -260,7 +274,7 @@ public class Partida extends Observable implements Observer {
   }
 
   public Jugador getGanador() {
-    if (haTerminado())
+    if (terminada())
       return ganador;
     return null;
   }

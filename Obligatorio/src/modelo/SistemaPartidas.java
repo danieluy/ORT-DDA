@@ -39,7 +39,7 @@ public class SistemaPartidas implements Observer {
   public void purgarPartidas() {
     ArrayList<Integer> purgar = new ArrayList();
     for (int i = 0; i < partidas.size(); i++)
-      if (!partidas.get(i).haIniciado())
+      if (!partidas.get(i).iniciada())
         purgar.add(i);
     for (int j : purgar)
       partidas.remove(j);
@@ -48,7 +48,7 @@ public class SistemaPartidas implements Observer {
 
   public boolean hayJuegosActivos() {
     for (Partida partida : partidas)
-      if (!partida.haTerminado())
+      if (!partida.terminada())
         return true;
     return false;
   }

@@ -31,7 +31,7 @@ public class PartidaControlador implements Observer {
       // Si es el jugador 1 preguntamos tamaño de tablero
       // Si es el jugador 2 espera
       if (partida.getJugador2() == jugador)
-        if (partida.haIniciado())
+        if (partida.iniciada())
           actualizarPartida();
         else
           vista.mostrarEspera("Esperando por " + partida.getJugador1().getNombreCompleto());
@@ -72,9 +72,9 @@ public class PartidaControlador implements Observer {
 
   private String tituloPartida() {
     String titulo;
-    if (partida.haIniciado())
+    if (partida.iniciada())
       titulo = partida.getJugador1().getNombreCompleto() + " vs. " + partida.getJugador2().getNombreCompleto();
-    else if (partida.haTerminado())
+    else if (partida.terminada())
       titulo = "Partida finalizada";
     else
       titulo = partida.getJugador1().getNombreCompleto() + " esperando oponente";
