@@ -16,7 +16,6 @@ public class BaseDatos {
   private BaseDatos() {
   }
 
-  ;
   public static BaseDatos getInstancia() {
     return bd;
   }
