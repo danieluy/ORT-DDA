@@ -1,7 +1,6 @@
 package modelo;
 
 import java.awt.Color;
-import java.util.ArrayList;
 
 public class Jugador extends Usuario {
 
@@ -9,9 +8,13 @@ public class Jugador extends Usuario {
   private Partida partida;
   private double saldo;
 
-  public Jugador(String nombre, String nombreCompleto, String password, double saldoInicial) {
+  public Jugador() {
+    super();
+  }
+
+  public Jugador(String nombre, String nombreCompleto, String password, double saldo) {
     super(nombre, nombreCompleto, password);
-    saldo = saldoInicial;
+    this.saldo = saldo;
   }
 
   public void abandonarPartida() {
@@ -51,5 +54,10 @@ public class Jugador extends Usuario {
   public void setSaldo(double saldo) {
     this.saldo = saldo;
   }
-
+  
+  
+  @Override
+  public String toString(){
+    return super.toString() + ", saldo: " + saldo;
+  }
 }

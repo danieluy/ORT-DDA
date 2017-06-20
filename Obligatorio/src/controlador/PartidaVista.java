@@ -9,6 +9,8 @@ public interface PartidaVista {
 
   public void mostrarError(String string);
 
+  public void iniciarTablero();
+
   public void mostrarTablero(int tamano, ArrayList casilleros);
 
   public void mostrarEspera(String mensaje);

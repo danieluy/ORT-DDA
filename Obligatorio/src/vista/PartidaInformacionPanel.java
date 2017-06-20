@@ -6,24 +6,13 @@ public class PartidaInformacionPanel extends javax.swing.JPanel {
 
   private PartidaControlador controlador;
 
-  public PartidaInformacionPanel(
-      PartidaControlador controlador,
-      String tituloPartida,
-      String turno,
-      String saldo,
-      String pozo,
-      String apuestaActual,
-      String numeroTurno,
-      String tiempoTurno) {
+  public PartidaInformacionPanel(PartidaControlador controlador) {
     initComponents();
     this.controlador = controlador;
-    lbl_titulo.setText(tituloPartida);
-    lbl_jugadorTurno.setText(turno);
-    lbl_saldo.setText(saldo);
-    lbl_pozo.setText(pozo);
-    lbl_numeroTurno.setText(numeroTurno);
-    lbl_totalApuesta.setText(apuestaActual);
-    lbl_tiempo.setText(tiempoTurno);
+  }
+
+  PartidaInformacionPanel() {
+    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
   }
 
   @SuppressWarnings("unchecked")
@@ -212,4 +201,19 @@ public class PartidaInformacionPanel extends javax.swing.JPanel {
   private javax.swing.JLabel lbl_totalApuesta;
   private javax.swing.JTextField txt_montoApuesta;
   // End of variables declaration//GEN-END:variables
+
+  public void mostrarDatos(String tituloPartida, String turno, String saldo, String pozo, String apuestaActual, String numeroTurno, String tiempoTurno) {
+    lbl_titulo.setText(tituloPartida);
+    lbl_jugadorTurno.setText(turno);
+    lbl_saldo.setText(saldo);
+    lbl_pozo.setText(pozo);
+    lbl_numeroTurno.setText(numeroTurno);
+    lbl_totalApuesta.setText(apuestaActual);
+    lbl_tiempo.setText(tiempoTurno);
+  }
+  
+  public void actualizarTiempo(String tiempoTurno){
+    lbl_tiempo.setText(tiempoTurno);
+  }
+  
 }

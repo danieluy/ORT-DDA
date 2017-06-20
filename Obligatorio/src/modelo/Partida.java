@@ -10,7 +10,7 @@ public class Partida extends Observable implements Observer {
 
   public static final int TAMANO_MINIMO = 3;
   public static final int TAMANO_MAXIMO = 10;
-  public static final int TIEMPO_TURNO = 15;
+  public static final int TIEMPO_TURNO = 10;
   public static final double APUESTA_INICIAL = 10;
   private final Color COLOR_1 = Color.CYAN;
   private final Color COLOR_2 = Color.YELLOW;
@@ -68,6 +68,8 @@ public class Partida extends Observable implements Observer {
       throw new PartidaException("El tamaño mínimo del tablero es de " + TAMANO_MINIMO + (TAMANO_MINIMO == 1 ? " casillero" : " casilleros"));
     if (tamano > TAMANO_MAXIMO)
       throw new PartidaException("El tamaño máximo del tablero es de " + TAMANO_MAXIMO + " casilleros");
+    if(this.tamano >= TAMANO_MINIMO)
+      throw new PartidaException("Tablero ya iniciado");
     this.tamano = tamano;
     for (int i = 0; i < cantCasilleros(); i++)
       casilleros.add(new Casillero());
@@ -80,6 +82,7 @@ public class Partida extends Observable implements Observer {
     if (iniciada()) { // necesario porque deben cumplirse dos condiciones no simultáneas para poder iniciar
       iniciarApuestas();
       registrarMovimiento();
+      turno = jugador1;
       notificar(Eventos.partidaIniciada);
       temporizador = new Temporizador(TIEMPO_TURNO, this);
     }
@@ -134,8 +137,6 @@ public class Partida extends Observable implements Observer {
         throw new PartidaException("No es tu turno");
       if (!apuesta.estaPaga())
         throw new ApuestaException("Apuesta en curso");
-      if (turno == null)
-        turno = jugador;
       temporizador.detener();
       Casillero casillero = (Casillero) casilleroPanel;
       casillero.destapar(this);
@@ -294,7 +295,7 @@ public class Partida extends Observable implements Observer {
   @Override
   public void update(Observable o, Object evento) {
     if (evento == Temporizador.Eventos.tiempo)
-//      notificar(Eventos.tiempo);
+      notificar(Eventos.tiempo);
       if (evento == Temporizador.Eventos.tiempo_agotado)
         terminar();
     if (evento == Temporizador.Eventos.interrupted_exception)
