@@ -12,6 +12,7 @@ public class Partida extends Observable implements Observer {
   public static final int TAMANO_MAXIMO = 10;
   public static final int TIEMPO_TURNO = 10;
   public static final double APUESTA_INICIAL = 10;
+  private int oid;
   private final Color COLOR_1 = Color.CYAN;
   private final Color COLOR_2 = Color.YELLOW;
   private double pozo = 0;
@@ -68,7 +69,7 @@ public class Partida extends Observable implements Observer {
       throw new PartidaException("El tamaño mínimo del tablero es de " + TAMANO_MINIMO + (TAMANO_MINIMO == 1 ? " casillero" : " casilleros"));
     if (tamano > TAMANO_MAXIMO)
       throw new PartidaException("El tamaño máximo del tablero es de " + TAMANO_MAXIMO + " casilleros");
-    if(this.tamano >= TAMANO_MINIMO)
+    if (this.tamano >= TAMANO_MINIMO)
       throw new PartidaException("Tablero ya iniciado");
     this.tamano = tamano;
     for (int i = 0; i < cantCasilleros(); i++)
@@ -219,6 +220,14 @@ public class Partida extends Observable implements Observer {
   }
 
 //    Getters & Setters
+  public int getOid() {
+    return oid;
+  }
+
+  public void setOid(int oid) {
+    this.oid = oid;
+  }
+
   private int cantCasilleros() {
     return tamano * tamano;
   }
@@ -296,8 +305,8 @@ public class Partida extends Observable implements Observer {
   public void update(Observable o, Object evento) {
     if (evento == Temporizador.Eventos.tiempo)
       notificar(Eventos.tiempo);
-      if (evento == Temporizador.Eventos.tiempo_agotado)
-        terminar();
+    if (evento == Temporizador.Eventos.tiempo_agotado)
+      terminar();
     if (evento == Temporizador.Eventos.interrupted_exception)
       System.out.println("Error de temporizador");
   }

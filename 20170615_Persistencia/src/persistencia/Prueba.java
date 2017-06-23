@@ -21,7 +21,7 @@ public class Prueba {
 
     MapeadorFactura mf = new MapeadorFactura();
     mf.setF(f);
-    //p.guardar(mf);
+//    p.guardar(mf);
     System.out.println(f);
     System.out.println(p.obtenerTodos(mf));
     System.out.println(p.obtenerTodos(new MapeadorUsuario()));

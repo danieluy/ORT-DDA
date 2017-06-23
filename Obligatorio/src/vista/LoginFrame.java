@@ -9,7 +9,7 @@ import modelo.Usuario;
 
 public class LoginFrame extends java.awt.Frame implements LoginVista {
 
-  private controlador.LoginControlador controlador;
+  private LoginControlador controlador;
   private Usuario.TiposUsuario tipoUsuario;
 
   public LoginFrame(Usuario.TiposUsuario tipoUsuario) {

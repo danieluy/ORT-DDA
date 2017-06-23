@@ -32,8 +32,8 @@ public class Main {
   }
 
   private static void cargarJugadores() throws UsuarioException {
-    MapperJugador mapJ = new MapperJugador();
-    ArrayList<Jugador> jugadores = persistencia.selectAll(mapJ);
+    MapperJugador map = new MapperJugador();
+    ArrayList<Jugador> jugadores = persistencia.selectAll(map);
     for (Jugador j : jugadores)
       modelo.addJugador(new Jugador(j.getNombre(), j.getNombreCompleto(), j.getPassword(), j.getSaldo()));
 //    modelo.addJugador(new Jugador("Tyler", "Tyler Durden", "tfc", 100));
@@ -44,8 +44,8 @@ public class Main {
   }
 
   private static void cargarAdministradores() throws UsuarioException {
-    MapperAdministrador mapA = new MapperAdministrador();
-    ArrayList<Administrador> administradores = persistencia.selectAll(mapA);
+    MapperAdministrador map = new MapperAdministrador();
+    ArrayList<Administrador> administradores = persistencia.selectAll(map);
     for (Administrador a : administradores)
       modelo.addAdministrador(new Administrador(a.getNombre(), a.getNombreCompleto(), a.getPassword()));
 //    modelo.addAdministrador(new Administrador("Daniel", "Daniel Sosa", "pass"));

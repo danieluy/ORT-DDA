@@ -3,6 +3,9 @@ package modelo;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
+import mappers.MapperPartida;
+import persistencia.BaseDatos;
+import persistencia.Persistencia;
 
 public class SistemaPartidas implements Observer {
 
@@ -57,11 +60,27 @@ public class SistemaPartidas implements Observer {
     return partidas;
   }
 
+  protected void guardarPartida(Partida partida) {
+    BaseDatos bd = BaseDatos.getInstancia();
+    String url = "jdbc:mysql://localhost/obligatorio_203752";
+    bd.conectar(url, "root", "root");
+    
+    MapperPartida map = new MapperPartida();
+    map.setPartida(partida);
+    
+    Persistencia p = Persistencia.getInstancia();
+    p.save(map);
+    
+    bd.desconectar();
+  }
+
   @Override
   public void update(Observable o, Object evento) {
     Fachada.getInstancia().notificar(Fachada.Eventos.listaPartidasActualizada);
-    if (evento == Partida.Eventos.partidaTerminada)
+    if (evento == Partida.Eventos.partidaTerminada) {
       o.deleteObserver(this);
+      guardarPartida((Partida) o);
+    }
     if (evento == Partida.Eventos.partidaCancelada)
       purgarPartidas();
   }
