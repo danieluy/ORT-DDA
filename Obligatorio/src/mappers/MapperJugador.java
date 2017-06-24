@@ -52,7 +52,7 @@ public class MapperJugador implements Mapper {
 
   @Override
   public String getSqlSelect() {
-    return "SELECT * FROM jugadores";
+    return "SELECT * FROM jugadores ORDER BY oid";
   }
 
   @Override

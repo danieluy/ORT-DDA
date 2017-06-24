@@ -37,8 +37,7 @@ public class MapeadorFactura implements Mapeador {
   @Override
   public ArrayList<String> getSqlInsertar() {
     ArrayList<String> sqls = new ArrayList();
-    String cabezal = "INSERT INTO cabezal (oid,datos) values "
-        + "(" + getOid() + ",'" + f.getDatos() + "')";
+    String cabezal = "INSERT INTO cabezal (oid,datos) values (" + getOid() + ",'" + f.getDatos() + "')";
     sqls.add(cabezal);
     generarLineas(sqls);
     return sqls;

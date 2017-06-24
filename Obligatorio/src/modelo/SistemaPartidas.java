@@ -61,25 +61,29 @@ public class SistemaPartidas implements Observer {
   }
 
   protected void guardarPartida(Partida partida) {
+    System.out.println("Guardando partida...");
     BaseDatos bd = BaseDatos.getInstancia();
     String url = "jdbc:mysql://localhost/obligatorio_203752";
+
     bd.conectar(url, "root", "root");
-    
+
     MapperPartida map = new MapperPartida();
     map.setPartida(partida);
-    
+
     Persistencia p = Persistencia.getInstancia();
     p.save(map);
-    
+
     bd.desconectar();
+
+    System.out.println("Partida guardada!");
   }
 
   @Override
-  public void update(Observable o, Object evento) {
+  public void update(Observable observer, Object evento) {
     Fachada.getInstancia().notificar(Fachada.Eventos.listaPartidasActualizada);
     if (evento == Partida.Eventos.partidaTerminada) {
-      o.deleteObserver(this);
-      guardarPartida((Partida) o);
+      guardarPartida((Partida) observer);
+      observer.deleteObserver(this);
     }
     if (evento == Partida.Eventos.partidaCancelada)
       purgarPartidas();

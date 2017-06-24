@@ -25,7 +25,7 @@ public class Persistencia {
       int oid = rs.getInt("valor");
       rs.close();
       oid++;
-      bd.update("UPDATE oid SET valor=" + oid);
+      bd.execute("UPDATE oid SET valor=" + oid);
       return oid;
     }
     catch (SQLException ex) {
@@ -86,7 +86,7 @@ public class Persistencia {
   }
 
   public ArrayList select(Mapper map, String where) {
-    String sql = map.getSqlSelect(); //ORDENADO POR oid
+    String sql = map.getSqlSelect(); // ordenado por oid
     if (where != null)
       sql += " WHERE " + where;
     ArrayList lista = new ArrayList();
@@ -94,8 +94,8 @@ public class Persistencia {
       ResultSet rs = bd.select(sql);
       int oid, oidAnterior = -1;
       while (rs.next()) {
-        oid = rs.getInt("oid"); //SE TIENE QUE LLAMAR ASI 
-        if (oid != oidAnterior) { //CAMBIO EL OID
+        oid = rs.getInt("oid"); // el campo oid tiene que existir con ese nombre en la base de datos
+        if (oid != oidAnterior) { // cambió oid
           map.crearNuevo();
           map.setOid(oid);
           lista.add(map.getObjeto());
@@ -103,7 +103,6 @@ public class Persistencia {
           oidAnterior = oid;
         }
         map.leerComponente(rs);
-
       }
     }
     catch (SQLException ex) {

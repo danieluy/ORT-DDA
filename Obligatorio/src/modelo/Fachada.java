@@ -65,4 +65,8 @@ public class Fachada extends Observable {
     return sistemaPartidas.getPartidas();
   }
 
+  public void iniciarJugadores() throws UsuarioException {
+    sistemaUsuarios.iniciarJugadores();
+  }
+
 }

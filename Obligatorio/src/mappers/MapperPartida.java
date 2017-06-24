@@ -33,8 +33,9 @@ public class MapperPartida implements Mapper {
         + ", " + partida.getJugador1().getOid()
         + ", " + partida.getJugador2().getOid()
         + ")";
+    System.out.println("sql_partida " + sql_partida);
     sqls.add(sql_partida);
-    return null;
+    return sqls;
   }
 
   @Override

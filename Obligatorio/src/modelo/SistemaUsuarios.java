@@ -1,11 +1,18 @@
 package modelo;
 
 import java.util.ArrayList;
+import mappers.MapperAdministrador;
+import mappers.MapperJugador;
+import persistencia.BaseDatos;
+import persistencia.Persistencia;
 
 public class SistemaUsuarios {
 
   private ArrayList<Jugador> jugadores = new ArrayList();
   private ArrayList<Administrador> administradores = new ArrayList();
+  private Persistencia persistencia = Persistencia.getInstancia();
+  private BaseDatos bd = BaseDatos.getInstancia();
+  private static String url = "jdbc:mysql://localhost/obligatorio_203752";
 
   public Jugador loginJugador(String usuario, String password) throws UsuarioException {
     for (Jugador jugador : jugadores)
@@ -44,6 +51,27 @@ public class SistemaUsuarios {
 
   void logoutAdministrador(Administrador administrador) {
     throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+  }
+
+  public void iniciarJugadores() throws UsuarioException {
+    bd.conectar(url, "root", "root");
+    cargarJugadores();
+    cargarAdministradores();
+    bd.desconectar();
+  }
+
+  private void cargarJugadores() throws UsuarioException {
+    MapperJugador map = new MapperJugador();
+    ArrayList<Jugador> jugadores_bd = persistencia.selectAll(map);
+    for (Jugador j : jugadores_bd)
+      addJugador((Jugador) j);
+  }
+
+  private void cargarAdministradores() throws UsuarioException {
+    MapperAdministrador map = new MapperAdministrador();
+    ArrayList<Administrador> administradores_bd = persistencia.selectAll(map);
+    for (Administrador a : administradores_bd)
+      addAdministrador((Administrador) a);
   }
 
 }
