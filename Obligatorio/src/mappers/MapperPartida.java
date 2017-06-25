@@ -3,6 +3,8 @@ package mappers;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import modelo.Casillero;
+import modelo.Movimiento;
 import modelo.Partida;
 
 public class MapperPartida implements Mapper {
@@ -26,16 +28,43 @@ public class MapperPartida implements Mapper {
   @Override
   public ArrayList<String> getSqlInsert() {
     ArrayList<String> sqls = new ArrayList();
-    String sql_partida = "INSERT INTO partidas (oid, tamano, ganador, jugador1, jugador2) VALUES ("
+    String sqlInsertPartida = "INSERT INTO partidas (oid, tamano, ganador, jugador1, jugador2) VALUES ("
         + getOid()
         + ", " + partida.getTamano()
         + ", " + partida.getGanador().getOid()
         + ", " + partida.getJugador1().getOid()
         + ", " + partida.getJugador2().getOid()
         + ")";
-    System.out.println("sql_partida " + sql_partida);
-    sqls.add(sql_partida);
+    sqls.add(sqlInsertPartida);
+    getSqlInsertMovimientos(sqls);
     return sqls;
+  }
+
+  private void getSqlInsertMovimientos(ArrayList<String> sqls) {
+    ArrayList<Movimiento> movimientos = partida.getMovimientos();
+    int i = 0;
+    for (Movimiento mov : movimientos) {
+      String sqlInsertMovimiento = "INSERT INTO movimientos (oid, oidPartida, jugador, pozo, numeroTurno) VALUES ("
+          + "'" + getOid() + "_" + i + "'"
+          + ", " + getOid()
+          + ", " + mov.getJugador().getOid()
+          + ", " + mov.getPozo()
+          + ", " + mov.getNumeroTurno()
+          + ")";
+      sqls.add(sqlInsertMovimiento);
+      getSqlInsertCasillero(sqls, (getOid() + "_" + i), mov.getEstadoTablero());
+      i++;
+    }
+  }
+
+  private void getSqlInsertCasillero(ArrayList<String> sqls, String oidMovimiento, ArrayList<Casillero> estado) {
+    for (Casillero cas : estado) {
+      String sqlInsertCasillero = "INSERT INTO casilleros (oidMovimiento, mina) VALUES ("
+          + "'" + oidMovimiento + "'"
+          + ", " + (cas.getTipoMina() != null ? ("'" + cas.getTipoMina() + "'") : null)
+          + ")";
+      sqls.add(sqlInsertCasillero);
+    }
   }
 
   @Override

@@ -47,9 +47,11 @@ public class BaseDatos {
   // La transacción es básicamente poner los commits en manual hasta temrinar de hacer cada uno de los necesarios
   // y después los dejamos como estaban para que el resto de las operaciones puedan usar la conexión normalmente
   public boolean transaction(ArrayList<String> sqls) {
+    String auxSql = "";
     try {
       con.setAutoCommit(false); //comenzar transacción
       for (String sql : sqls) {
+        auxSql = sql;
         if (execute(sql) < 1) {
           con.rollback();
           return false;
@@ -60,6 +62,7 @@ public class BaseDatos {
     }
     catch (SQLException e) {
       System.out.println("Error al ejecutar transaccion:" + e.getMessage());
+      System.out.println("SQL: " + auxSql);
       return false;
     }
     finally {

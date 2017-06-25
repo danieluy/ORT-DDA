@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class Movimiento {
 
+  private int oid;
   private Jugador jugador;
   private ArrayList<Casillero> estadoTablero;
   private double pozo;
@@ -14,6 +15,14 @@ public class Movimiento {
     this.pozo = pozo;
     this.numeroTurno = numeroTurno;
     estadoTablero = clonarEstadoTablero(casilleros);
+  }
+
+  public int getOid() {
+    return oid;
+  }
+
+  public void setOid(int oid) {
+    this.oid = oid;
   }
 
   private ArrayList<Casillero> clonarEstadoTablero(ArrayList<Casillero> casilleros) {
