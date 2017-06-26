@@ -66,7 +66,11 @@ public class Fachada extends Observable {
   }
 
   public void iniciarJugadores() throws UsuarioException {
-    sistemaUsuarios.iniciarJugadores();
+    sistemaUsuarios.cargarUsuarios();
+  }
+
+  public Jugador getPorOid(int oid) {
+    return sistemaUsuarios.getPorOid(oid);
   }
 
 }

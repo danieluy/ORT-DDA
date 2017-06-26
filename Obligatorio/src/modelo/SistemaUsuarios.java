@@ -12,7 +12,6 @@ public class SistemaUsuarios {
   private ArrayList<Administrador> administradores = new ArrayList();
   private Persistencia persistencia = Persistencia.getInstancia();
   private BaseDatos bd = BaseDatos.getInstancia();
-  private static String url = "jdbc:mysql://localhost/obligatorio_203752";
 
   public Jugador loginJugador(String usuario, String password) throws UsuarioException {
     for (Jugador jugador : jugadores)
@@ -53,8 +52,8 @@ public class SistemaUsuarios {
     throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
   }
 
-  public void iniciarJugadores() throws UsuarioException {
-    bd.conectar(url, "root", "root");
+  public void cargarUsuarios() throws UsuarioException {
+    bd.conectar(Config.BD_URL, Config.BD_USUARIO, Config.BD_PASSWORD);
     cargarJugadores();
     cargarAdministradores();
     bd.desconectar();
@@ -72,6 +71,13 @@ public class SistemaUsuarios {
     ArrayList<Administrador> administradores_bd = persistencia.selectAll(map);
     for (Administrador a : administradores_bd)
       addAdministrador((Administrador) a);
+  }
+
+  public Jugador getPorOid(int oid) {
+    for (Jugador j : jugadores)
+      if (j.getOid() == oid)
+        return j;
+    return null;
   }
 
 }

@@ -3,12 +3,15 @@ package modelo;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
+import mappers.Mapper;
 import mappers.MapperPartida;
 import persistencia.BaseDatos;
 import persistencia.Persistencia;
 
 public class SistemaPartidas implements Observer {
-
+  
+  private BaseDatos bd = BaseDatos.getInstancia();
+  private Persistencia persistencia = Persistencia.getInstancia();
   private ArrayList<Partida> partidas;
 
   public SistemaPartidas() {
@@ -84,6 +87,13 @@ public class SistemaPartidas implements Observer {
     }
     if (evento == Partida.Eventos.partidaCancelada)
       purgarPartidas();
+  }
+
+  public void cargarPartidas() throws UsuarioException {
+    bd.conectar(Config.BD_URL, Config.BD_USUARIO, Config.BD_PASSWORD);
+    Mapper map = new MapperPartida();
+    partidas = persistencia.selectAll(map);
+    bd.desconectar();
   }
 
 }

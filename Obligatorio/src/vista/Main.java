@@ -1,14 +1,7 @@
 package vista;
 
-import java.util.ArrayList;
-import mappers.MapperAdministrador;
-import mappers.MapperJugador;
-import modelo.Administrador;
 import modelo.Fachada;
-import modelo.Jugador;
 import modelo.UsuarioException;
-import persistencia.BaseDatos;
-import persistencia.Persistencia;
 
 public class Main {
 

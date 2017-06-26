@@ -86,12 +86,17 @@ public class MapperPartida implements Mapper {
 
   @Override
   public String getSqlSelect() {
-    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    String sqlSelectPartida = "SELECT p.oid, p.tamano, p.jugador1, p.jugador2, m.nro movimiento, m.jugador oidJugadorMovimiento, m.pozo, m.numeroTurno, c.nro nroCasillero, c.mina "
+        + "FROM partidas p, movimientos m, casilleros c "
+        + "WHERE p.oid = m.oidPartida "
+        + "AND p.oid = c.oidPartida "
+        + "ORDER BY p.oid, m.nro, c.nro";
+    return sqlSelectPartida;
   }
 
   @Override
   public void crearNuevo() {
-    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    partida = new Partida();
   }
 
   @Override
@@ -101,12 +106,16 @@ public class MapperPartida implements Mapper {
 
   @Override
   public void leerCompuesto(ResultSet rs) throws SQLException {
-    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    int tamano = rs.getInt("tamano");
+    int oidGanador = rs.getInt("ganador");
+    int oidJugador1 = rs.getInt("jugador1");
+    int oidJugador2 = rs.getInt("jugador2");
+    partida.restaurarDesdeBD(tamano, oidGanador, oidJugador1, oidJugador2);
   }
 
   @Override
   public void leerComponente(ResultSet rs) throws SQLException {
-    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    // TODO
   }
 
 }

@@ -32,6 +32,9 @@ public class Partida extends Observable implements Observer {
     jugador1.setPartida(this);
   }
 
+  public Partida() {
+  }
+
   public enum Eventos {
     partidaLlena,
     tableroCreado,
@@ -49,6 +52,13 @@ public class Partida extends Observable implements Observer {
   private void notificar(Object evento) {
     setChanged();
     notifyObservers(evento);
+  }
+  
+  public void restaurarDesdeBD(int tamano, int oidGanador, int oidJugador1, int oidJugador2){
+    this.tamano = tamano;
+    this.ganador = Fachada.getInstancia().getPorOid(oidGanador);
+    this.jugador1 = Fachada.getInstancia().getPorOid(oidJugador1);
+    this.jugador2 = Fachada.getInstancia().getPorOid(oidJugador2);
   }
 
   public void setJugador2(Jugador jugador) throws ApuestaException {
