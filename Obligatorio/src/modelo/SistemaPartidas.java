@@ -61,7 +61,6 @@ public class SistemaPartidas implements Observer {
   }
 
   protected void guardarPartida(Partida partida) {
-    System.out.println("Guardando partida...");
     BaseDatos bd = BaseDatos.getInstancia();
     String url = "jdbc:mysql://localhost/obligatorio_203752";
 
@@ -74,8 +73,6 @@ public class SistemaPartidas implements Observer {
     p.save(map);
 
     bd.desconectar();
-
-    System.out.println("Partida guardada!");
   }
 
   @Override

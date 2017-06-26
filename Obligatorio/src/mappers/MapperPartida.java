@@ -42,26 +42,28 @@ public class MapperPartida implements Mapper {
 
   private void getSqlInsertMovimientos(ArrayList<String> sqls) {
     ArrayList<Movimiento> movimientos = partida.getMovimientos();
-    int i = 0;
-    for (Movimiento mov : movimientos) {
-      String sqlInsertMovimiento = "INSERT INTO movimientos (oid, oidPartida, jugador, pozo, numeroTurno) VALUES ("
-          + "'" + getOid() + "_" + i + "'"
+    for (int i = 0; i < movimientos.size(); i++) {
+      Movimiento mov = movimientos.get(i);
+      String sqlInsertMovimiento = "INSERT INTO movimientos (nro, oidPartida, jugador, pozo, numeroTurno) VALUES ("
+          + i
           + ", " + getOid()
           + ", " + mov.getJugador().getOid()
           + ", " + mov.getPozo()
           + ", " + mov.getNumeroTurno()
           + ")";
       sqls.add(sqlInsertMovimiento);
-      getSqlInsertCasillero(sqls, (getOid() + "_" + i), mov.getEstadoTablero());
-      i++;
+      getSqlInsertCasillero(sqls, i, mov.getEstadoTablero());
     }
   }
 
-  private void getSqlInsertCasillero(ArrayList<String> sqls, String oidMovimiento, ArrayList<Casillero> estado) {
-    for (Casillero cas : estado) {
-      String sqlInsertCasillero = "INSERT INTO casilleros (oidMovimiento, mina) VALUES ("
-          + "'" + oidMovimiento + "'"
-          + ", " + (cas.getTipoMina() != null ? ("'" + cas.getTipoMina() + "'") : null)
+  private void getSqlInsertCasillero(ArrayList<String> sqls, int nroMovimiento, ArrayList<Casillero> casilleros) {
+    for (int i = 0; i < casilleros.size(); i++) {
+      Casillero casillero = casilleros.get(i);
+      String sqlInsertCasillero = "INSERT INTO casilleros (nro, nroMovimiento, oidPartida, mina) VALUES ("
+          + i
+          + ", " + nroMovimiento
+          + ", " + getOid()
+          + ", " + (casillero.getTipoMina() != null ? ("'" + casillero.getTipoMina() + "'") : null)
           + ")";
       sqls.add(sqlInsertCasillero);
     }
