@@ -11,7 +11,8 @@ public class Main {
 
     System.out.println("Diseño y Desarrollo de Aplicaciones - ORT - 2017 - Obligatorio Daniel Sosa");
 
-    modelo.iniciarJugadores();
+    modelo.cargarJugadores();
+    modelo.cargarPartidas();
 
     new InicioFrame().setVisible(true);
 

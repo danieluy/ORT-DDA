@@ -56,9 +56,13 @@ public class Partida extends Observable implements Observer {
   
   public void restaurarDesdeBD(int tamano, int oidGanador, int oidJugador1, int oidJugador2){
     this.tamano = tamano;
-    this.ganador = Fachada.getInstancia().getPorOid(oidGanador);
-    this.jugador1 = Fachada.getInstancia().getPorOid(oidJugador1);
-    this.jugador2 = Fachada.getInstancia().getPorOid(oidJugador2);
+    this.ganador = Fachada.getInstancia().getJugadorPorOid(oidGanador);
+    this.jugador1 = Fachada.getInstancia().getJugadorPorOid(oidJugador1);
+    this.jugador2 = Fachada.getInstancia().getJugadorPorOid(oidJugador2);
+  }
+  
+  public void addMovimientoDesdeBD(Movimiento movimiento){
+    this.movimientos.add(movimiento);
   }
 
   public void setJugador2(Jugador jugador) throws ApuestaException {

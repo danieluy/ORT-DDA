@@ -4,9 +4,8 @@ import java.util.ArrayList;
 
 public class Movimiento {
 
-  private int oid;
   private Jugador jugador;
-  private ArrayList<Casillero> estadoTablero;
+  private ArrayList<Casillero> estadoTablero = new ArrayList();
   private double pozo;
   private int numeroTurno;
 
@@ -17,12 +16,7 @@ public class Movimiento {
     estadoTablero = clonarEstadoTablero(casilleros);
   }
 
-  public int getOid() {
-    return oid;
-  }
-
-  public void setOid(int oid) {
-    this.oid = oid;
+  public Movimiento() {
   }
 
   private ArrayList<Casillero> clonarEstadoTablero(ArrayList<Casillero> casilleros) {
@@ -40,6 +34,12 @@ public class Movimiento {
     for (Casillero c : estadoTablero)
       c.activarMina();
   }
+  
+  public void restaurarDesdeBD(Jugador jugador, double pozo, int numeroTurno){
+    this.jugador = jugador;
+    this.pozo = pozo;
+    this.numeroTurno = numeroTurno;
+  }
 
 //    Getters & Setters
   public Jugador getJugador() {
@@ -56,6 +56,10 @@ public class Movimiento {
 
   public ArrayList<Casillero> getEstadoTablero() {
     return estadoTablero;
+  }
+
+  public void addCasilleroDesdeBD(Casillero casillero) {
+    estadoTablero.add(casillero);
   }
 
 }

@@ -37,6 +37,25 @@ public class Casillero implements CasilleroPanel {
     return false;
   }
 
+  public void restaurarDesdeBD(String mina) {
+    if (mina != null) {
+      switch (mina) { // Buscar otra manera para no perder la fleximibilidad de poder agregar tipo de mina en Mina[] minas
+        case "E":
+          this.mina = new MinaExplosiva();
+          break;
+        case "S":
+          this.mina = new MinaSuerte();
+          break;
+        case "T":
+          this.mina = new MinaTrampa();
+          break;
+        default:
+          this.mina = null;
+      }
+      activarMina();
+    }
+  }
+
   public boolean tieneMina() {
     return mina != null;
   }

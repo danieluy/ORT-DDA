@@ -27,6 +27,14 @@ public class Fachada extends Observable {
     return instancia;
   }
 
+  public void cargarJugadores() throws UsuarioException {
+    sistemaUsuarios.cargarUsuarios();
+  }
+
+  public Jugador getJugadorPorOid(int oid) {
+    return sistemaUsuarios.getPorOid(oid);
+  }
+
 //    Sistema de Usuarios
   public Jugador loginJugador(String usuario, String password) throws UsuarioException {
     return sistemaUsuarios.loginJugador(usuario, password);
@@ -65,12 +73,8 @@ public class Fachada extends Observable {
     return sistemaPartidas.getPartidas();
   }
 
-  public void iniciarJugadores() throws UsuarioException {
-    sistemaUsuarios.cargarUsuarios();
-  }
-
-  public Jugador getPorOid(int oid) {
-    return sistemaUsuarios.getPorOid(oid);
+  public void cargarPartidas() throws UsuarioException {
+    sistemaPartidas.cargarPartidas();
   }
 
 }

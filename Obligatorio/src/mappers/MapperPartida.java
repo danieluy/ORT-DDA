@@ -4,6 +4,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import modelo.Casillero;
+import modelo.Fachada;
+import modelo.Jugador;
 import modelo.Movimiento;
 import modelo.Partida;
 
@@ -90,6 +92,7 @@ public class MapperPartida implements Mapper {
         + "FROM partidas p, movimientos m, casilleros c "
         + "WHERE p.oid = m.oidPartida "
         + "AND p.oid = c.oidPartida "
+        + "AND m.nro = c.nroMovimiento "
         + "ORDER BY p.oid, m.nro, c.nro";
     return sqlSelectPartida;
   }
@@ -101,21 +104,42 @@ public class MapperPartida implements Mapper {
 
   @Override
   public Object getObjeto() {
-    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    return partida;
   }
 
   @Override
   public void leerCompuesto(ResultSet rs) throws SQLException {
+    // Restaurar Partida
     int tamano = rs.getInt("tamano");
     int oidGanador = rs.getInt("ganador");
     int oidJugador1 = rs.getInt("jugador1");
     int oidJugador2 = rs.getInt("jugador2");
     partida.restaurarDesdeBD(tamano, oidGanador, oidJugador1, oidJugador2);
+    // Restaurar primer Movimiento de la Partida
+    leerComponente(rs);
   }
 
   @Override
   public void leerComponente(ResultSet rs) throws SQLException {
-    // TODO
+    // Numero de Movimiento debe coincidir con el la primera posicion disponible de ArrayList<Movimiento> partida.movimientos
+    if (partida.getMovimientos().size() == rs.getInt("movimiento")) {
+      Movimiento movimiento = new Movimiento();
+      Jugador jugador = Fachada.getInstancia().getJugadorPorOid(rs.getInt("oidJugadorMovimiento"));
+      double pozo = rs.getDouble("pozo");
+      int numeroTurno = rs.getInt("numeroTurno");
+      movimiento.restaurarDesdeBD(jugador, pozo, numeroTurno);
+      partida.addMovimientoDesdeBD(movimiento);
+    }
+    // En todos los casos consigo el casillero de la fila
+    getCasillero(rs);
   }
 
+  private void getCasillero(ResultSet rs) throws SQLException {
+    // Agrego el casillero en el último movimiento
+    ArrayList<Movimiento> movimientos = partida.getMovimientos();
+    Movimiento movimiento = movimientos.get(movimientos.size() - 1);
+    Casillero casillero = new Casillero();
+    casillero.restaurarDesdeBD(rs.getString("mina"));
+    movimiento.addCasilleroDesdeBD(casillero);
+  }
 }
