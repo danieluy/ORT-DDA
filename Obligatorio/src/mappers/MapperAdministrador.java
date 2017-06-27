@@ -20,7 +20,7 @@ public class MapperAdministrador implements Mapper {
   }
 
   @Override
-  public ArrayList<String> getSqlInsert() {
+  public ArrayList<String> getSQLInsert() {
     throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
   }
 

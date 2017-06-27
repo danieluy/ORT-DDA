@@ -41,6 +41,10 @@ public class Movimiento {
     this.numeroTurno = numeroTurno;
   }
 
+  public void addCasilleroDesdeBD(Casillero casillero) {
+    estadoTablero.add(casillero);
+  }
+
 //    Getters & Setters
   public Jugador getJugador() {
     return jugador;
@@ -56,10 +60,6 @@ public class Movimiento {
 
   public ArrayList<Casillero> getEstadoTablero() {
     return estadoTablero;
-  }
-
-  public void addCasilleroDesdeBD(Casillero casillero) {
-    estadoTablero.add(casillero);
   }
 
 }

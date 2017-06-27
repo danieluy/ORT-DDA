@@ -58,7 +58,11 @@ public class Partida extends Observable implements Observer {
     this.tamano = tamano;
     this.ganador = Fachada.getInstancia().getJugadorPorOid(oidGanador);
     this.jugador1 = Fachada.getInstancia().getJugadorPorOid(oidJugador1);
+    this.jugador1.setColor(COLOR_1);
+    this.jugador1.setPartida(this);
     this.jugador2 = Fachada.getInstancia().getJugadorPorOid(oidJugador2);
+    this.jugador2.setColor(COLOR_2);
+    this.jugador2.setPartida(this);
   }
   
   public void addMovimientoDesdeBD(Movimiento movimiento){

@@ -6,7 +6,7 @@ import vista.CasilleroPanel;
 public class Casillero implements CasilleroPanel {
 
   private Mina mina;
-  private Color color;
+  private Color color = Color.LIGHT_GRAY;
   private Mina[] minas = {
     new MinaExplosiva(),
     new MinaTrampa(),
@@ -14,7 +14,6 @@ public class Casillero implements CasilleroPanel {
   };
 
   public Casillero() {
-    color = Color.LIGHT_GRAY;
   }
 
   public void activarMina() {
@@ -37,7 +36,7 @@ public class Casillero implements CasilleroPanel {
     return false;
   }
 
-  public void restaurarDesdeBD(String mina) {
+  public void restaurarDesdeBD(String mina, String color) {
     if (mina != null) {
       switch (mina) { // Buscar otra manera para no perder la fleximibilidad de poder agregar tipo de mina en Mina[] minas
         case "E":
@@ -52,20 +51,30 @@ public class Casillero implements CasilleroPanel {
         default:
           this.mina = null;
       }
-      activarMina();
     }
+    setColor(color);
   }
 
   public boolean tieneMina() {
     return mina != null;
   }
 
+  public void setMina(Mina mina) {
+    this.mina = mina;
+  }
+
   public void setColor(Color color) {
+    // Se usa para el clonado de casilleros, no debe verificar tieneMina()
     this.color = color;
   }
 
-  public void setMina(Mina mina) {
-    this.mina = mina;
+  public void setColor(String rgb) {
+    if (tieneMina())
+      color = mina.getColor();
+    else {
+      String[] c = rgb.split(",");
+      color = new Color(Integer.parseInt(c[0]), Integer.parseInt(c[1]), Integer.parseInt(c[2]));
+    }
   }
 
   private void setColor(Jugador jugador) {
@@ -104,6 +113,13 @@ public class Casillero implements CasilleroPanel {
     if (destapado() && tieneMina())
       return mina.getTipo();
     return null;
+  }
+
+  public String getColorRGB() {
+    int r = color.getRed();
+    int g = color.getGreen();
+    int b = color.getBlue();
+    return r + "," + g + "," + b;
   }
 
 }

@@ -65,9 +65,8 @@ public class SistemaPartidas implements Observer {
 
   protected void guardarPartida(Partida partida) {
     BaseDatos bd = BaseDatos.getInstancia();
-    String url = "jdbc:mysql://localhost/obligatorio_203752";
 
-    bd.conectar(url, "root", "root");
+    bd.conectar(Config.BD_URL, Config.BD_USUARIO, Config.BD_PASSWORD);
 
     MapperPartida map = new MapperPartida();
     map.setPartida(partida);

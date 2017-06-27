@@ -28,7 +28,7 @@ public class MapperPartida implements Mapper {
   }
 
   @Override
-  public ArrayList<String> getSqlInsert() {
+  public ArrayList<String> getSQLInsert() {
     ArrayList<String> sqls = new ArrayList();
     String sqlInsertPartida = "INSERT INTO partidas (oid, tamano, ganador, jugador1, jugador2) VALUES ("
         + getOid()
@@ -38,11 +38,11 @@ public class MapperPartida implements Mapper {
         + ", " + partida.getJugador2().getOid()
         + ")";
     sqls.add(sqlInsertPartida);
-    getSqlInsertMovimientos(sqls);
+    getSQLInsertMovimientos(sqls);
     return sqls;
   }
 
-  private void getSqlInsertMovimientos(ArrayList<String> sqls) {
+  private void getSQLInsertMovimientos(ArrayList<String> sqls) {
     ArrayList<Movimiento> movimientos = partida.getMovimientos();
     for (int i = 0; i < movimientos.size(); i++) {
       Movimiento mov = movimientos.get(i);
@@ -54,18 +54,19 @@ public class MapperPartida implements Mapper {
           + ", " + mov.getNumeroTurno()
           + ")";
       sqls.add(sqlInsertMovimiento);
-      getSqlInsertCasillero(sqls, i, mov.getEstadoTablero());
+      getSQLInsertCasillero(sqls, i, mov.getEstadoTablero());
     }
   }
 
-  private void getSqlInsertCasillero(ArrayList<String> sqls, int nroMovimiento, ArrayList<Casillero> casilleros) {
+  private void getSQLInsertCasillero(ArrayList<String> sqls, int nroMovimiento, ArrayList<Casillero> casilleros) {
     for (int i = 0; i < casilleros.size(); i++) {
       Casillero casillero = casilleros.get(i);
-      String sqlInsertCasillero = "INSERT INTO casilleros (nro, nroMovimiento, oidPartida, mina) VALUES ("
+      String sqlInsertCasillero = "INSERT INTO casilleros (nro, nroMovimiento, oidPartida, mina, color) VALUES ("
           + i
           + ", " + nroMovimiento
           + ", " + getOid()
           + ", " + (casillero.getTipoMina() != null ? ("'" + casillero.getTipoMina() + "'") : null)
+          + ", " + "'" + casillero.getColorRGB() + "'"
           + ")";
       sqls.add(sqlInsertCasillero);
     }
@@ -88,7 +89,7 @@ public class MapperPartida implements Mapper {
 
   @Override
   public String getSqlSelect() {
-    String sqlSelectPartida = "SELECT p.oid, p.tamano, p.jugador1, p.jugador2, m.nro movimiento, m.jugador oidJugadorMovimiento, m.pozo, m.numeroTurno, c.nro nroCasillero, c.mina "
+    String sqlSelectPartida = "SELECT p.oid, p.tamano, p.ganador, p.jugador1, p.jugador2, m.nro movimiento, m.jugador oidJugadorMovimiento, m.pozo, m.numeroTurno, c.nro nroCasillero, c.mina, c.color "
         + "FROM partidas p, movimientos m, casilleros c "
         + "WHERE p.oid = m.oidPartida "
         + "AND p.oid = c.oidPartida "
@@ -139,7 +140,7 @@ public class MapperPartida implements Mapper {
     ArrayList<Movimiento> movimientos = partida.getMovimientos();
     Movimiento movimiento = movimientos.get(movimientos.size() - 1);
     Casillero casillero = new Casillero();
-    casillero.restaurarDesdeBD(rs.getString("mina"));
+    casillero.restaurarDesdeBD(rs.getString("mina"), rs.getString("color"));
     movimiento.addCasilleroDesdeBD(casillero);
   }
 }

@@ -10,7 +10,7 @@ public interface Mapper {
 
   public void setOid(int oid);
 
-  public ArrayList<String> getSqlInsert();
+  public ArrayList<String> getSQLInsert();
 
   public ArrayList<String> getSqlUpdate();
 

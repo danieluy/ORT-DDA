@@ -44,7 +44,7 @@ public class Persistencia {
   private void insert(Mapper map) {
     int oid = nextOid();
     map.setOid(oid);
-    ArrayList<String> sqls = map.getSqlInsert();
+    ArrayList<String> sqls = map.getSQLInsert();
     if (!bd.transaction(sqls)) {
       map.setOid(0);
       System.out.println("Error al insertar objeto");
@@ -106,7 +106,7 @@ public class Persistencia {
       }
     }
     catch (SQLException ex) {
-      System.out.println("Error al buscar:" + ex.getMessage());
+      System.out.println("Error al buscar: " + ex.getMessage());
     }
     return lista;
   }
