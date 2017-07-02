@@ -3,19 +3,19 @@ package controlador;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
-import modelo.Fachada;
+import modelo.Modelo;
 import modelo.Jugador;
 import modelo.Partida;
 
 public class ListaPartidasControlador implements Observer {
 
-  private Fachada modelo;
+  private Modelo modelo;
   private ListaPartidaVista vistaLista;
   private ArrayList<Partida> partidas;
 
   public ListaPartidasControlador(ListaPartidaVista vistaLista) {
     this.vistaLista = vistaLista;
-    modelo = Fachada.getInstancia();
+    modelo = Modelo.getInstancia();
     modelo.addObserver(this);
     mostrarPartidas();
   }
@@ -44,7 +44,7 @@ public class ListaPartidasControlador implements Observer {
 
   @Override
   public void update(Observable o, Object evento) {
-    if (evento == Fachada.Eventos.listaPartidasActualizada)
+    if (evento == Modelo.Eventos.listaPartidasActualizada)
       mostrarPartidas();
   }
 

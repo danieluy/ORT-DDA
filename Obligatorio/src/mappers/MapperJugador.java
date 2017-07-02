@@ -37,7 +37,15 @@ public class MapperJugador implements Mapper {
 
   @Override
   public ArrayList<String> getSqlUpdate() {
-    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    ArrayList<String> sqls = new ArrayList();
+    String sqlUpdateJugador = "UPDATE jugadores "
+        + "SET nombre = '" + jugador.getNombre() + "'"
+        + ", nombrecompleto = '" + jugador.getNombreCompleto() + "'"
+        + ", password = '" + jugador.getPassword() + "'"
+        + ", saldo = " + jugador.getSaldo()
+        + "WHERE oid = " + jugador.getOid();
+    sqls.add(sqlUpdateJugador);
+    return sqls;
   }
 
   @Override

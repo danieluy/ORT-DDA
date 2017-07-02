@@ -59,6 +59,14 @@ public class SistemaUsuarios {
     bd.desconectar();
   }
 
+  public void guardarJugador(Jugador u) {
+    bd.conectar(Config.BD_URL, Config.BD_USUARIO, Config.BD_PASSWORD);
+    MapperJugador map = new MapperJugador();
+    map.setUsuario(u);
+    persistencia.save(map);
+    bd.desconectar();
+  }
+
   private void cargarJugadores() throws UsuarioException {
     MapperJugador map = new MapperJugador();
     ArrayList<Jugador> jugadores_bd = persistencia.selectAll(map);
@@ -73,7 +81,7 @@ public class SistemaUsuarios {
       addAdministrador((Administrador) a);
   }
 
-  public Jugador getPorOid(int oid) {
+  public Jugador getByOid(int oid) {
     for (Jugador j : jugadores)
       if (j.getOid() == oid)
         return j;

@@ -1,12 +1,12 @@
 package controlador;
 
 import javax.swing.JFrame;
-import modelo.Fachada;
+import modelo.Modelo;
 
 public class InicioControlador {
 
   InicioVista vista;
-  Fachada modelo = Fachada.getInstancia();
+  Modelo modelo = Modelo.getInstancia();
 
   public InicioControlador(InicioVista vista) {
     this.vista = vista;

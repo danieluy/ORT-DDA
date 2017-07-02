@@ -1,11 +1,11 @@
 package vista;
 
-import modelo.Fachada;
+import modelo.Modelo;
 import modelo.UsuarioException;
 
 public class Main {
 
-  private static Fachada modelo = Fachada.getInstancia();
+  private static Modelo modelo = Modelo.getInstancia();
 
   public static void main(String[] args) throws UsuarioException {
 

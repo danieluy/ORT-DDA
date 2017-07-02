@@ -49,7 +49,7 @@ public class SistemaPartidas implements Observer {
         purgar.add(i);
     for (int j : purgar)
       partidas.remove(j);
-    Fachada.getInstancia().notificar(Fachada.Eventos.listaPartidasActualizada);
+    Modelo.getInstancia().notificar(Modelo.Eventos.listaPartidasActualizada);
   }
 
   public boolean hayJuegosActivos() {
@@ -77,22 +77,25 @@ public class SistemaPartidas implements Observer {
     bd.desconectar();
   }
 
-  @Override
-  public void update(Observable observer, Object evento) {
-    Fachada.getInstancia().notificar(Fachada.Eventos.listaPartidasActualizada);
-    if (evento == Partida.Eventos.partidaTerminada) {
-      guardarPartida((Partida) observer);
-      observer.deleteObserver(this);
-    }
-    if (evento == Partida.Eventos.partidaCancelada)
-      purgarPartidas();
-  }
-
   public void cargarPartidas() throws UsuarioException {
     bd.conectar(Config.BD_URL, Config.BD_USUARIO, Config.BD_PASSWORD);
     Mapper map = new MapperPartida();
     partidas = persistencia.selectAll(map);
     bd.desconectar();
+  }
+
+  @Override
+  public void update(Observable observer, Object evento) {
+    Modelo.getInstancia().notificar(Modelo.Eventos.listaPartidasActualizada);
+    if (evento == Partida.Eventos.partidaTerminada) {
+      Partida p = (Partida) observer;
+      guardarPartida(p);
+      Modelo.getInstancia().guardarJugador(p.getJugador1());
+      Modelo.getInstancia().guardarJugador(p.getJugador2());
+      observer.deleteObserver(this);
+    }
+    if (evento == Partida.Eventos.partidaCancelada)
+      purgarPartidas();
   }
 
 }

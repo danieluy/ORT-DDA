@@ -1,6 +1,6 @@
 package controlador;
 
-import modelo.Fachada;
+import modelo.Modelo;
 import modelo.Jugador;
 import modelo.Administrador;
 import modelo.Usuario;
@@ -8,7 +8,7 @@ import modelo.UsuarioException;
 
 public class LoginControlador {
 
-  private Fachada modelo = Fachada.getInstancia();
+  private Modelo modelo = Modelo.getInstancia();
   private LoginVista vista;
 
   public LoginControlador(LoginVista vista) {

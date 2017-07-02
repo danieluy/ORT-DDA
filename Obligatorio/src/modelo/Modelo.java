@@ -3,9 +3,9 @@ package modelo;
 import java.util.ArrayList;
 import java.util.Observable;
 
-public class Fachada extends Observable {
+public class Modelo extends Observable {
 
-  private static Fachada instancia = new Fachada();
+  private static Modelo instancia = new Modelo();
   private SistemaUsuarios sistemaUsuarios;
   private SistemaPartidas sistemaPartidas;
 
@@ -18,24 +18,28 @@ public class Fachada extends Observable {
     notifyObservers(evento);
   }
 
-  private Fachada() {
+  private Modelo() {
     sistemaUsuarios = new SistemaUsuarios();
     sistemaPartidas = new SistemaPartidas();
   }
 
-  public static Fachada getInstancia() {
+  public static Modelo getInstancia() {
     return instancia;
   }
 
+//    Sistema de Usuarios
   public void cargarJugadores() throws UsuarioException {
     sistemaUsuarios.cargarUsuarios();
   }
 
-  public Jugador getJugadorPorOid(int oid) {
-    return sistemaUsuarios.getPorOid(oid);
+  public void guardarJugador(Jugador u) {
+    sistemaUsuarios.guardarJugador(u);
   }
 
-//    Sistema de Usuarios
+  public Jugador getJugadorByOid(int oid) {
+    return sistemaUsuarios.getByOid(oid);
+  }
+
   public Jugador loginJugador(String usuario, String password) throws UsuarioException {
     return sistemaUsuarios.loginJugador(usuario, password);
   }

@@ -21,11 +21,13 @@ public class MonitorControlador implements Observer {
 
   public void actualizarVista() {
     if (partida.iniciada()) {
-      vista.mostrarDatos(tituloPartida(), partida.getPozo(), partida.getNumeroTurno(), getTurnoDe());
-      vista.mostrarTablero(partida.getTamano(), partida.getCasilleros());
+      Movimiento ultimoMovimiento = partida.getMovimientos().get(posicionReproductor);
+      vista.mostrarDatos(tituloPartida(), ultimoMovimiento.getPozo(), ultimoMovimiento.getNumeroTurno(), getTurnoDe());
+      vista.mostrarTablero(partida.getTamano(), ultimoMovimiento.getEstadoTablero());
     }
     else
       vista.mostrarError("La partida no ha iniciado aún");
+    actualizarEstadoReproductor();
   }
 
   private String tituloPartida() {
@@ -86,7 +88,6 @@ public class MonitorControlador implements Observer {
   @Override
   public void update(Observable o, Object evento) {
     actualizarVista();
-    actualizarEstadoReproductor();
   }
 
 }
