@@ -64,7 +64,6 @@ public class SistemaPartidas implements Observer {
   }
 
   protected void guardarPartida(Partida partida) {
-    BaseDatos bd = BaseDatos.getInstancia();
 
     bd.conectar(Config.BD_URL, Config.BD_USUARIO, Config.BD_PASSWORD);
 
@@ -73,8 +72,7 @@ public class SistemaPartidas implements Observer {
 
     Persistencia p = Persistencia.getInstancia();
     p.save(map);
-
-    bd.desconectar();
+    
   }
 
   public void cargarPartidas() throws UsuarioException {

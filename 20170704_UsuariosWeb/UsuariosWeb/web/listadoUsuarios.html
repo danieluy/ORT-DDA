@@ -1,0 +1,46 @@
+
+
+
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Listado Usuarios</title>
+    </head>
+
+    <body>
+        <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+        <script type="text/javascript">
+
+            // SSE Server side events, part of HTML5 specification
+            // Lisents to server communication
+            var eventSource = new EventSource("listadoUsuarios?accion=new");
+
+            eventSource.onerror = function (evt) {
+                alert("Sin conexion con el servidor");
+                eventSource.close();
+                document.location = "/usuarios/";
+            };
+
+            eventSource.addEventListener("usuarios", function (evt) {
+                document.getElementById("usuarios").innerHTML = evt.data;
+            }, false);
+
+            eventSource.addEventListener("usuario", function (evt) {
+                document.getElementById("usuario").innerHTML = evt.data;
+            }, false);
+
+            function logout() {
+                $.get("/usuarios/listadoUsuarios?accion=logout", function (data) { });
+            }
+
+
+        </script>
+        <h1>Usuario actual</h1>
+        <span id="usuario"></span>
+        <h1>Conectados</h1>
+        <span id="usuarios"></span>
+        <br><br>
+        <button onclick="logout()"> Logout</button>
+
+    </body>
+</html>

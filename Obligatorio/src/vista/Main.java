@@ -2,6 +2,7 @@ package vista;
 
 import modelo.Modelo;
 import modelo.UsuarioException;
+import persistencia.BaseDatos;
 
 public class Main {
 
@@ -11,6 +12,7 @@ public class Main {
 
     System.out.println("Diseño y Desarrollo de Aplicaciones - ORT - 2017 - Obligatorio Daniel Sosa");
 
+    BaseDatos bd = BaseDatos.getInstancia();
     modelo.cargarJugadores();
     modelo.cargarPartidas();
 

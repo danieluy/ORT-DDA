@@ -2,12 +2,15 @@ package vista;
 
 import controlador.InicioControlador;
 import controlador.InicioVista;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import modelo.Usuario;
+import persistencia.BaseDatos;
 
 public class InicioFrame extends javax.swing.JFrame implements InicioVista {
 
   private InicioControlador controlador;
+  private BaseDatos bd = BaseDatos.getInstancia();
 
   public InicioFrame() {
     initComponents();
@@ -79,7 +82,12 @@ public class InicioFrame extends javax.swing.JFrame implements InicioVista {
     }//GEN-LAST:event_btn_administradorActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-      setDefaultCloseOperation(controlador.validarCerrar());
+      if (controlador.validarCerrar()) {
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        bd.desconectar();
+      }
+      else
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
     }//GEN-LAST:event_formWindowClosing
 
   // Variables declaration - do not modify//GEN-BEGIN:variables

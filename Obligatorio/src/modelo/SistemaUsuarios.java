@@ -60,11 +60,9 @@ public class SistemaUsuarios {
   }
 
   public void guardarJugador(Jugador u) {
-    bd.conectar(Config.BD_URL, Config.BD_USUARIO, Config.BD_PASSWORD);
     MapperJugador map = new MapperJugador();
     map.setUsuario(u);
     persistencia.save(map);
-    bd.desconectar();
   }
 
   private void cargarJugadores() throws UsuarioException {

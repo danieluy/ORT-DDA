@@ -12,13 +12,13 @@ public class InicioControlador {
     this.vista = vista;
   }
 
-  public int validarCerrar() {
+  public boolean validarCerrar() {
     if (modelo.hayJuegosActivos()) {
       vista.mostrarError("Hay juegos activos");
-      return JFrame.DO_NOTHING_ON_CLOSE;
+      return false;
     }
     else
-      return JFrame.EXIT_ON_CLOSE;
+      return true;
   }
 
 }

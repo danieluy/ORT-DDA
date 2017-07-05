@@ -1,0 +1,61 @@
+
+
+
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Listado Usuarios</title>
+    </head>
+
+    <body>
+        <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+        <script type="text/javascript">
+
+            var vistaWeb = new EventSource("listadoUsuarios?accion=new");
+
+            vistaWeb.onerror = function (evento) {
+                alert("Sin conexion con el servidor");
+                vistaWeb.close();
+                document.location = "/usuarios/";
+            };
+
+            vistaWeb.addEventListener("usuarios", function (evento) {
+                document.getElementById("usuarios").innerHTML = evento.data;
+            }, false);
+            vistaWeb.addEventListener("contador", function (evento) {
+                document.getElementById("cont").innerHTML = evento.data;
+            }, false);
+
+            vistaWeb.addEventListener("usuario", function (evento) {
+                document.getElementById("usuario").innerHTML = evento.data;
+            }, false);
+
+            function logout() {
+                var lista = document.getElementById("lstUsuarios");
+                var pos = lista.selectedIndex;
+                if (pos == -1) {
+                    $.get("/usuarios/listadoUsuarios?accion=logout", function (data) {
+
+                    });
+                } else {
+                    $.get("/usuarios/listadoUsuarios?accion=logoutOtro&pos=" + pos, function (data) {
+
+                    });
+                }
+
+            }
+            ;
+
+        </script>
+        <h1>Usuario actual</h1>
+        <span id="usuario"></span>
+        <h1>Logins
+            <span id="cont"></span>
+        </h1>
+        <h1>Conectados</h1>
+        <span id="usuarios"></span>
+        <br><br>
+        <button onclick="logout()"> Logout</button>
+
+    </body>
+</html>
