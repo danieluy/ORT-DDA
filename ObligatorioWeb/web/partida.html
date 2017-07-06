@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<!--Import Google Icon Font-->
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<!-- Compiled and minified CSS -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.99.0/css/materialize.min.css">
+	<title>Buscaminas</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+	<div class="container">
+		<h1 class="center">Buscaminas</h1>
+		<div class="ds-card">
+
+			<h3 id="titulo">Cargando...</h3>
+
+			<div id="tamano">
+				<div class="row">
+					<div class="input-field col s12">
+						<input id="txt-tamano" type="number" autofocus>
+						<label for="nombre">Tamaño del tablero</label>
+					</div>
+					<div class="input-field col s12">
+						<input id="btn-tamano" class="btn" type="button" value="Guardar">
+					</div>
+				</div>
+			</div>
+
+			<div id="espera" class="hidden"></div>
+
+			<div id="tablero" class="hidden">
+				<div id="info-tablero">
+
+				</div>
+				<div id="casilleros-tablero">
+					
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<!--Import jQuery before materialize.js-->
+	<script src="https://code.jquery.com/jquery-2.1.1.min.js" type="text/javascript"></script>
+	<!-- Compiled and minified JavaScript -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.99.0/js/materialize.min.js" type="text/javascript"></script>
+
+	<script src="partida.js" type="text/javascript"></script>
+</body>
+
+</html>

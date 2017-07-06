@@ -169,9 +169,9 @@ public class PartidaControlador implements Observer {
       quitarJugador2();
     if (evento == Partida.Eventos.tiempo) // por razones de performance en este caso solo actualizo la vista de datos
 //      vista.mostrarDatos(tituloPartida(), getNombreTurno(), jugador.getSaldo(), partida.getPozo(), partida.getApuesta().getTotalApostado(), partida.getNumeroTurno(), partida.getTiempoTurno());
-    if (evento == Partida.Eventos.partidaCancelada) {
-      vista.mostrarError(partida.getJugador1().getNombreCompleto() + " ha cancelado la partida");
-      vista.cerrar();
-    }
+      if (evento == Partida.Eventos.partidaCancelada) {
+        vista.mostrarError(partida.getJugador1().getNombreCompleto() + " ha cancelado la partida");
+        vista.cerrar();
+      }
   }
 }

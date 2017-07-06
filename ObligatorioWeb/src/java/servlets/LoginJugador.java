@@ -21,6 +21,7 @@ import modelo.Usuario;
 public class LoginJugador extends HttpServlet implements LoginVista {
 
   LoginControlador controlador = new LoginControlador(this);
+  HttpServletRequest request;
   HttpServletResponse response;
 
   public LoginJugador() {
@@ -33,11 +34,13 @@ public class LoginJugador extends HttpServlet implements LoginVista {
   }
 
   protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    this.request = request;
     this.response = response;
     String nombre = request.getParameter("nombre");
     String password = request.getParameter("password");
     System.out.println(nombre + " - " + password);
     controlador.login(nombre, password, Usuario.TiposUsuario.jugador);
+
   }
 
   // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -82,9 +85,9 @@ public class LoginJugador extends HttpServlet implements LoginVista {
   @Override
   public void loginJugadorOk(Jugador jugador) {
     // inicio partida
-//    new PartidaFrame(jugador).setVisible(true);
     try {
-      response.sendRedirect("index.jsp?mensaje=Bienvenid@ " + jugador.getNombreCompleto());
+      request.getSession(true).setAttribute("jugador", jugador);
+      response.sendRedirect("partida.html");
     }
     catch (IOException ex) {
       System.out.println(ex.getMessage());
