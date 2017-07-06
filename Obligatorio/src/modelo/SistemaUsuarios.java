@@ -53,10 +53,8 @@ public class SistemaUsuarios {
   }
 
   public void cargarUsuarios() throws UsuarioException {
-    bd.conectar(Config.BD_URL, Config.BD_USUARIO, Config.BD_PASSWORD);
     cargarJugadores();
     cargarAdministradores();
-    bd.desconectar();
   }
 
   public void guardarJugador(Jugador u) {

@@ -64,22 +64,15 @@ public class SistemaPartidas implements Observer {
   }
 
   protected void guardarPartida(Partida partida) {
-
-    bd.conectar(Config.BD_URL, Config.BD_USUARIO, Config.BD_PASSWORD);
-
     MapperPartida map = new MapperPartida();
     map.setPartida(partida);
-
     Persistencia p = Persistencia.getInstancia();
     p.save(map);
-    
   }
 
   public void cargarPartidas() throws UsuarioException {
-    bd.conectar(Config.BD_URL, Config.BD_USUARIO, Config.BD_PASSWORD);
     Mapper map = new MapperPartida();
     partidas = persistencia.selectAll(map);
-    bd.desconectar();
   }
 
   @Override

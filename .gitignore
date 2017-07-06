@@ -60,3 +60,5 @@ hs_err_pid*
 /20170704_UsuariosWeb/build/
 /20170704_Agenda/build/
 /20170704_Agenda/dist/
+/AgendaWeb/build/
+/AgendaWeb/nbproject/private/

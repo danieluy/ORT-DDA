@@ -1,5 +1,6 @@
 package vista;
 
+import modelo.Config;
 import modelo.Modelo;
 import modelo.UsuarioException;
 import persistencia.BaseDatos;
@@ -13,6 +14,8 @@ public class Main {
     System.out.println("Diseño y Desarrollo de Aplicaciones - ORT - 2017 - Obligatorio Daniel Sosa");
 
     BaseDatos bd = BaseDatos.getInstancia();
+    bd.conectar(Config.BD_URL, Config.BD_USUARIO, Config.BD_PASSWORD);
+    
     modelo.cargarJugadores();
     modelo.cargarPartidas();
 

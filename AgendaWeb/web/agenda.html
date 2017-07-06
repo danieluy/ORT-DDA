@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <script type="text/javascript">
+
+            var vistaWeb = new EventSource("agendaServlet?accion=new");
+                                    
+            vistaWeb.onerror = function(evento) {
+               alert("Sin conexion con el servidor");
+                vistaWeb.close();
+                document.location="/agenda/";
+            };
+            vistaWeb.addEventListener("duenio", function (evento){
+                document.title = evento.data;
+                document.getElementById("spanDuenio").innerHTML=evento.data;
+            },false);
+            vistaWeb.addEventListener("tiposTel", function (evento){
+                document.getElementById("spanTipos").innerHTML=evento.data;
+            },false);
+            vistaWeb.addEventListener("contactos", function (evento){
+                document.getElementById("spanContactos").innerHTML=evento.data;
+            },false);
+            
+        </script>
+        <div>AGENDA DE <span id="spanDuenio"></span></div>
+        <div>TIPOS <span id="spanTipos"></span></div>
+        <div>CONTACTOS <span id="spanContactos"></span></div>
+    </body>
+</html>

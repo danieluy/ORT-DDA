@@ -5,49 +5,39 @@
  */
 package servlets;
 
+import controlador.LoginControlador;
+import controlador.LoginVista;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import modelo.Administrador;
+import modelo.Jugador;
+import modelo.Usuario;
 
-/**
- *
- * @author Daniel
- */
 @WebServlet(name = "LoginJugador", urlPatterns = {"/loginjugador"})
-public class LoginJugador extends HttpServlet {
+public class LoginJugador extends HttpServlet implements LoginVista {
 
-  /**
-   * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
-   *
-   * @param request servlet request
-   * @param response servlet response
-   * @throws ServletException if a servlet-specific error occurs
-   * @throws IOException if an I/O error occurs
-   */
-  protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-      throws ServletException, IOException {
-    response.setContentType("text/html;charset=UTF-8");
-    try (PrintWriter out = response.getWriter()) {
-      /* TODO output your page here. You may use following sample code. */
-//      out.println("<!DOCTYPE html>");
-//      out.println("<html>");
-//      out.println("<head>");
-//      out.println("<title>Servlet LoginJugador</title>");      
-//      out.println("</head>");
-//      out.println("<body>");
-//      out.println("<h1>Nombre: " + request.getParameter("nombre") + "</h1>");
-//      out.println("<h1>Contraseña: " + request.getParameter("password") + "</h1>");
-//      out.println("<h1>Servlet LoginJugador at " + request.getContextPath() + "</h1>");
-//      out.println("</body>");
-//      out.println("</html>");      
-      request.getSession().setAttribute("nombre", request.getParameter("nombre"));
-      request.getSession().setAttribute("password", request.getParameter("password"));
-      response.sendRedirect("tablero.jsp");
+  LoginControlador controlador = new LoginControlador(this);
+  HttpServletResponse response;
+
+  public LoginJugador() {
+    try {
+      vista.Main.main(null);
     }
+    catch (Exception ex) {
+      System.out.println(ex.getMessage());
+    }
+  }
+
+  protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    this.response = response;
+    String nombre = request.getParameter("nombre");
+    String password = request.getParameter("password");
+    System.out.println(nombre + " - " + password);
+    controlador.login(nombre, password, Usuario.TiposUsuario.jugador);
   }
 
   // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -88,5 +78,32 @@ public class LoginJugador extends HttpServlet {
   public String getServletInfo() {
     return "Short description";
   }// </editor-fold>
+
+  @Override
+  public void loginJugadorOk(Jugador jugador) {
+    // inicio partida
+//    new PartidaFrame(jugador).setVisible(true);
+    try {
+      response.sendRedirect("index.jsp?mensaje=Bienvenid@ " + jugador.getNombreCompleto());
+    }
+    catch (IOException ex) {
+      System.out.println(ex.getMessage());
+    }
+  }
+
+  @Override
+  public void loginAdministradorOk(Administrador administrador) {
+    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+  }
+
+  @Override
+  public void loginError(String mensaje) {
+    try {
+      response.sendRedirect("index.jsp?mensaje=" + mensaje);
+    }
+    catch (IOException ex) {
+      System.out.println(ex.getMessage());
+    }
+  }
 
 }
