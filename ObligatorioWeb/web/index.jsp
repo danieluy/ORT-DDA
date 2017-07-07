@@ -47,7 +47,7 @@
                             <label for="password">Password</label>
                         </div>
                         <div class="input-field col s12">
-                            <input class="btn" type="submit" value="Ingresar">
+                            <input class="btn waves-effect" type="submit" value="Ingresar">
                         </div>
                     </div>
                 </form>

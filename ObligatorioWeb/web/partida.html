@@ -18,13 +18,13 @@
 		<h1 class="center">Buscaminas</h1>
 		<div class="ds-card">
 
-			<h3 id="titulo">Cargando...</h3>
+			<h4 id="titulo">Cargando...</h4>
 
 			<div id="tamano">
 				<div class="row">
 					<div class="input-field col s12">
 						<input id="txt-tamano" type="number" autofocus>
-						<label for="nombre">Tamaño del tablero</label>
+						<label for="txt-tamano">Tamaño del tablero</label>
 					</div>
 					<div class="input-field col s12">
 						<input id="btn-tamano" class="btn" type="button" value="Guardar">
@@ -36,15 +36,52 @@
 
 			<div id="tablero" class="hidden">
 				<div id="info-tablero">
-
+					<div class="row">
+						<div class="col s6">
+							<span id="juega">Juegas tu</span>
+							<span class="right" id="tiempo">10 seg.</span>
+						</div>
+						<div class="saldo col s6">
+							<span>Tu saldo es de </span>
+							<span class="right" id="saldo">$90</span>
+						</div>
+					</div>
+					<div class="row">
+						<div class="pozo col s6">
+							<span>Pozo</span>
+							<span class="right" id="pozo">$20</span>
+						</div>
+						<div class="turno col s6">
+							<span>Turno</span>
+							<span class="right" id="turno">#3</span>
+						</div>
+					</div>
+					<div class="apuestas row">
+						<button class="btn waves-effect add-margin col s2" id="btn-apostar">Apostar</button>
+						<button class="btn waves-effect add-margin col s2" id="btn-pagar">Pagar</button>
+						<button class="btn waves-effect add-margin col s2" id="btn-subir">Subir</button>
+						<div class="input-field col s3">
+							<input id="txt-apuesta" type="number">
+							<label for="txt-apuesta">Ingrese monto</label>
+						</div>
+						<div class="total col s3">
+							<span>Total apostado</span>
+							<span class="right" id="total">$20</span>
+						</div>
+					</div>
 				</div>
-				<div id="casilleros-tablero">
-					
-				</div>
+				<div id="casilleros-tablero"></div>
 			</div>
 
 		</div>
 	</div>
+	<!--apuestaActual : "0.0"
+ numeroTurno : "1"
+ pozo : "20.0"
+ saldo : "125.0"
+ tiempoTurno : "0"
+ tituloPartida : "Tyler Durden vs. Robert Paulson"
+ turno : "Juegas tu"-->
 
 	<!--Import jQuery before materialize.js-->
 	<script src="https://code.jquery.com/jquery-2.1.1.min.js" type="text/javascript"></script>

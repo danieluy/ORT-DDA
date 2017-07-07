@@ -55,6 +55,10 @@ public class PartidaControlador implements Observer {
     }
   }
 
+  public void destapar(int i) {
+    destapar(partida.getCasilleros().get(i));
+  }
+
   public void destapar(CasilleroPanel casillero) {
     try {
       partida.destaparCasillero(casillero, jugador);

@@ -1,4 +1,4 @@
-body{
+    body{
     background-color: #dddddd;
 }
 .ds-card{
@@ -7,7 +7,7 @@ body{
     border-radius: 3px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.5);
 }
-#tablero{
+#casilleros-tablero{
     display: flex;
     justify-content: center;
 }
@@ -18,8 +18,15 @@ body{
     float: left;
     transition: all 300ms ease-out;
 }
+.apuestas{
+    display: flex;
+    align-items: center;
+}
 .casillero:hover{
     transform: scale(1.1);
+}
+.btn.add-margin{
+    margin: 0 5px;
 }
 .hidden{
     display: none;

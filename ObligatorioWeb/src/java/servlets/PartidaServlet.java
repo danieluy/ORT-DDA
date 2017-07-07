@@ -2,7 +2,6 @@ package servlets;
 
 import VistasWeb.PartidaWeb;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.AsyncContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,22 +15,14 @@ import modelo.Jugador;
 public class PartidaServlet extends HttpServlet {
 
   protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-  }
-
-  @Override
-  protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-    String accion = request.getParameter("accion");
-    if (accion == null)
-      return;
     HttpSession sesion = request.getSession(false);
     if (sesion == null)
       return;
     Jugador jugador = (Jugador) sesion.getAttribute("jugador");
     if (jugador == null)
       return;
-    if (accion.equals("new")) {
+    String accion = request.getParameter("accion");
+    if (accion != null && accion.equals("new")) {
 //      Setup SSE
       request.setAttribute("org.apache.catalina.ASYNC_SUPPORTED", true);
       AsyncContext contexto = request.startAsync();
@@ -41,38 +32,48 @@ public class PartidaServlet extends HttpServlet {
 //      Inicializar la Vista
       PartidaWeb vista = new PartidaWeb();
       vista.inicializar(jugador, contexto);
-      sesion.setAttribute("vistaPartida", vista);
+      sesion.setAttribute("vista", vista);
     }
+    else {
+      PartidaWeb vista = (PartidaWeb) sesion.getAttribute("vista");
+      if (vista == null)
+        return;
+      
+      String tamano = request.getParameter("tamano");
+      if (tamano != null)
+        vista.setTamanoTablero(tamano);
+      
+      String apostar = request.getParameter("apostar");
+      if (apostar != null)
+        vista.apostar(apostar);
+      
+      String subir = request.getParameter("subir");
+      if (subir != null)
+        vista.subir(subir);
+      
+      String pagar = request.getParameter("pagar");
+      if (pagar != null)
+        vista.pagar();
+      
+      String destapar = request.getParameter("destapar");
+      if (destapar != null)
+        vista.destapar(destapar);
+    }
+  }
 
+  @Override
+  protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    processRequest(request, response);
   }
 
   @Override
   protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-    HttpSession sesion = request.getSession(false);
-    if (sesion == null)
-      return;
-    Jugador jugador = (Jugador) sesion.getAttribute("jugador");
-    if (jugador == null)
-      return;
-    PartidaWeb vista = (PartidaWeb) sesion.getAttribute("vistaPartida");
-    if (vista == null)
-      return;
-    
-    String tamano = request.getParameter("tamano");
-    if (tamano != null)
-      vista.setTamanoTablero(tamano);
-    
+    processRequest(request, response);
   }
 
-  /**
-   * Returns a short description of the servlet.
-   *
-   * @return a String containing servlet description
-   */
   @Override
   public String getServletInfo() {
     return "Short description";
-  }// </editor-fold>
+  }
 
 }

@@ -11,7 +11,7 @@ import modelo.Jugador;
 
 public class PartidaWeb implements PartidaVista {
 
-  PartidaControlador controlador;
+  private PartidaControlador controlador;
   private AsyncContext contexto;
   private PrintWriter out;
 
@@ -41,8 +41,30 @@ public class PartidaWeb implements PartidaVista {
     }
   }
 
+  // Delegación de métodos del controlador
   public void setTamanoTablero(String tamano) {
     controlador.setTamanoTablero(tamano);
+  }
+
+  public void apostar(String monto) {
+    controlador.apostar(monto);
+  }
+
+  public void pagar() {
+    controlador.pagar();
+  }
+
+  public void subir(String monto) {
+    controlador.subir(monto);
+  }
+
+  public void destapar(String i) {
+    try {
+      controlador.destapar(Integer.parseInt(i));
+    }
+    catch (Exception ex) {
+      mostrarError(ex.getMessage());
+    }
   }
 
   @Override
@@ -67,7 +89,7 @@ public class PartidaWeb implements PartidaVista {
     for (Object o : casilleros) {
       Casillero c = (Casillero) o;
       String casilleroString = "{\"color\": "
-          + "\"" + c.getColorRGB()+ "\""
+          + "\"" + c.getColorRGB() + "\""
           + ", \"mina\": "
           + (c.getTipoMina() == null ? c.getTipoMina() : ("\"" + c.getTipoMina() + "\""))
           + "},";
@@ -85,17 +107,26 @@ public class PartidaWeb implements PartidaVista {
 
   @Override
   public void mostrarDatos(String tituloPartida, String turno, double saldo, double pozo, double apuestaActual, int numeroTurno, int tiempoTurno) {
-    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    String datos = "{"
+        + "\"tituloPartida\":" + "\"" + tituloPartida + "\","
+        + "\"turno\":" + "\"" + turno + "\","
+        + "\"saldo\":" + "\"" + saldo + "\","
+        + "\"pozo\":" + "\"" + pozo + "\","
+        + "\"apuestaActual\":" + "\"" + apuestaActual + "\","
+        + "\"numeroTurno\":" + "\"" + numeroTurno + "\","
+        + "\"tiempoTurno\":" + "\"" + tiempoTurno + "\""
+        + "}";
+    enviar("mostrarDatos", datos);
   }
 
   @Override
-  public void mostarMensaje(String string) {
-    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+  public void mostarMensaje(String mensaje) {
+    enviar("mostarMensaje", mensaje);
   }
 
   @Override
   public void cerrar() {
-    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    enviar("cerrar", null);
   }
 
 }
