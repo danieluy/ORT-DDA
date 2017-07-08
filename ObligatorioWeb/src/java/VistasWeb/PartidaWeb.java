@@ -28,7 +28,6 @@ public class PartidaWeb implements PartidaVista {
   }
 
   public void enviar(String evento, String dato) {
-
     out.write("event: " + evento + "\n");
     dato = dato.replace("\n", "");
     out.write("data: " + dato + "\n\n");
@@ -63,8 +62,12 @@ public class PartidaWeb implements PartidaVista {
       controlador.destapar(Integer.parseInt(i));
     }
     catch (Exception ex) {
-      mostrarError(ex.getMessage());
+      mostrarError("Error al destapar el casillero " + i);
     }
+  }
+
+  public void salir() {
+    controlador.salir();
   }
 
   @Override
@@ -110,11 +113,11 @@ public class PartidaWeb implements PartidaVista {
     String datos = "{"
         + "\"tituloPartida\":" + "\"" + tituloPartida + "\","
         + "\"turno\":" + "\"" + turno + "\","
-        + "\"saldo\":" + "\"" + saldo + "\","
-        + "\"pozo\":" + "\"" + pozo + "\","
-        + "\"apuestaActual\":" + "\"" + apuestaActual + "\","
-        + "\"numeroTurno\":" + "\"" + numeroTurno + "\","
-        + "\"tiempoTurno\":" + "\"" + tiempoTurno + "\""
+        + "\"saldo\":" + "\"$" + saldo + "\","
+        + "\"pozo\":" + "\"$" + pozo + "\","
+        + "\"apuestaActual\":" + "\"$" + apuestaActual + "\","
+        + "\"numeroTurno\":" + "\"#" + numeroTurno + "\","
+        + "\"tiempoTurno\":" + "\"" + tiempoTurno + " seg.\""
         + "}";
     enviar("mostrarDatos", datos);
   }
@@ -127,6 +130,11 @@ public class PartidaWeb implements PartidaVista {
   @Override
   public void cerrar() {
     enviar("cerrar", null);
+  }
+
+  @Override
+  public void mostrarTiempo(int tiempoTurno) {
+    enviar("tiempo", tiempoTurno + " seg.");
   }
 
 }

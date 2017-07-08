@@ -58,6 +58,10 @@ public class PartidaServlet extends HttpServlet {
       String destapar = request.getParameter("destapar");
       if (destapar != null)
         vista.destapar(destapar);
+      
+      String salir = request.getParameter("salir");
+      if (salir != null)
+        vista.salir();
     }
   }
 

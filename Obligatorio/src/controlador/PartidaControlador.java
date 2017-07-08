@@ -1,8 +1,10 @@
 package controlador;
 
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 import modelo.ApuestaException;
+import modelo.Casillero;
 import modelo.CasilleroException;
 import modelo.Modelo;
 import modelo.Jugador;
@@ -56,7 +58,9 @@ public class PartidaControlador implements Observer {
   }
 
   public void destapar(int i) {
-    destapar(partida.getCasilleros().get(i));
+    Casillero c = partida.getCasilleros().get(i);
+    System.out.println(c);
+    destapar(c);
   }
 
   public void destapar(CasilleroPanel casillero) {
@@ -172,7 +176,7 @@ public class PartidaControlador implements Observer {
     if (evento == Partida.Eventos.jugador2NoJuega)
       quitarJugador2();
     if (evento == Partida.Eventos.tiempo) // por razones de performance en este caso solo actualizo la vista de datos
-//      vista.mostrarDatos(tituloPartida(), getNombreTurno(), jugador.getSaldo(), partida.getPozo(), partida.getApuesta().getTotalApostado(), partida.getNumeroTurno(), partida.getTiempoTurno());
+      vista.mostrarTiempo(partida.getTiempoTurno());
       if (evento == Partida.Eventos.partidaCancelada) {
         vista.mostrarError(partida.getJugador1().getNombreCompleto() + " ha cancelado la partida");
         vista.cerrar();

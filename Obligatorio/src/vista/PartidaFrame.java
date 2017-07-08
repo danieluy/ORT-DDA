@@ -15,6 +15,7 @@ public class PartidaFrame extends javax.swing.JFrame implements PartidaVista, Ac
 
   private PartidaControlador controlador;
   private JSplitPane splitPanel;
+  private PartidaInformacionPanel infoPanel;
 
   public PartidaFrame(Jugador jugador) {
     initComponents();
@@ -145,7 +146,7 @@ public class PartidaFrame extends javax.swing.JFrame implements PartidaVista, Ac
 
   @Override
   public void mostrarDatos(String tituloPartida, String turno, double saldo, double pozo, double apuestaActual, int numeroTurno, int tiempoTurno) {
-    PartidaInformacionPanel infoPanel = new PartidaInformacionPanel(controlador);
+    infoPanel = new PartidaInformacionPanel(controlador);
     splitPanel.setTopComponent(infoPanel);
     setTitle(tituloPartida);
     infoPanel.mostrarDatos(tituloPartida, turno, ("$" + saldo), ("$" + pozo), ("$" + apuestaActual), ("#" + numeroTurno), (tiempoTurno + " seg."));
@@ -170,6 +171,11 @@ public class PartidaFrame extends javax.swing.JFrame implements PartidaVista, Ac
   @Override
   public void cerrar() {
     dispose();
+  }
+
+  @Override
+  public void mostrarTiempo(int tiempoTurno) {
+    infoPanel.mostrarTiempo(tiempoTurno + " seg.");
   }
 
 }

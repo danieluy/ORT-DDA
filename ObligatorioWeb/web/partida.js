@@ -49,10 +49,13 @@ var partida = {
     setCasillerosListeners: function () {
         var casilleros = document.getElementsByClassName('casillero');
         for (var i = 0; i < casilleros.length; i++)
-            casilleros[i].addEventListener('click', function (evt) {
-                var selectedIndex = evt.target.getAttribute('data-index');
-                $.post('partida', { destapar: selectedIndex });
-            })
+            casilleros[i].addEventListener('click', this.destaparCasillero)
+    },
+    destaparCasillero: function (evt) {
+        var indice = evt.target.getAttribute('data-index');
+        if (isNaN(parseInt(indice)))
+            console.error("indice invalido", indice);
+        $.post('partida', { destapar: indice });
     },
     render: {
         titulo: function (texto) {
@@ -85,6 +88,7 @@ var partida = {
             }
             var ladoTablero = parseInt(Math.sqrt(casilleros.length)) * 100;
             this.casillerosTablero.style.width = ladoTablero + "px";
+            this.casillerosTablero.style.height = ladoTablero + "px";
             this.casillerosTablero.innerHTML = '';
             var i = 0;
             casilleros.forEach(function (casillero) {
@@ -98,7 +102,7 @@ var partida = {
             this.setCasillerosListeners();
         },
         datos: function (datos) {
-            this.render.titulo(datos.tituloPartida);
+            this.titulo.innerHTML = datos.tituloPartida;
             this.juega.innerHTML = datos.turno;
             this.turno.innerHTML = datos.numeroTurno;
             this.tiempo.innerHTML = datos.tiempoTurno;
@@ -110,16 +114,12 @@ var partida = {
         },
         mensaje: function (mensaje) {
             Materialize.toast(mensaje, 5000, 'teal lighten-2');
+        },
+        tiempo: function (tiempo) {
+            this.tiempo.innerHTML = tiempo;
         }
     }
 }
-// apuestaActual: "0.0"
-// numeroTurno: "1"
-// pozo: "20.0"
-// saldo: "125.0"
-// tiempoTurno: "0"
-// tituloPartida: "Tyler Durden vs. Robert Paulson"
-// turno: "Juegas tu"
 var eventos = {
     init: function () {
         this.eventos = new EventSource("partida?accion=new");// (servlet_name?accion=new)
@@ -161,6 +161,10 @@ var eventos = {
         this.eventos.addEventListener("cerrar", function (evt) {
             window.close();
         }, false);
+
+        this.eventos.addEventListener("tiempo", function (evt) {
+            partida.render.tiempo.call(partida, evt.data);
+        }, false);
     }
 }
 
@@ -169,6 +173,7 @@ eventos.init();
 
 window.addEventListener("beforeunload", function (e) {
     partida.render.error("La partida se cerrará");
+    $.post('partida', { salir: "salir" });
     var confirmationMessage = "La partida se cerrará";
     e.returnValue = confirmationMessage;
     return confirmationMessage;

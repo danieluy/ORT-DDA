@@ -20,4 +20,6 @@ public interface PartidaVista {
   public void mostarMensaje(String string);
 
   public void cerrar();
+
+  public void mostrarTiempo(int tiempoTurno);
 }

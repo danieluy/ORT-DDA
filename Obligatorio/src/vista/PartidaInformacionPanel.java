@@ -212,6 +212,10 @@ public class PartidaInformacionPanel extends javax.swing.JPanel {
     lbl_tiempo.setText(tiempoTurno);
   }
   
+  public void mostrarTiempo(String tiempoTurno){
+    lbl_tiempo.setText(tiempoTurno);
+  }
+  
   public void actualizarTiempo(String tiempoTurno){
     lbl_tiempo.setText(tiempoTurno);
   }

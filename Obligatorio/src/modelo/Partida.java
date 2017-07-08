@@ -10,7 +10,7 @@ public class Partida extends Observable implements Observer {
 
   public static final int TAMANO_MINIMO = 3;
   public static final int TAMANO_MAXIMO = 10;
-  public static final int TIEMPO_TURNO = 100;
+  public static final int TIEMPO_TURNO = 20;
   public static final double APUESTA_INICIAL = 10;
   private int oid;
   private final Color COLOR_1 = Color.CYAN;
