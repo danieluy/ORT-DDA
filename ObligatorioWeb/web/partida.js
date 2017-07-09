@@ -1,6 +1,5 @@
 var estado = {
     tamanoVisible: true,
-    esperaVisible: false,
     tableroVisible: false
 }
 
@@ -11,7 +10,6 @@ var partida = {
     cacheDOM: function () {
         this.titulo = document.getElementById('titulo');
         this.tamano = document.getElementById('tamano');
-        this.espera = document.getElementById('espera');
         this.tablero = document.getElementById('tablero');
         this.infoTablero = document.getElementById('info-tablero');
         this.casillerosTablero = document.getElementById('casilleros-tablero');
@@ -54,7 +52,7 @@ var partida = {
     destaparCasillero: function (evt) {
         var indice = evt.target.getAttribute('data-index');
         if (isNaN(parseInt(indice)))
-            console.error("indice invalido", indice);
+            console.error("Indice invalido", indice);
         $.post('partida', { destapar: indice });
     },
     render: {
@@ -63,26 +61,20 @@ var partida = {
             this.titulo.innerHTML = texto;
         },
         espera: function (mensaje) {
-            if (!estado.esperaVisible) {
-                this.tamano.classList.add('hidden');
-                this.espera.classList.remove('hidden');
-                this.tablero.classList.add('hidden');
-                estado = {
-                    tamanoVisible: false,
-                    esperaVisible: true,
-                    tableroVisible: false
-                }
+            this.render.titulo.call(this, mensaje);
+            this.tamano.classList.add('hidden');
+            this.tablero.classList.add('hidden');
+            estado = {
+                tamanoVisible: false,
+                tableroVisible: false
             }
-            this.espera.innerHTML = mensaje;
         },
         tablero: function (casilleros) {
             if (!estado.tableroVisible) {
                 this.tamano.classList.add('hidden');
-                this.espera.classList.add('hidden');
                 this.tablero.classList.remove('hidden');
                 estado = {
                     tamanoVisible: false,
-                    esperaVisible: false,
                     tableroVisible: true
                 }
             }
@@ -102,7 +94,7 @@ var partida = {
             this.setCasillerosListeners();
         },
         datos: function (datos) {
-            this.titulo.innerHTML = datos.tituloPartida;
+            this.render.titulo.call(this, datos.tituloPartida);
             this.juega.innerHTML = datos.turno;
             this.turno.innerHTML = datos.numeroTurno;
             this.tiempo.innerHTML = datos.tiempoTurno;
@@ -156,10 +148,6 @@ var eventos = {
 
         this.eventos.addEventListener("mostrarDatos", function (evt) {
             partida.render.datos.call(partida, JSON.parse(evt.data));
-        }, false);
-
-        this.eventos.addEventListener("cerrar", function (evt) {
-            window.close();
         }, false);
 
         this.eventos.addEventListener("tiempo", function (evt) {

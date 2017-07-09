@@ -53,8 +53,8 @@ public class Partida extends Observable implements Observer {
     setChanged();
     notifyObservers(evento);
   }
-  
-  public void restaurarDesdeBD(int tamano, int oidGanador, int oidJugador1, int oidJugador2){
+
+  public void restaurarDesdeBD(int tamano, int oidGanador, int oidJugador1, int oidJugador2) {
     this.tamano = tamano;
     this.ganador = Modelo.getInstancia().getJugadorByOid(oidGanador);
     this.jugador1 = Modelo.getInstancia().getJugadorByOid(oidJugador1);
@@ -62,8 +62,8 @@ public class Partida extends Observable implements Observer {
     this.jugador2 = Modelo.getInstancia().getJugadorByOid(oidJugador2);
     this.jugador2.setColor(COLOR_2);
   }
-  
-  public void addMovimientoDesdeBD(Movimiento movimiento){
+
+  public void addMovimientoDesdeBD(Movimiento movimiento) {
     this.movimientos.add(movimiento);
   }
 
@@ -169,6 +169,8 @@ public class Partida extends Observable implements Observer {
     if (iniciada()) {
       apuesta = new Apuesta(jugadorApuesta, getOponente(jugadorApuesta), monto);
       pozo += monto;
+      if (temporizador != null)
+        temporizador.pausar();
       notificar(Eventos.apuesta);
     }
   }
@@ -177,6 +179,8 @@ public class Partida extends Observable implements Observer {
     if (iniciada() && !apuesta.estaPaga()) {
       apuesta.pagar(jugadorPaga);
       pozo += apuesta.getApostado();
+      if (temporizador != null)
+        temporizador.continuar();
       notificar(Eventos.apuesta);
     }
   }
@@ -319,8 +323,10 @@ public class Partida extends Observable implements Observer {
 
   @Override
   public void update(Observable o, Object evento) {
-    if (evento == Temporizador.Eventos.tiempo)
+    if (evento == Temporizador.Eventos.tiempo){
+      System.out.println("T: " + temporizador.getTiempo() + "seg.");
       notificar(Eventos.tiempo);
+    }
     if (evento == Temporizador.Eventos.tiempo_agotado)
       terminar();
     if (evento == Temporizador.Eventos.interrupted_exception)

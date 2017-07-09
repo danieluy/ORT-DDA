@@ -175,7 +175,8 @@ public class PartidaFrame extends javax.swing.JFrame implements PartidaVista, Ac
 
   @Override
   public void mostrarTiempo(int tiempoTurno) {
-    infoPanel.mostrarTiempo(tiempoTurno + " seg.");
+    if (infoPanel != null)
+      infoPanel.mostrarTiempo(tiempoTurno + " seg.");
   }
 
 }

@@ -13,12 +13,12 @@ public class PartidaWeb implements PartidaVista {
 
   private PartidaControlador controlador;
   private AsyncContext contexto;
-  private PrintWriter out;
+  private PrintWriter writer;
 
   public void inicializar(Jugador jugador, AsyncContext contexto) {
     this.contexto = contexto;
     try {
-      this.out = this.contexto.getResponse().getWriter();
+      this.writer = this.contexto.getResponse().getWriter();
     }
     catch (IOException ex) {
       System.out.println(ex.getMessage());
@@ -28,14 +28,14 @@ public class PartidaWeb implements PartidaVista {
   }
 
   public void enviar(String evento, String dato) {
-    out.write("event: " + evento + "\n");
+    writer.write("event: " + evento + "\n");
     dato = dato.replace("\n", "");
-    out.write("data: " + dato + "\n\n");
-    if (out.checkError()) {//checkError llama a flush, si da false evío bien
-      cerrar();
+    writer.write("data: " + dato + "\n\n");
+    if (writer.checkError()) {//checkError llama a flush, si da false evío bien
+      cerrar();// El problema con esto es que cuendo ocurre un error el jugador pierde la partida
     }
     else {
-      //TODO OK!
+      // TODO OK!
       // System.out.println("Enviado");
     }
   }
@@ -82,8 +82,7 @@ public class PartidaWeb implements PartidaVista {
 
   @Override
   public void iniciarTablero() {
-//    enviar("iniciarTablero", null);
-    return;
+    // No es necesario
   }
 
   @Override
@@ -129,7 +128,7 @@ public class PartidaWeb implements PartidaVista {
 
   @Override
   public void cerrar() {
-    enviar("cerrar", null);
+    // No es necesario
   }
 
   @Override

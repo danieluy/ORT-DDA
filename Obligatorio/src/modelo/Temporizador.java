@@ -5,9 +5,9 @@ import java.util.Observer;
 
 public class Temporizador extends Observable implements Runnable {
 
-  private Thread hilo;
+  private Thread thread;
   private int tiempo_segundos;
-  private boolean detenido = false;
+  private boolean detenido = true;
 
   public static enum Eventos {
     tiempo_agotado,
@@ -19,13 +19,46 @@ public class Temporizador extends Observable implements Runnable {
   public Temporizador(int tiempo_segundos, Observer observador) {
     this.tiempo_segundos = tiempo_segundos;
     addObserver(observador);
-    hilo = new Thread(this);
-    hilo.start();
+    iniciar();
+  }
+
+  private void iniciar() {
+    if (detenido) {
+      detenido = false;
+      thread = new Thread(this);
+      thread.start();
+    }
   }
 
   public void detener() {
-    detenido = true;
-    deleteObservers();
+    if (!detenido) {
+      try {
+        detenido = true;
+        thread.interrupt();
+      }
+      catch (SecurityException ex) {
+        System.out.println(ex.getMessage());
+      }
+      finally {
+        deleteObservers();
+      }
+    }
+  }
+
+  public void pausar() {
+    if (!detenido) {
+      try {
+        detenido = true;
+        thread.interrupt();
+      }
+      catch (SecurityException ex) {
+        System.out.println(ex.getMessage());
+      }
+    }
+  }
+
+  public void continuar() {
+    iniciar();
   }
 
   private void notificar(Object evento) {
@@ -35,7 +68,7 @@ public class Temporizador extends Observable implements Runnable {
 
   public int getTiempo() {
     return tiempo_segundos;
-  }  
+  }
 
   @Override
   public void run() {
@@ -52,9 +85,10 @@ public class Temporizador extends Observable implements Runnable {
     }
     if (detenido)
       notificar(Eventos.temporizador_detenido);
-    else
+    else {
       notificar(Eventos.tiempo_agotado);
-    deleteObservers();
+      deleteObservers();
+    }
   }
 
 }

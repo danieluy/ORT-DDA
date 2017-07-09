@@ -43,7 +43,7 @@ public class ProcesoX extends Observable implements Runnable {
     if (!correr && !finalizado) {
       correr = true;
       hilo = new Thread(this);
-    hilo.start();
+      hilo.start();
     }
   }
 
