@@ -32,6 +32,7 @@ public class PartidaWeb implements PartidaVista {
     dato = dato.replace("\n", "");
     writer.write("data: " + dato + "\n\n");
     if (writer.checkError()) {//checkError llama a flush, si da false evío bien
+      System.out.println("Error en writer");
       cerrar();// El problema con esto es que cuendo ocurre un error el jugador pierde la partida
     }
     else {
@@ -128,7 +129,7 @@ public class PartidaWeb implements PartidaVista {
 
   @Override
   public void cerrar() {
-    // No es necesario
+    enviar("cerrar", "");
   }
 
   @Override

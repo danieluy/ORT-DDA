@@ -14,13 +14,14 @@ import modelo.Jugador;
 @WebServlet(name = "PartidaServlet", urlPatterns = {"/partida"})
 public class PartidaServlet extends HttpServlet {
 
-  protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+  @Override
+  protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     HttpSession sesion = request.getSession(false);
-    if (sesion == null)
-      return;
     Jugador jugador = (Jugador) sesion.getAttribute("jugador");
-    if (jugador == null)
-      return;
+    if (sesion == null || jugador == null) {
+      sesion = null;
+      response.sendRedirect("login.jsp");
+    }
     String accion = request.getParameter("accion");
     if (accion != null && accion.equals("new")) {
 //      Setup SSE
@@ -34,31 +35,38 @@ public class PartidaServlet extends HttpServlet {
       vista.inicializar(jugador, contexto);
       sesion.setAttribute("vista", vista);
     }
-    else {
-      PartidaWeb vista = (PartidaWeb) sesion.getAttribute("vista");
-      if (vista == null)
-        return;
-      
+  }
+
+  @Override
+  protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    HttpSession sesion = request.getSession(false);
+    Jugador jugador = (Jugador) sesion.getAttribute("jugador");
+    if (sesion == null || jugador == null) {
+      sesion = null;
+      response.sendRedirect("login.jsp");
+    }
+    PartidaWeb vista = (PartidaWeb) sesion.getAttribute("vista");
+    if (vista != null) {
       String tamano = request.getParameter("tamano");
       if (tamano != null)
         vista.setTamanoTablero(tamano);
-      
+
       String apostar = request.getParameter("apostar");
       if (apostar != null)
         vista.apostar(apostar);
-      
+
       String subir = request.getParameter("subir");
       if (subir != null)
         vista.subir(subir);
-      
+
       String pagar = request.getParameter("pagar");
       if (pagar != null)
         vista.pagar();
-      
+
       String destapar = request.getParameter("destapar");
       if (destapar != null)
         vista.destapar(destapar);
-      
+
       String salir = request.getParameter("salir");
       if (salir != null)
         vista.salir();
@@ -66,18 +74,8 @@ public class PartidaServlet extends HttpServlet {
   }
 
   @Override
-  protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    processRequest(request, response);
-  }
-
-  @Override
-  protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    processRequest(request, response);
-  }
-
-  @Override
   public String getServletInfo() {
     return "Short description";
-  }
+  }// </editor-fold>
 
 }

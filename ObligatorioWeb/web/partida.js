@@ -119,7 +119,7 @@ var eventos = {
     },
     setListeners: function () {
         this.eventos.onerror = (function (evt) {
-            Materialize.toast("Sin conexion con el servidor", 5000, 'red lighten-2');
+            Materialize.toast("Sin conexion con el servidor", 60000, 'red lighten-2');
             this.eventos.close();
             document.location = "/partida/";
         }).bind(this);
@@ -153,6 +153,10 @@ var eventos = {
         this.eventos.addEventListener("tiempo", function (evt) {
             partida.render.tiempo.call(partida, evt.data);
         }, false);
+
+        this.eventos.addEventListener("cerrar", function (evt) {
+            window.close();
+        }, false);
     }
 }
 
@@ -160,7 +164,6 @@ partida.init();
 eventos.init();
 
 window.addEventListener("beforeunload", function (e) {
-    partida.render.error("La partida se cerrará");
     $.post('partida', { salir: "salir" });
     var confirmationMessage = "La partida se cerrará";
     e.returnValue = confirmationMessage;
