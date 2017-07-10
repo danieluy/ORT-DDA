@@ -11,7 +11,6 @@ public class SistemaUsuarios {
   private ArrayList<Jugador> jugadores = new ArrayList();
   private ArrayList<Administrador> administradores = new ArrayList();
   private Persistencia persistencia = Persistencia.getInstancia();
-  private BaseDatos bd = BaseDatos.getInstancia();
 
   public Jugador loginJugador(String usuario, String password) throws UsuarioException {
     for (Jugador jugador : jugadores)
